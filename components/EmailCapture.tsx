@@ -9,11 +9,9 @@ import { CONTACT_EMAIL } from "@/lib/content";
  * Swap this handler for a real endpoint when one exists.
  */
 export default function EmailCapture({
-  placeholder = "you@practice.com",
   label = "Book a demo",
   id,
 }: {
-  placeholder?: string;
   label?: string;
   /** Set on one instance only — the nav CTA anchors to it. */
   id?: string;
@@ -24,7 +22,7 @@ export default function EmailCapture({
   return (
     <form
       id={id}
-      className="flex w-full max-w-md items-center gap-1 rounded-full bg-bg p-1.5 pl-2"
+      className="flex w-full max-w-lg flex-col gap-3 sm:flex-row"
       onSubmit={(e) => {
         e.preventDefault();
         window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
@@ -41,12 +39,12 @@ export default function EmailCapture({
         required
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder={placeholder}
-        className="min-w-0 flex-1 bg-transparent px-3 py-2.5 text-[15px] text-ink outline-none placeholder:text-faint"
+        placeholder="you@practice.com"
+        className="min-w-0 flex-1 rounded-sm border border-rule-mid bg-card px-3.5 py-2.5 text-[15px] text-ink outline-none placeholder:text-mute focus:border-accent"
       />
       <button
         type="submit"
-        className="shrink-0 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-hover"
+        className="shrink-0 rounded-sm bg-accent px-5 py-2.5 text-[15px] font-medium text-white transition-colors hover:bg-accent-deep"
       >
         {label}
       </button>

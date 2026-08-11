@@ -1,26 +1,25 @@
-import { Eyebrow, Section } from "./Section";
+import { Eyebrow, Heading, Section } from "./Section";
 import { capabilities } from "@/lib/content";
 
 export default function Capabilities() {
   return (
-    <Section className="bg-warm/50">
-      <div className="max-w-3xl">
-        <Eyebrow>{capabilities.eyebrow}</Eyebrow>
-        <h2 className="display mt-4 text-[36px] text-ink sm:text-[52px]">
-          {capabilities.heading}
-        </h2>
-        <p className="mt-6 text-[17px] leading-[1.75] text-muted">
-          {capabilities.intro}
-        </p>
-      </div>
+    <Section>
+      <div className="grid gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
+        <div>
+          <Eyebrow>{capabilities.eyebrow}</Eyebrow>
+          <Heading>{capabilities.heading}</Heading>
+        </div>
 
-      <div className="mt-14 grid gap-4 sm:grid-cols-2">
-        {capabilities.items.map((item) => (
-          <div key={item.title} className="rounded-panel bg-surface p-8 shadow-card">
-            <h3 className="display text-[22px] text-ink">{item.title}</h3>
-            <p className="mt-3 text-[15px] leading-[1.75] text-muted">{item.body}</p>
-          </div>
-        ))}
+        <dl className="border-t border-rule-mid">
+          {capabilities.items.map((item) => (
+            <div key={item.title} className="border-b border-rule py-6">
+              <dt className="display text-[18px] text-ink">{item.title}</dt>
+              <dd className="mt-2 max-w-2xl text-[15px] leading-[1.7] text-body">
+                {item.body}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </Section>
   );

@@ -1,25 +1,33 @@
 import type { ReactNode } from "react";
 
+/**
+ * Sections are separated by rule weight and vertical rhythm rather than
+ * alternating background bands — the banding device belongs to ledger rows,
+ * where it actually encodes "scannable data."
+ */
 export function Section({
   children,
   className = "",
   id,
+  rule = true,
 }: {
   children: ReactNode;
   className?: string;
   id?: string;
+  rule?: boolean;
 }) {
   return (
-    <section id={id} className={`px-4 py-16 sm:px-6 sm:py-24 ${className}`}>
+    <section
+      id={id}
+      className={`px-5 py-20 sm:px-8 sm:py-28 ${rule ? "border-t border-rule" : ""} ${className}`}
+    >
       <div className="mx-auto max-w-6xl">{children}</div>
     </section>
   );
 }
 
 export function Eyebrow({ children }: { children: ReactNode }) {
-  return (
-    <p className="text-sm font-semibold tracking-[0.02em] text-accent">{children}</p>
-  );
+  return <p className="label text-accent">{children}</p>;
 }
 
 export function Heading({
@@ -30,7 +38,7 @@ export function Heading({
   className?: string;
 }) {
   return (
-    <h2 className={`display mt-4 text-[32px] text-ink sm:text-[44px] ${className}`}>
+    <h2 className={`display mt-5 text-[30px] text-ink sm:text-[40px] ${className}`}>
       {children}
     </h2>
   );

@@ -3,32 +3,36 @@ import { nav } from "@/lib/content";
 
 export default function SiteNav() {
   return (
-    <header className="sticky top-0 z-50 flex justify-center px-4 pt-4 sm:pt-6">
-      <nav className="flex items-center gap-1.5 rounded-full bg-surface/90 p-1.5 pl-4 shadow-pill backdrop-blur-md sm:gap-2 sm:pl-5">
+    <header className="sticky top-0 z-50 border-b border-rule bg-paper/92 backdrop-blur-md">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3.5 sm:px-8">
         <Link
           href="/"
-          className="display pr-1 text-[15px] font-semibold tracking-[-0.03em] whitespace-nowrap text-accent sm:pr-2 sm:text-[17px]"
+          className="display text-[17px] whitespace-nowrap text-ink sm:text-[18px]"
         >
-          {nav.wordmark}
+          Primary<span className="text-accent">·</span>Logic
         </Link>
 
-        {nav.links.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className="rounded-full bg-accent-soft px-3.5 py-2 text-[13px] font-medium whitespace-nowrap text-accent transition-colors hover:bg-accent hover:text-white sm:px-5 sm:text-sm"
-          >
-            {link.label}
-          </Link>
-        ))}
+        <div className="flex items-center gap-6 sm:gap-8">
+          <nav className="hidden items-center gap-6 sm:flex">
+            {nav.links.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-[14px] text-body transition-colors hover:text-accent"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
 
-        <a
-          href={nav.cta.href}
-          className="rounded-full bg-ink px-3.5 py-2 text-[13px] font-medium whitespace-nowrap text-white transition-opacity hover:opacity-85 sm:px-5 sm:text-sm"
-        >
-          {nav.cta.label}
-        </a>
-      </nav>
+          <a
+            href={nav.cta.href}
+            className="rounded-sm bg-ink px-4 py-2 text-[14px] font-medium whitespace-nowrap text-paper transition-colors hover:bg-accent-deep"
+          >
+            {nav.cta.label}
+          </a>
+        </div>
+      </div>
     </header>
   );
 }

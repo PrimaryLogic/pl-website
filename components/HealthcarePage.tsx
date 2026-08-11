@@ -1,12 +1,10 @@
 import SiteNav from "./SiteNav";
 import Hero from "./Hero";
-import Challenge from "./Challenge";
-import JourneyShowcase from "./JourneyShowcase";
-import HowItWorks from "./HowItWorks";
-import ConfigPanel from "./ConfigPanel";
+import Leak from "./Leak";
+import Sequence from "./Sequence";
 import Capabilities from "./Capabilities";
 import Orchestration from "./Orchestration";
-import Economics from "./Economics";
+import CostCurves from "./CostCurves";
 import FinalCta from "./FinalCta";
 import SiteFooter from "./SiteFooter";
 
@@ -16,13 +14,11 @@ export default function HealthcarePage() {
       <SiteNav />
       <main className="flex-1">
         <Hero />
-        <Challenge />
-        <JourneyShowcase />
-        <HowItWorks />
-        <ConfigPanel />
+        <Leak />
+        <Sequence />
         <Capabilities />
         <Orchestration />
-        <Economics />
+        <CostCurves />
         <FinalCta />
       </main>
       <SiteFooter />

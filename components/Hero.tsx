@@ -1,110 +1,32 @@
-"use client";
-
-import { useEffect, useState, useSyncExternalStore } from "react";
-import EmailCapture from "./EmailCapture";
+import Ledger from "./Ledger";
 import { hero } from "@/lib/content";
 
-const TYPE_MS = 55;
-const DELETE_MS = 25;
-const HOLD_MS = 1900;
-
-const FIRST_PHRASE_LENGTH =
-  hero.phrases[0].accent.length + hero.phrases[0].second.length;
-
 /**
- * Rotating typewriter headline. Each phrase types out `accent` (line one's
- * colored tail) then `second` (line two), holds, deletes, and advances.
- * Under prefers-reduced-motion the first phrase renders statically instead.
+ * The hero is the argument, not a slogan: the reader's own numbers, computed
+ * on first paint. Nothing here is a Primary Logic performance claim.
  */
-function useTypewriter(reduced: boolean) {
-  const [index, setIndex] = useState(0);
-  // Seed at phrase 0 fully typed so the first client render is identical to
-  // the server's static render — otherwise the headline flashes complete,
-  // blanks, and retypes on every load. The cycle starts in its hold state.
-  const [count, setCount] = useState(FIRST_PHRASE_LENGTH);
-  const [deleting, setDeleting] = useState(false);
-
-  const phrase = hero.phrases[index];
-  const full = phrase.accent + phrase.second;
-
-  useEffect(() => {
-    if (reduced) return;
-
-    const atEnd = !deleting && count === full.length;
-    const atStart = deleting && count === 0;
-
-    const t = setTimeout(
-      () => {
-        if (atEnd) {
-          setDeleting(true);
-        } else if (atStart) {
-          setDeleting(false);
-          setIndex((i) => (i + 1) % hero.phrases.length);
-        } else {
-          setCount((c) => c + (deleting ? -1 : 1));
-        }
-      },
-      atEnd ? HOLD_MS : deleting ? DELETE_MS : TYPE_MS,
-    );
-
-    return () => clearTimeout(t);
-  }, [count, deleting, full.length, reduced]);
-
-  if (reduced) {
-    const first = hero.phrases[0];
-    return { accent: first.accent, second: first.second, onSecond: true };
-  }
-
-  return {
-    accent: full.slice(0, Math.min(count, phrase.accent.length)),
-    second: count > phrase.accent.length ? full.slice(phrase.accent.length, count) : "",
-    onSecond: count > phrase.accent.length,
-  };
-}
-
-const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
-
-function subscribeToMotionPreference(onChange: () => void) {
-  const mq = window.matchMedia(REDUCED_QUERY);
-  mq.addEventListener("change", onChange);
-  return () => mq.removeEventListener("change", onChange);
-}
-
 export default function Hero() {
-  // Server renders the static phrase; the client opts into motion only if the
-  // visitor hasn't asked us not to.
-  const reduced = useSyncExternalStore(
-    subscribeToMotionPreference,
-    () => window.matchMedia(REDUCED_QUERY).matches,
-    () => true,
-  );
-
-  const { accent, second, onSecond } = useTypewriter(reduced);
-
   return (
-    <section className="px-4 pt-6 sm:px-6 sm:pt-10">
-      <div className="mx-auto max-w-6xl rounded-card bg-surface px-6 py-14 shadow-card sm:px-12 sm:py-20 lg:px-16 lg:py-24">
-        <p className="text-sm font-semibold text-accent sm:text-[15px]">{hero.eyebrow}</p>
+    <section id="ledger" className="px-5 pt-14 pb-20 sm:px-8 sm:pt-20 sm:pb-28">
+      <div className="mx-auto max-w-6xl">
+        <p className="label text-accent">{hero.eyebrow}</p>
 
-        <h1 className="display mt-5 text-[40px] text-ink sm:text-[56px] lg:text-[62px]">
-          <span className="flex min-h-[2.2em] flex-wrap items-center sm:min-h-[1.1em]">
-            <span className="whitespace-pre-wrap">{hero.phrases[0].lead}</span>
-            <span className="whitespace-pre-wrap text-accent">{accent}</span>
-            {!onSecond && <span className="caret" aria-hidden="true" />}
-          </span>
-          <span className="flex min-h-[2.2em] flex-wrap items-center sm:min-h-[1.1em]">
-            <span className="whitespace-pre-wrap">{second}</span>
-            {onSecond && <span className="caret" aria-hidden="true" />}
-          </span>
+        <h1 className="display mt-6 max-w-4xl text-[38px] text-ink sm:text-[54px] lg:text-[62px]">
+          You already paid for the patients who{" "}
+          <span className="text-loss">never finished intake</span>.
         </h1>
 
-        <p className="mt-7 max-w-3xl text-[17px] leading-[1.75] text-muted sm:text-lg">
-          {hero.body}{" "}
-          <span className="mark-accent font-medium text-ink">{hero.highlight}</span>
+        <p className="mt-7 max-w-2xl text-[16px] leading-[1.7] text-body sm:text-[17px]">
+          {hero.body}
         </p>
 
-        <div className="mt-10">
-          <EmailCapture placeholder={hero.emailPlaceholder} />
+        <div className="mt-14 border-t-2 border-ink pt-10">
+          <p className="max-w-2xl text-[15px] leading-relaxed text-body">
+            {hero.ledgerLead}
+          </p>
+          <div className="mt-8">
+            <Ledger />
+          </div>
         </div>
       </div>
     </section>
