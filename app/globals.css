@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  /* Surfaces */
+  --color-bg: #f7f5f2;
+  --color-surface: #ffffff;
+  --color-warm: #f1e9da;
+
+  /* Ink */
+  --color-ink: #1a1410;
+  --color-dim: #4a4640;
+  --color-muted: #6b6660;
+  --color-faint: #9c9489;
+
+  /* Accents */
+  --color-accent: #ff2d00;
+  --color-accent-hover: #e52800;
+  --color-accent-soft: #ffeeea;
+  --color-green: #28c840;
+  --color-amber: #f4b94c;
+
+  /* Type */
+  --font-display: var(--font-geist-sans), system-ui, sans-serif;
+  --font-body: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Shape */
+  --radius-card: 32px;
+  --radius-panel: 20px;
+  --radius-tile: 16px;
+
+  --shadow-card: 0 1px 2px rgb(26 20 16 / 0.04), 0 12px 40px -12px rgb(26 20 16 / 0.10);
+  --shadow-pill: 0 1px 2px rgb(26 20 16 / 0.05), 0 8px 24px -8px rgb(26 20 16 / 0.14);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Headings in this system are weight 500 with tight negative tracking —
+   that pairing is most of what makes the display face read the way it does. */
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+}
+
+/* Inline highlight-mark behind a key sentence in body copy. */
+@utility mark-accent {
+  background: var(--color-accent-soft);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0.14em 0.36em;
+  border-radius: 6px;
+}
+
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.caret {
+  display: inline-block;
+  width: 3px;
+  margin-left: 2px;
+  align-self: stretch;
+  background: var(--color-accent);
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .caret {
+    animation: none;
+    opacity: 0;
+  }
+}
