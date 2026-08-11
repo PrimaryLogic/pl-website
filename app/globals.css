@@ -17,7 +17,9 @@
   /* Ink */
   --color-ink: #101a15;
   --color-body: #4a554e;
-  --color-mute: #7c867f;
+  /* Mute is only ever used at 11–13px, so it has to clear AA at small sizes:
+     5.19:1 on --color-paper, 4.86:1 on --color-band. */
+  --color-mute: #616b64;
 
   /* Rules */
   --color-rule: #d6ddd6;
@@ -37,6 +39,12 @@
 
   --radius-sm: 2px;
   --radius-md: 3px;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Clears the sticky header so in-page anchors don't land under it. */
+  scroll-padding-top: 5rem;
 }
 
 body {
@@ -77,6 +85,9 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   *,
   *::before,
   *::after {

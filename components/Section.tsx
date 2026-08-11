@@ -9,17 +9,15 @@ export function Section({
   children,
   className = "",
   id,
-  rule = true,
 }: {
   children: ReactNode;
   className?: string;
   id?: string;
-  rule?: boolean;
 }) {
   return (
     <section
       id={id}
-      className={`px-5 py-20 sm:px-8 sm:py-28 ${rule ? "border-t border-rule" : ""} ${className}`}
+      className={`border-t border-rule px-5 py-20 sm:px-8 sm:py-28 ${className}`}
     >
       <div className="mx-auto max-w-6xl">{children}</div>
     </section>

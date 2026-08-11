@@ -25,7 +25,12 @@ export const nav = {
 
 export const hero = {
   eyebrow: "Patient coverage for specialty practices",
-  heading: "You already paid for the patients who never finished intake.",
+  /** Split so the emphasis colour lives in content, not hardcoded in JSX. */
+  heading: {
+    lead: "You already paid for the patients who ",
+    emphasis: "never finished intake",
+    tail: ".",
+  },
   body: "Referrals arrive, forms go out, refills come due — and each one needs a person to notice it the same day. Primary Logic covers those touchpoints across voice, SMS, and email, with one shared memory behind all three.",
   ledgerLead: "Start with what it's costing you. These are your numbers, not ours.",
 };

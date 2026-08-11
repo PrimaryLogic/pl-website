@@ -12,8 +12,9 @@ export default function Hero() {
         <p className="label text-accent">{hero.eyebrow}</p>
 
         <h1 className="display mt-6 max-w-4xl text-[38px] text-ink sm:text-[54px] lg:text-[62px]">
-          You already paid for the patients who{" "}
-          <span className="text-loss">never finished intake</span>.
+          {hero.heading.lead}
+          <span className="text-loss">{hero.heading.emphasis}</span>
+          {hero.heading.tail}
         </h1>
 
         <p className="mt-7 max-w-2xl text-[16px] leading-[1.7] text-body sm:text-[17px]">
