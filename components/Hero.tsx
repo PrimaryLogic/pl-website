@@ -8,6 +8,9 @@ const TYPE_MS = 55;
 const DELETE_MS = 25;
 const HOLD_MS = 1900;
 
+const FIRST_PHRASE_LENGTH =
+  hero.phrases[0].accent.length + hero.phrases[0].second.length;
+
 /**
  * Rotating typewriter headline. Each phrase types out `accent` (line one's
  * colored tail) then `second` (line two), holds, deletes, and advances.
@@ -15,7 +18,10 @@ const HOLD_MS = 1900;
  */
 function useTypewriter(reduced: boolean) {
   const [index, setIndex] = useState(0);
-  const [count, setCount] = useState(0);
+  // Seed at phrase 0 fully typed so the first client render is identical to
+  // the server's static render — otherwise the headline flashes complete,
+  // blanks, and retypes on every load. The cycle starts in its hold state.
+  const [count, setCount] = useState(FIRST_PHRASE_LENGTH);
   const [deleting, setDeleting] = useState(false);
 
   const phrase = hero.phrases[index];
@@ -81,12 +87,12 @@ export default function Hero() {
         <p className="text-sm font-semibold text-accent sm:text-[15px]">{hero.eyebrow}</p>
 
         <h1 className="display mt-5 text-[40px] text-ink sm:text-[56px] lg:text-[62px]">
-          <span className="flex min-h-[1.1em] flex-wrap items-center">
+          <span className="flex min-h-[2.2em] flex-wrap items-center sm:min-h-[1.1em]">
             <span className="whitespace-pre-wrap">{hero.phrases[0].lead}</span>
             <span className="whitespace-pre-wrap text-accent">{accent}</span>
             {!onSecond && <span className="caret" aria-hidden="true" />}
           </span>
-          <span className="flex min-h-[1.1em] flex-wrap items-center">
+          <span className="flex min-h-[2.2em] flex-wrap items-center sm:min-h-[1.1em]">
             <span className="whitespace-pre-wrap">{second}</span>
             {onSecond && <span className="caret" aria-hidden="true" />}
           </span>

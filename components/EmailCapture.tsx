@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { CONTACT_EMAIL } from "@/lib/content";
 
 /**
  * Inline email capture. There is no backend yet — submitting opens the
- * visitor's mail client. Swap the handler for a real endpoint when one exists.
+ * visitor's mail client addressed to CONTACT_EMAIL, which is still unverified.
+ * Swap this handler for a real endpoint when one exists.
  */
 export default function EmailCapture({
   placeholder = "you@practice.com",
@@ -25,7 +27,7 @@ export default function EmailCapture({
       className="flex w-full max-w-md items-center gap-1 rounded-full bg-bg p-1.5 pl-2"
       onSubmit={(e) => {
         e.preventDefault();
-        window.location.href = `mailto:hello@primarylogic.com?subject=${encodeURIComponent(
+        window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
           "Demo request",
         )}&body=${encodeURIComponent(`From: ${email}`)}`;
       }}

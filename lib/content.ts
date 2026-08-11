@@ -8,6 +8,13 @@
 
 export const PLACEHOLDER_METRIC = "—";
 
+/**
+ * TODO(unverified): this address was assumed, not confirmed. Every demo
+ * request on the page routes here — point it at a real inbox, or replace
+ * EmailCapture's handler with a real endpoint, before this ships.
+ */
+export const CONTACT_EMAIL = "hello@primarylogic.com";
+
 export const nav = {
   wordmark: "Primary Logic",
   links: [{ label: "Healthcare", href: "/healthcare" }],
