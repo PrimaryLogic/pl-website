@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -22,10 +22,40 @@ const mono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
 });
 
+const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://primarylogic.com");
+
 export const metadata: Metadata = {
-  title: "Primary Logic — What your unreached patients are worth",
+  metadataBase: siteUrl,
+  title: {
+    default: "Primary Logic | AI Patient Coordination for Specialty Practices",
+    template: "%s | Primary Logic",
+  },
   description:
-    "Put your own numbers in. See what the patients who never finish intake are costing you, and what recovering them is worth.",
+    "Primary Logic keeps responsibility for the next patient step until it is complete, declined, or handed to a person with context.",
+  alternates: { canonical: "/" },
+  applicationName: "Primary Logic",
+  authors: [{ name: "Primary Logic" }],
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "Primary Logic",
+    title: "Every referral gets followed through.",
+    description:
+      "AI patient coordination that stays responsible for the next step across voice, SMS, and email.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Every referral gets followed through.",
+    description:
+      "AI patient coordination that stays responsible for the next step across voice, SMS, and email.",
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#f7f8f6",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

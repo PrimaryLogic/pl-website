@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import SliderField from "./SliderField";
-import { useEconomics } from "./EconomicsProvider";
-import { money, count } from "./Ledger";
 import { comparison } from "@/lib/content";
+import { useEconomics } from "./EconomicsProvider";
+import { count, money } from "./Ledger";
+import SliderField from "./SliderField";
+import { track } from "@/lib/analytics";
 
 type Key = (typeof comparison.options)[number]["key"];
 
@@ -17,166 +18,98 @@ const tone: Record<Key, { bar: string; text: string }> = {
 export default function Comparison() {
   const { inputs, set, model } = useEconomics();
   const [selected, setSelected] = useState<Key>("coverage");
-
-  const perPatient = model.perPatient;
-  const active = comparison.options.find((o) => o.key === selected)!;
-
-  /** Cost of adding this month's recovered cohort, each way. */
-  const monthly: Record<Key, number | null> = {
-    paid:
-      perPatient.paid === null ? null : perPatient.paid * model.recoveredPerMonth,
-    team: perPatient.team === null ? null : model.teamMonthlyCost,
-    coverage: perPatient.coverage === null ? null : inputs.platformCost,
-  };
-
+  const active = comparison.options.find((option) => option.key === selected)!;
   const values = comparison.options
-    .map((o) => perPatient[o.key])
-    .filter((v): v is number => v !== null);
+    .map((option) => model.perPatient[option.key])
+    .filter((value): value is number => value !== null);
   const max = values.length ? Math.max(...values) : 0;
 
+  const monthly: Record<Key, number | null> = {
+    paid: model.perPatient.paid === null ? null : model.perPatient.paid * model.recoveredPerMonth,
+    team: model.perPatient.team === null ? null : model.teamMonthlyCost,
+    coverage: model.perPatient.coverage === null ? null : inputs.platformCost,
+  };
+
   return (
-    <div className="grid gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
+    <div className="grid gap-x-12 gap-y-8 lg:grid-cols-[minmax(0,1fr)_minmax(280px,.65fr)]">
       <div>
-        <p className="label text-accent">Your numbers</p>
-        <div className="mt-2 divide-y divide-rule">
-          <SliderField
-            {...comparison.fields.coordinatorCost}
-            value={inputs.coordinatorCost}
-            onChange={(v) => set("coordinatorCost", v)}
-            min={2000}
-            max={15000}
-            step={100}
-            prefix="$"
-          />
-          <SliderField
-            {...comparison.fields.coordinatorCapacity}
-            value={inputs.coordinatorCapacity}
-            onChange={(v) => set("coordinatorCapacity", v)}
-            min={25}
-            max={500}
-            step={5}
-          />
-          <SliderField
-            {...comparison.fields.platformCost}
-            value={inputs.platformCost}
-            onChange={(v) => set("platformCost", v)}
-            min={0}
-            max={40000}
-            step={250}
-            prefix="$"
-          />
-        </div>
-      </div>
-
-      <div>
-        {/* Selected option, in detail */}
-        <div className="rounded-sm border border-rule-mid bg-card">
-          <div className="flex flex-wrap items-center gap-2 border-b border-rule px-5 py-4">
-            {comparison.options.map((option) => (
-              <button
-                key={option.key}
-                type="button"
-                onClick={() => setSelected(option.key)}
-                aria-pressed={option.key === selected}
-                className={`rounded-sm px-3 py-1.5 text-[13px] font-medium transition-colors ${
-                  option.key === selected
-                    ? "bg-ink text-paper"
-                    : "text-body hover:bg-band"
-                }`}
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
-
-          <div className="px-5 py-7">
-            <p className="label text-mute">{comparison.rows.perPatient}</p>
-            <p
-              className={`figure-num mt-2 text-[46px] leading-none font-semibold sm:text-[60px] ${tone[selected].text}`}
-            >
-              {perPatient[selected] === null ? "—" : money(perPatient[selected]!)}
-            </p>
-            <p className="mt-3 max-w-lg text-[14px] leading-relaxed text-body">
-              {active.body}
-            </p>
-          </div>
-
-          <dl className="grid grid-cols-2 gap-px border-t border-rule bg-rule sm:grid-cols-4">
-            {[
-              {
-                t: comparison.rows.monthly,
-                v: monthly[selected] === null ? "—" : money(monthly[selected]!),
-              },
-              { t: comparison.rows.reach, v: active.reach },
-              { t: comparison.rows.scale, v: active.scale },
-              { t: comparison.rows.risk, v: active.risk },
-            ].map((cell) => (
-              <div key={cell.t} className="bg-card px-5 py-4">
-                <dt className="label text-mute">{cell.t}</dt>
-                <dd className="mt-1.5 text-[14px] leading-snug font-medium text-ink">
-                  {cell.v}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-
-        {/* All three, side by side */}
-        <div className="mt-6 flex flex-col gap-4">
+        <div className="flex flex-col gap-5" aria-label="Cost per modelled completion">
           {comparison.options.map((option) => {
-            const v = perPatient[option.key];
+            const value = model.perPatient[option.key];
+            const selectedOption = option.key === selected;
             return (
               <button
                 key={option.key}
                 type="button"
-                onClick={() => setSelected(option.key)}
-                className="group block text-left"
-                aria-label={`Show ${option.label}`}
+                onClick={() => {
+                  setSelected(option.key);
+                  track("comparison_selected", { option: option.key });
+                }}
+                aria-pressed={selectedOption}
+                className="group min-h-11 text-left"
               >
-                <div className="flex items-baseline justify-between gap-4">
+                <span className="flex items-baseline justify-between gap-4">
+                  <span className={`text-[14px] ${selectedOption ? "font-semibold text-ink" : "text-body"}`}>{option.label}</span>
+                  <span className={`figure-num text-[15px] font-medium ${tone[option.key].text}`}>{value === null ? "—" : money(value)}</span>
+                </span>
+                <span className="mt-2 block h-2 bg-band">
                   <span
-                    className={`text-[14px] ${
-                      option.key === selected ? "font-medium text-ink" : "text-body"
-                    }`}
-                  >
-                    {option.label}
-                  </span>
-                  <span
-                    className={`figure-num text-[15px] font-medium ${tone[option.key].text}`}
-                  >
-                    {v === null ? "—" : money(v)}
-                  </span>
-                </div>
-                <div className="mt-1.5 h-2 w-full rounded-sm bg-band">
-                  <div
-                    className={`h-full rounded-sm transition-[width] duration-300 ease-out ${tone[option.key].bar}`}
-                    style={{ width: max > 0 && v !== null ? `${(v / max) * 100}%` : "0%" }}
+                    className={`block h-full transition-[width] duration-300 ease-out ${tone[option.key].bar}`}
+                    style={{ width: max > 0 && value !== null ? `${(value / max) * 100}%` : "0%" }}
                   />
-                </div>
+                </span>
               </button>
             );
           })}
         </div>
 
+        <details className="group mt-8 border-t border-rule">
+          <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between py-4 text-[13px] font-medium text-body marker:hidden">
+            {comparison.assumptionsLabel}
+            <span aria-hidden="true" className="figure-num text-[17px] text-accent transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <div className="grid divide-y divide-rule border-t border-rule sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+            <div className="sm:px-4 sm:first:pl-0">
+              <SliderField {...comparison.fields.coordinatorCost} value={inputs.coordinatorCost} onChange={(value) => set("coordinatorCost", value)} min={2000} max={15000} step={100} prefix="$" />
+            </div>
+            <div className="sm:px-4">
+              <SliderField {...comparison.fields.coordinatorCapacity} value={inputs.coordinatorCapacity} onChange={(value) => set("coordinatorCapacity", value)} min={25} max={500} step={5} />
+            </div>
+            <div className="sm:px-4 sm:last:pr-0">
+              <SliderField {...comparison.fields.platformCost} value={inputs.platformCost} onChange={(value) => set("platformCost", value)} min={0} max={40000} step={250} prefix="$" />
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <aside className="border-t-2 border-ink pt-5" aria-live="polite">
+        <p className="label text-mute">Selected model</p>
+        <p className={`figure-num mt-4 text-[36px] font-semibold leading-none ${tone[selected].text}`}>
+          {model.perPatient[selected] === null ? "—" : money(model.perPatient[selected]!)}
+        </p>
+        <p className="label mt-2 text-mute">{comparison.rows.perPatient}</p>
+        <p className="mt-5 text-[14px] leading-[1.65] text-body">{active.body}</p>
+        <dl className="mt-6 border-t border-rule">
+          {[
+            [comparison.rows.monthly, monthly[selected] === null ? "—" : money(monthly[selected]!)],
+            [comparison.rows.reach, active.reach],
+            [comparison.rows.scale, active.scale],
+            [comparison.rows.risk, active.risk],
+          ].map(([label, value]) => (
+            <div key={label} className="grid grid-cols-[110px_1fr] gap-4 border-b border-rule py-3">
+              <dt className="label text-mute">{label}</dt>
+              <dd className="text-[13px] leading-[1.5] font-medium text-ink">{value}</dd>
+            </div>
+          ))}
+        </dl>
         {model.coordinatorsNeeded > 0 && (
-          <p className="mt-5 text-[13px] leading-relaxed text-body">
-            At this volume a team means{" "}
-            <span className="figure-num font-medium text-ink">
-              {count(model.coordinatorsNeeded)}
-            </span>{" "}
-            {model.coordinatorsNeeded === 1 ? "coordinator" : "coordinators"} working{" "}
-            <span className="figure-num font-medium text-ink">
-              {count(model.lostPerMonth)}
-            </span>{" "}
-            patients a month. Drag your inbound volume up and watch which of these
-            three numbers moves.
+          <p className="mt-5 text-[12px] leading-[1.65] text-mute">
+            The team model sizes {count(model.coordinatorsNeeded)} {model.coordinatorsNeeded === 1 ? "coordinator" : "coordinators"} against {count(model.lostPerMonth)} unfinished cases each month.
           </p>
         )}
+      </aside>
 
-        <p className="mt-4 text-[12px] leading-relaxed text-mute">
-          {comparison.caption}
-        </p>
-      </div>
+      <p className="text-[12px] leading-[1.65] text-mute lg:col-span-2">{comparison.caption}</p>
     </div>
   );
 }

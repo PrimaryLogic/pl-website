@@ -1,25 +1,31 @@
+import { systemFit } from "@/lib/content";
 import { Eyebrow, Heading, Section } from "./Section";
-import { capabilities } from "@/lib/content";
 
 export default function Capabilities() {
   return (
-    <Section>
-      <div className="grid gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
+    <Section className="content-auto">
+      <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,.8fr)_minmax(0,1.2fr)]">
         <div>
-          <Eyebrow>{capabilities.eyebrow}</Eyebrow>
-          <Heading>{capabilities.heading}</Heading>
+          <Eyebrow>{systemFit.eyebrow}</Eyebrow>
+          <Heading>{systemFit.heading}</Heading>
+          <p className="mt-4 max-w-xl text-[15px] leading-[1.6] text-body">{systemFit.intro}</p>
         </div>
 
-        <dl className="border-t border-rule-mid">
-          {capabilities.items.map((item) => (
-            <div key={item.title} className="border-b border-rule py-6">
-              <dt className="display text-[18px] text-ink">{item.title}</dt>
-              <dd className="mt-2 max-w-2xl text-[15px] leading-[1.7] text-body">
-                {item.body}
-              </dd>
+        <div className="grid gap-px border border-rule-mid bg-rule sm:grid-cols-3">
+          {systemFit.columns.map((column, index) => (
+            <div key={column.label} className="bg-card p-5">
+              <div className="flex items-baseline justify-between gap-3 border-b border-rule pb-4">
+                <p className="label text-accent">{column.label}</p>
+                <span className="figure-num text-[12px] text-mute">0{index + 1}</span>
+              </div>
+              <ul className="mt-4 space-y-3">
+                {column.items.map((item) => (
+                  <li key={item} className="text-[14px] leading-[1.5] text-body">{item}</li>
+                ))}
+              </ul>
             </div>
           ))}
-        </dl>
+        </div>
       </div>
     </Section>
   );

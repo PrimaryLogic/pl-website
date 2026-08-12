@@ -1,6 +1,6 @@
 import StubPage from "@/components/StubPage";
 
-export const metadata = { title: "Contact — Primary Logic" };
+export const metadata = { title: "Contact", robots: { index: false, follow: false } };
 
 export default function Contact() {
   return (

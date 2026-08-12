@@ -1,231 +1,351 @@
 /**
- * All page copy lives here so messaging can be revised without touching layout.
+ * Homepage copy is centralized here so every product claim can be reviewed
+ * without hunting through layout code.
  *
- * NOTE ON NUMBERS: this page asserts no performance figures of its own. Every
- * number in the ledger is supplied by the reader, including the recovery
- * assumption. Keep it that way — a claim here would need real measurement
- * behind it.
+ * CLAIM RULE: Primary Logic publishes no customer, performance, integration,
+ * certification, or pricing claims on this page. Calculator figures come from
+ * the reader. Product traces are explicitly illustrative. Deployment promises
+ * describe a review process, not a compliance outcome.
  */
 
-/**
- * TODO(unverified): this address was assumed, not confirmed. Every demo
- * request on the page routes here — point it at a real inbox, or replace
- * EmailCapture's handler with a real endpoint, before this ships.
- */
 export const CONTACT_EMAIL = "hello@primarylogic.com";
 
 export const nav = {
   wordmark: "Primary Logic",
   links: [
-    { label: "The math", href: "#ledger" },
-    { label: "How it works", href: "#sequence" },
-    { label: "Compare costs", href: "#economics" },
+    { label: "Product", href: "#product" },
+    { label: "Workflows", href: "#workflows" },
+    { label: "Deployment", href: "#trust" },
+    { label: "Economics", href: "#economics" },
   ],
-  cta: { label: "Book a demo", href: "#contact" },
+  cta: { label: "Map one workflow", href: "#contact" },
 };
 
 export const hero = {
-  eyebrow: "Patient coverage for specialty practices",
-  /** Split so the emphasis colour lives in content, not hardcoded in JSX. */
-  heading: {
-    lead: "You already paid for the patients who ",
-    emphasis: "never finished intake",
-    tail: ".",
-  },
-  body: "Referrals arrive, forms go out, refills come due — and each one needs a person to notice it the same day. Primary Logic covers those touchpoints across voice, SMS, and email, with one shared memory behind all three.",
-  ledgerLead: "Start with what it's costing you. These are your numbers, not ours.",
+  eyebrow: "AI patient coordination for specialty practices",
+  heading: "Every referral gets followed through.",
+  body: "Primary Logic keeps responsibility for the next patient step across voice, SMS, and email. It continues until that step is complete, the patient declines, or a person needs to take over.",
+  thesis:
+    "Automation sends the next message. Coverage stays responsible for the outcome.",
+  primaryCta: { label: "Map one workflow", href: "#contact" },
+  secondaryCta: { label: "See a coverage trace", href: "#product" },
 };
 
-/** Default values live in lib/economics.ts, alongside the model that uses them. */
+export const operatingPrinciples = [
+  {
+    label: "One history",
+    body: "Each channel reads the same workflow state instead of starting over.",
+  },
+  {
+    label: "Explicit finish line",
+    body: "Completed, declined, and needs-human are states—not guesses.",
+  },
+  {
+    label: "Context at handoff",
+    body: "Staff receive the reason, the thread, and the unresolved next step.",
+  },
+];
+
+export const coverageDefinition = {
+  eyebrow: "The operating model",
+  heading: "Coverage is a closed loop, not a cadence.",
+  intro:
+    "A workflow begins with a signal and ends only at a named stopping condition. Everything between those points stays visible to the practice.",
+  stages: [
+    {
+      index: "01",
+      title: "Start from a real signal",
+      body: "A referral arrives, an intake remains incomplete, or a follow-up becomes due.",
+    },
+    {
+      index: "02",
+      title: "Choose the next permitted action",
+      body: "The workflow uses the approved channel, timing, language, and practice rule for that state.",
+    },
+    {
+      index: "03",
+      title: "Read what changed",
+      body: "A reply, form status, appointment state, opt-out, or question updates the same thread.",
+    },
+    {
+      index: "04",
+      title: "Stop with an accountable state",
+      body: "The step is complete, the patient declines, or staff receive a contextual handoff.",
+    },
+  ],
+};
+
+export const coverageTrace = {
+  eyebrow: "Product in action",
+  heading: "One referral. One owner. A visible finish line.",
+  intro:
+    "This fictional trace shows the control logic, not a measured result. The cadence, channels, data access, and stopping conditions are configured with each practice.",
+  caseLabel: "Illustrative workflow · no patient data",
+  caseId: "Referral PL–2048",
+  objective: "Complete intake or route the unresolved step",
+  status: "Completed",
+  completion: "Intake received · staff queue cleared",
+  rows: [
+    {
+      at: "09:02",
+      kind: "Signal",
+      event: "Referral received; mobile number available",
+      state: "Needs outreach",
+    },
+    {
+      at: "09:03",
+      kind: "Action",
+      event: "Consent request sent by SMS in the configured language",
+      state: "Waiting on patient",
+    },
+    {
+      at: "09:11",
+      kind: "Signal",
+      event: "Patient replies and opens the intake link",
+      state: "Intake started",
+    },
+    {
+      at: "09:18",
+      kind: "Decision",
+      event: "Non-clinical question answered from approved practice guidance",
+      state: "Intake active",
+    },
+    {
+      at: "09:26",
+      kind: "Stop",
+      event: "Required fields received; outreach cadence ends",
+      state: "Complete",
+    },
+  ],
+  stopConditions: ["Next step completed", "Patient declines or opts out", "Human review required"],
+};
+
+export const workflows = {
+  eyebrow: "Where coverage begins",
+  heading: "Start with one high-friction workflow.",
+  intro:
+    "Each deployment has a trigger, a finish line, and a named escalation owner. That makes the pilot narrow enough to govern and concrete enough to measure.",
+  items: [
+    {
+      title: "Referral conversion",
+      trigger: "New referral enters the agreed queue",
+      work: "Confirm intent, collect permitted details, keep the next action moving",
+      finish: "Booked, declined, unreachable by policy, or handed to staff",
+    },
+    {
+      title: "Intake completion",
+      trigger: "Required paperwork remains incomplete",
+      work: "Resume from the missing step across the approved channel mix",
+      finish: "Required fields received or the blocking issue is escalated",
+    },
+    {
+      title: "Recall and non-clinical follow-up",
+      trigger: "A practice-approved follow-up becomes due",
+      work: "Re-engage, capture the response, and route clinical questions untouched",
+      finish: "Next step recorded, patient declines, or licensed staff take over",
+    },
+  ],
+};
+
+export const systemFit = {
+  eyebrow: "System fit",
+  heading: "The workflow sits between a signal and an accountable outcome.",
+  intro:
+    "We map the exact reads, writes, and human boundaries before anything touches a production workflow. Availability depends on the practice stack and approved integration path.",
+  columns: [
+    {
+      label: "Signal in",
+      items: ["Referral received", "Form remains incomplete", "Patient replies", "Follow-up becomes due"],
+    },
+    {
+      label: "Context used",
+      items: ["Workflow state", "Approved practice guidance", "Channel consent", "Language and timing rules"],
+    },
+    {
+      label: "Action out",
+      items: ["Voice, SMS, or email step", "Status update", "Completed record", "Contextual human handoff"],
+    },
+  ],
+};
+
+export const trust = {
+  eyebrow: "Control before scale",
+  heading: "The deployment record is part of the product.",
+  intro:
+    "A workflow should be inspectable before it is automated. We document what can happen, what cannot happen, and who owns the exception.",
+  controls: [
+    {
+      title: "Approved boundaries",
+      body: "Channels, cadence, content sources, quiet hours, opt-outs, and forbidden actions are explicit configuration.",
+    },
+    {
+      title: "Human escalation",
+      body: "Clinical, billing, identity, and other practice-defined exceptions stop automation and preserve the full context for staff.",
+    },
+    {
+      title: "Technical review",
+      body: "Systems touched, data read and written, retention, subprocessors, access, and contracting are resolved before production use.",
+    },
+    {
+      title: "Traceable outcomes",
+      body: "Every workflow closes with a reason so the practice can audit completed steps, declines, timeouts, and handoffs.",
+    },
+  ],
+  note:
+    "We do not use an unsourced badge as a substitute for your security, privacy, legal, and clinical review.",
+};
+
+export const pilot = {
+  eyebrow: "Proof without theater",
+  heading: "Baseline the workflow. Run it narrowly. Compare the outcomes.",
+  intro:
+    "The practice defines the cohort and finish line before launch. The pilot report separates patient outcomes, staff workload, and exceptions so a higher message count cannot masquerade as success.",
+  metrics: [
+    { label: "Time to first permitted action", owner: "Responsiveness" },
+    { label: "Patients who complete the named next step", owner: "Outcome" },
+    { label: "Declines, opt-outs, and unreachable states", owner: "Disposition" },
+    { label: "Cases escalated with sufficient context", owner: "Safety" },
+    { label: "Manual touches required per completed case", owner: "Staff load" },
+  ],
+};
+
+/** Default values live in lib/economics.ts, beside the model that uses them. */
 export const ledger = {
+  eyebrow: "Your economics",
+  heading: "Put a range around the unfinished work.",
+  intro:
+    "The calculator makes no Primary Logic performance claim. Volume, drop-off, patient value, and the recoverable share are your inputs; change them to match one workflow.",
   fields: {
-    inbound: { label: "Inbound patients each month", hint: "Referrals and new-patient calls" },
-    dropRate: { label: "Share that never finish intake", hint: "Your current drop-off" },
+    inbound: { label: "Inbound patients each month", hint: "Referrals or another defined cohort" },
+    dropRate: { label: "Share that misses the next step", hint: "Use your current baseline" },
     revenuePerPatient: {
-      label: "Average first-year revenue per patient",
-      hint: "Net collections, not billed charges",
+      label: "Average first-year net revenue",
+      hint: "Collections attributable to one patient",
     },
     acquisitionCost: {
-      label: "What you spend to acquire one patient",
-      hint: "Marketing and referral development",
+      label: "Acquisition cost per patient",
+      hint: "Optional: marketing and referral development",
     },
     recoveryRate: {
-      label: "If coverage recovers",
-      hint: "Your assumption — Primary Logic makes no claim here",
+      label: "Recoverable share to model",
+      hint: "Your scenario—not a product promise",
     },
   },
   rows: {
-    lost: "Patients lost each month",
-    monthly: "Revenue never realized, monthly",
-    annual: "Revenue never realized, annually",
-    total: "Recoverable each year",
+    lost: "Patients missing the next step, monthly",
+    monthly: "Revenue exposed, monthly",
+    annual: "Revenue exposed, annually",
+    total: "Modelled recoverable value, annually",
   },
   sunkNote:
-    "You spent this acquiring the patients you then lost. Recovering them doesn't refund it — it's what makes the loss expensive twice over.",
+    "This was spent acquiring the unfinished cohort. It is shown separately because recovering a patient does not refund acquisition cost.",
   sunkLabel: "Acquisition already spent, monthly",
-};
-
-export const leak = {
-  eyebrow: "Where it goes",
-  heading: "Three leaks, all of them a coverage problem",
-  intro:
-    "None of this is a demand problem. The patient arrived. What failed was the follow-through on the day it mattered.",
-  items: [
-    {
-      title: "Callbacks arrive too late",
-      body: "A referral goes cold in hours, not days. By the time a coordinator works down the list, the patient has already booked elsewhere.",
-      when: "Hours",
-    },
-    {
-      title: "Intake forms stall out",
-      body: "Paperwork sent and never returned is the quietest failure in the practice. No one is assigned to notice, so no one does.",
-      when: "Days",
-    },
-    {
-      title: "Follow-up has no memory",
-      body: "Voice, text, and portal messages each start from zero. The patient repeats themselves until they stop replying at all.",
-      when: "Weeks",
-    },
-  ],
-};
-
-export const sequence = {
-  eyebrow: "Coverage",
-  heading: "From referral to first appointment",
-  description:
-    "Order matters here — each step depends on the one before it, and every agent works from the same patient record.",
-  steps: [
-    {
-      title: "Referral lands, outreach starts",
-      body: "The agent reaches out within minutes, not on the next open slot in someone's afternoon.",
-      at: "Minutes",
-    },
-    {
-      title: "Identity and coverage confirmed",
-      body: "Demographics, payer, and eligibility captured inside the conversation itself.",
-      at: "Same call",
-    },
-    {
-      title: "Forms walked through live",
-      body: "Consent and intake sent by text, completed while the patient is still on the line.",
-      at: "Same call",
-    },
-    {
-      title: "Clean handoff to your staff",
-      body: "A finished record and a booked appointment, instead of a stack of callbacks.",
-      at: "Same day",
-    },
-  ],
-};
-
-export const capabilities = {
-  eyebrow: "What it covers",
-  heading: "The work a coordinator does by hand",
-  items: [
-    {
-      title: "Guided form completion",
-      body: "The agent walks the patient through intake line by line, and resumes the session if they step away mid-form.",
-    },
-    {
-      title: "Automatic re-engagement",
-      body: "No-shows, unreturned forms, and lapsed refills each trigger their own follow-up cadence without anyone queueing it.",
-    },
-    {
-      title: "Cross-channel orchestration",
-      body: "Voice, SMS, and email draw on the same record and hand off to each other mid-thread.",
-    },
-    {
-      title: "Escalation to licensed staff",
-      body: "Clinical questions and billing disputes route to a person immediately, with the full thread attached.",
-    },
-  ],
-};
-
-export const orchestration = {
-  eyebrow: "One patient, one thread",
-  heading: "What coverage looks like on a single referral",
-  patient: {
-    name: "Elena Ruiz",
-    detail: "47 · Tucson, AZ",
-    tags: ["Medicare Advantage", "Cardiology referral", "Prefers Spanish"],
-  },
-  timeline: [
-    { channel: "Email", action: "Introduction and consent link", at: "t + 0" },
-    { channel: "SMS", action: "Nudge with a one-tap form", at: "t + 2 min" },
-    { channel: "Voice", action: "Live intake on reply", at: "t + 9 min" },
-    { channel: "SMS", action: "Appointment confirmation", at: "t + 24 hr" },
-    { channel: "Email", action: "Pre-visit checklist", at: "Weekly until visit" },
-  ],
-  note: "Illustrative sequence. Cadence is configured per workflow.",
+  advancedLabel: "Add acquisition cost",
 };
 
 export const comparison = {
-  eyebrow: "Cost to land one patient",
-  heading: "Buy a patient, staff up, or cover the panel you have",
+  eyebrow: "Operating cost",
+  heading: "Compare three ways to create one more completed case.",
   intro:
-    "Same goal — one more patient on the schedule — three ways to pay for it. The starting prices aren't the interesting part. What matters is which direction each one moves when volume goes up.",
+    "The same model can price additional acquisition, added coordinator capacity, or a coverage platform. Expand the assumptions only if this comparison helps your decision.",
   options: [
     {
       key: "paid" as const,
-      label: "Paid acquisition",
-      body: "You're bidding for net-new attention every month, against everyone else bidding for the same people.",
-      reach: "Net-new only",
-      scale: "Rises with spend",
-      risk: "CPA inflation",
+      label: "Buy more demand",
+      body: "Acquisition adds another person to the top of the funnel without repairing the unfinished workflow beneath it.",
+      reach: "Net-new patients",
+      scale: "Tracks media spend",
+      risk: "More demand can add more leakage",
     },
     {
       key: "team" as const,
-      label: "Coordinator team",
-      body: "Every additional block of patients needs another person hired, trained, and retained.",
-      reach: "Whoever gets called back",
-      scale: "Flat — headcount tracks volume",
-      risk: "Turnover and training",
+      label: "Add coordinators",
+      body: "People bring judgment and flexibility; capacity grows in hiring, training, supervision, and coverage increments.",
+      reach: "Assigned worklists",
+      scale: "Tracks headcount",
+      risk: "Queue and turnover variance",
     },
     {
       key: "coverage" as const,
-      label: "Coverage software",
-      body: "A largely fixed cost spread across a panel you've already paid to acquire.",
-      reach: "Every patient, every channel",
-      scale: "Falls as volume grows",
+      label: "Cover the workflow",
+      body: "A platform cost is spread across the defined cohort while staff stay responsible for exceptions and judgment.",
+      reach: "Configured cohort",
+      scale: "Modelled fixed cost",
       risk: "Integration and adoption",
     },
   ],
   fields: {
     coordinatorCost: {
-      label: "Fully loaded cost per coordinator",
+      label: "Monthly loaded cost per coordinator",
       hint: "Salary, benefits, tooling, supervision",
     },
     coordinatorCapacity: {
       label: "Patients one coordinator can work",
-      hint: "Per month, across all their touchpoints",
+      hint: "Per month, across the selected workflow",
     },
     platformCost: {
-      label: "What would you pay for coverage?",
-      hint: "Your number — Primary Logic is quoted per practice, so model it against what's at stake above",
+      label: "Monthly coverage cost to model",
+      hint: "Your scenario; Primary Logic pricing is not stated here",
     },
   },
   rows: {
     monthly: "Monthly cost at this volume",
-    perPatient: "Cost per patient added",
+    perPatient: "Cost per modelled completion",
     reach: "Who it reaches",
     scale: "At scale",
     risk: "What can go wrong",
   },
   caption:
-    "Paid acquisition is priced at your own cost per net-new patient. The other two are computed from the figures you entered — a team is sized by how many coordinators the lost cohort actually needs, which is what makes its cost per patient hold flat while a fixed platform cost keeps falling.",
-  undefinedNote: "Set a recovery rate above zero to price these.",
+    "All three values are derived from your inputs. A coordinator model is sized against the unfinished cohort; platform cost is the scenario you entered.",
+  undefinedNote: "Set a recoverable share above zero to price these.",
+  assumptionsLabel: "Edit comparison assumptions",
+};
+
+export const faq = {
+  eyebrow: "Questions worth resolving",
+  heading: "What a responsible first conversation should cover.",
+  items: [
+    {
+      question: "Does Primary Logic replace the coordination team?",
+      answer:
+        "No. The product owns repeatable follow-through inside approved boundaries. Staff keep judgment, exceptions, relationship-sensitive work, and every responsibility the practice chooses not to automate.",
+    },
+    {
+      question: "What counts as a successful workflow?",
+      answer:
+        "A named patient step reaches one of its agreed stopping conditions: completed, declined or opted out, unreachable under policy, or handed to a person with the unresolved context attached.",
+    },
+    {
+      question: "Which systems does it integrate with?",
+      answer:
+        "This page does not publish an integration list we cannot substantiate. Workflow mapping identifies the required systems and the approved read/write path; feasibility is confirmed before a pilot is proposed.",
+    },
+    {
+      question: "How is patient data handled?",
+      answer:
+        "Data scope, access, retention, subprocessors, security controls, and contracting belong in the technical review. Production use should not begin until the practice is satisfied with that record.",
+    },
+    {
+      question: "How do we start without redesigning the operation?",
+      answer:
+        "Choose one queue with a measurable baseline, define its finish line and escalation owner, map the permitted actions, and pilot only that cohort before expanding scope.",
+    },
+  ],
 };
 
 export const finalCta = {
-  heading: "Start with the patients you've already paid for",
-  body: "Bring Primary Logic in on one workflow — referrals, intake, or refills — and watch the same panel convert differently.",
+  eyebrow: "One-workflow pilot",
+  heading: "Bring the queue. Leave with a coverage map.",
+  body: "In the first working session, we define the trigger, finish line, permitted actions, system touchpoints, escalation owner, and baseline measures for one workflow. If the operating path is not credible, we stop there.",
+  formNote: "No patient data. A work email and practice name are enough to start.",
 };
 
 export const footer = {
   entity: "Primary Logic",
+  statement: "Patient follow-through with an accountable finish line.",
   links: [
-    { label: "Privacy Policy", href: "/privacy-policy" },
-    { label: "Terms of Service", href: "/terms-of-service" },
-    { label: "Contact Us", href: "/contact" },
+    { label: "Product", href: "#product" },
+    { label: "Deployment", href: "#trust" },
+    { label: "Contact", href: "#contact" },
   ],
 };

@@ -1,6 +1,6 @@
 import StubPage from "@/components/StubPage";
 
-export const metadata = { title: "Privacy Policy — Primary Logic" };
+export const metadata = { title: "Privacy Policy", robots: { index: false, follow: false } };
 
 export default function PrivacyPolicy() {
   return (

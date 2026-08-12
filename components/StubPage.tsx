@@ -13,10 +13,10 @@ export default function StubPage({
   return (
     <>
       <SiteNav />
-      <main className="flex-1 px-4 py-20 sm:px-6 sm:py-28">
+      <main className="flex-1 px-4 py-12 sm:px-6 sm:py-16">
         <div className="mx-auto max-w-2xl">
-          <h1 className="display text-[36px] text-ink sm:text-[46px]">{title}</h1>
-          <div className="mt-6 text-[17px] leading-[1.75] text-muted">{children}</div>
+          <h1 className="display text-[32px] text-ink sm:text-[40px]">{title}</h1>
+          <div className="mt-4 text-[16px] leading-[1.65] text-muted">{children}</div>
         </div>
       </main>
       <SiteFooter />

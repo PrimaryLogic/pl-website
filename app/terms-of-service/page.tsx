@@ -1,6 +1,6 @@
 import StubPage from "@/components/StubPage";
 
-export const metadata = { title: "Terms of Service — Primary Logic" };
+export const metadata = { title: "Terms of Service", robots: { index: false, follow: false } };
 
 export default function TermsOfService() {
   return (

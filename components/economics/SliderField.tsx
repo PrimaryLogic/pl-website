@@ -64,7 +64,7 @@ export default function SliderField({
         value={Math.min(Math.max(value, min), max)}
         onChange={(e) => onChange(Number(e.target.value))}
         aria-label={`${label} slider`}
-        className="pl-range mt-3 w-full"
+        className="pl-range mt-2 w-full"
       />
 
       {hint && <p className="mt-1.5 text-[12px] leading-snug text-mute">{hint}</p>}

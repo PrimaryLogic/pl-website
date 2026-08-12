@@ -1,5 +1,5 @@
-import HealthcarePage from "@/components/HealthcarePage";
+import { permanentRedirect } from "next/navigation";
 
 export default function Healthcare() {
-  return <HealthcarePage />;
+  permanentRedirect("/");
 }

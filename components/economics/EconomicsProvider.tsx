@@ -1,7 +1,8 @@
 "use client";
 
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from "react";
 import { computeModel, DEFAULTS, type Inputs, type Model } from "@/lib/economics";
+import { track } from "@/lib/analytics";
 
 type EconomicsContext = {
   inputs: Inputs;
@@ -18,14 +19,23 @@ const Ctx = createContext<EconomicsContext | null>(null);
  */
 export function EconomicsProvider({ children }: { children: ReactNode }) {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const trackedInputs = useRef(new Set<keyof Inputs>());
+
+  const set = useCallback((key: keyof Inputs, value: number) => {
+    setInputs((previous) => ({ ...previous, [key]: value }));
+    if (!trackedInputs.current.has(key)) {
+      trackedInputs.current.add(key);
+      track("calculator_changed", { field: key });
+    }
+  }, []);
 
   const value = useMemo<EconomicsContext>(
     () => ({
       inputs,
-      set: (key, v) => setInputs((prev) => ({ ...prev, [key]: v })),
+      set,
       model: computeModel(inputs),
     }),
-    [inputs],
+    [inputs, set],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

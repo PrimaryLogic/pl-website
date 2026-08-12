@@ -45,7 +45,7 @@ function Row({
       <span
         className={`figure-num shrink-0 ${
           emphasis === "total"
-            ? "text-[22px] font-semibold text-accent-deep sm:text-[26px]"
+            ? "text-[20px] font-semibold text-accent-deep sm:text-[24px]"
             : emphasis === "sub"
               ? "text-[17px] font-medium text-ink"
               : "text-[15px] text-ink"
@@ -92,15 +92,6 @@ export default function Ledger() {
             prefix="$"
           />
           <SliderField
-            {...fields.acquisitionCost}
-            value={inputs.acquisitionCost}
-            onChange={(v) => set("acquisitionCost", v)}
-            min={0}
-            max={1500}
-            step={10}
-            prefix="$"
-          />
-          <SliderField
             {...fields.recoveryRate}
             value={inputs.recoveryRate}
             onChange={(v) => set("recoveryRate", v)}
@@ -108,6 +99,21 @@ export default function Ledger() {
             max={80}
             suffix="%"
           />
+          <details className="group">
+            <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between py-3 text-[13px] font-medium text-body marker:hidden">
+              {ledger.advancedLabel}
+              <span aria-hidden="true" className="figure-num text-[17px] text-accent transition-transform group-open:rotate-45">+</span>
+            </summary>
+            <SliderField
+              {...fields.acquisitionCost}
+              value={inputs.acquisitionCost}
+              onChange={(v) => set("acquisitionCost", v)}
+              min={0}
+              max={1500}
+              step={10}
+              prefix="$"
+            />
+          </details>
         </div>
       </div>
 
@@ -132,7 +138,9 @@ export default function Ledger() {
             value={`× ${count(inputs.recoveryRate)}%`}
             band
           />
-          <Row label={rows.total} value={money(model.recoverableAnnual)} emphasis="total" />
+          <div aria-live="polite" aria-atomic="true">
+            <Row label={rows.total} value={<output>{money(model.recoverableAnnual)}</output>} emphasis="total" />
+          </div>
         </div>
 
         {/* Sunk acquisition sits outside the summing column on purpose —

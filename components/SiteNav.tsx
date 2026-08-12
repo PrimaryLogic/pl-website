@@ -6,7 +6,7 @@ import { nav } from "@/lib/content";
 export default function SiteNav() {
   return (
     <header className="sticky top-0 z-50 border-b border-rule bg-paper/92 px-5 backdrop-blur-md sm:px-8">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 py-3.5">
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 py-3">
         <Link
           href="/"
           className="display text-[17px] whitespace-nowrap text-ink sm:text-[18px]"
@@ -29,7 +29,8 @@ export default function SiteNav() {
 
           <a
             href={nav.cta.href}
-            className="rounded-sm bg-ink px-4 py-2 text-[14px] font-medium whitespace-nowrap text-paper transition-colors hover:bg-accent-deep"
+            data-analytics="nav-cta"
+            className="inline-flex min-h-11 items-center rounded-sm bg-ink px-4 py-2 text-[14px] font-medium whitespace-nowrap text-paper transition-colors hover:bg-accent-deep"
           >
             {nav.cta.label}
           </a>

@@ -17,9 +17,9 @@ export function Section({
   return (
     <section
       id={id}
-      className={`border-t border-rule px-5 py-20 sm:px-8 sm:py-28 ${className}`}
+      className={`scroll-mt-20 border-t border-rule px-5 py-12 sm:px-8 sm:py-16 ${className}`}
     >
-      <div className="mx-auto max-w-6xl">{children}</div>
+      <div className="mx-auto max-w-5xl">{children}</div>
     </section>
   );
 }
@@ -36,7 +36,7 @@ export function Heading({
   className?: string;
 }) {
   return (
-    <h2 className={`display mt-5 text-[30px] text-ink sm:text-[40px] ${className}`}>
+    <h2 className={`display mt-4 text-[28px] text-ink sm:text-[32px] ${className}`}>
       {children}
     </h2>
   );
