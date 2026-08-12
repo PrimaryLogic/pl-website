@@ -1,15 +1,17 @@
 import Link from "next/link";
 import { nav } from "@/lib/content";
 
+// Horizontal padding sits outside max-w-6xl, matching Section — otherwise the
+// header content is inset further than the page content beneath it.
 export default function SiteNav() {
   return (
-    <header className="sticky top-0 z-50 border-b border-rule bg-paper/92 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3.5 sm:px-8">
+    <header className="sticky top-0 z-50 border-b border-rule bg-paper/92 px-5 backdrop-blur-md sm:px-8">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 py-3.5">
         <Link
           href="/"
           className="display text-[17px] whitespace-nowrap text-ink sm:text-[18px]"
         >
-          Primary<span className="text-accent">·</span>Logic
+          {nav.wordmark}
         </Link>
 
         <div className="flex items-center gap-6 sm:gap-8">
