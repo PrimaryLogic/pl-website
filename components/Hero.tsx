@@ -1,4 +1,4 @@
-import Ledger from "./Ledger";
+import Ledger from "./economics/Ledger";
 import { hero } from "@/lib/content";
 
 /**

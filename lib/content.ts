@@ -19,6 +19,7 @@ export const nav = {
   links: [
     { label: "The math", href: "#ledger" },
     { label: "How it works", href: "#sequence" },
+    { label: "Compare costs", href: "#economics" },
   ],
   cta: { label: "Book a demo", href: "#contact" },
 };
@@ -35,15 +36,8 @@ export const hero = {
   ledgerLead: "Start with what it's costing you. These are your numbers, not ours.",
 };
 
-/** Defaults so the ledger reads as a finding on first paint, not a blank form. */
+/** Default values live in lib/economics.ts, alongside the model that uses them. */
 export const ledger = {
-  defaults: {
-    inbound: 400,
-    dropRate: 35,
-    revenuePerPatient: 1200,
-    acquisitionCost: 250,
-    recoveryRate: 30,
-  },
   fields: {
     inbound: { label: "Inbound patients each month", hint: "Referrals and new-patient calls" },
     dropRate: { label: "Share that never finish intake", hint: "Your current drop-off" },
@@ -165,33 +159,61 @@ export const orchestration = {
   note: "Illustrative sequence. Cadence is configured per workflow.",
 };
 
-export const curves = {
-  eyebrow: "Why coverage, and not more spend",
-  heading: "The three ways to fill a schedule scale differently",
+export const comparison = {
+  eyebrow: "Cost to land one patient",
+  heading: "Buy a patient, staff up, or cover the panel you have",
   intro:
-    "Every practice can buy more patients, hire more callers, or cover the panel it already has. The difference isn't the starting price — it's what happens to cost per patient as volume goes up.",
+    "Same goal — one more patient on the schedule — three ways to pay for it. The starting prices aren't the interesting part. What matters is which direction each one moves when volume goes up.",
   options: [
     {
+      key: "paid" as const,
       label: "Paid acquisition",
-      shape: "rising" as const,
-      body: "You're buying net-new attention every month, and the marginal patient costs more than the last one.",
-      trend: "Cost per patient rises",
+      body: "You're bidding for net-new attention every month, against everyone else bidding for the same people.",
+      reach: "Net-new only",
+      scale: "Rises with spend",
+      risk: "CPA inflation",
     },
     {
-      label: "More coordinators",
-      shape: "flat" as const,
-      body: "Cost tracks headcount in a straight line. The hundredth patient costs what the first one did.",
-      trend: "Cost per patient holds",
+      key: "team" as const,
+      label: "Coordinator team",
+      body: "Every additional block of patients needs another person hired, trained, and retained.",
+      reach: "Whoever gets called back",
+      scale: "Flat — headcount tracks volume",
+      risk: "Turnover and training",
     },
     {
+      key: "coverage" as const,
       label: "Coverage software",
-      shape: "falling" as const,
-      body: "Largely fixed cost against rising volume, applied to a panel you've already paid to acquire.",
-      trend: "Cost per patient falls",
+      body: "A largely fixed cost spread across a panel you've already paid to acquire.",
+      reach: "Every patient, every channel",
+      scale: "Falls as volume grows",
+      risk: "Integration and adoption",
     },
   ],
+  fields: {
+    coordinatorCost: {
+      label: "Fully loaded cost per coordinator",
+      hint: "Salary, benefits, tooling, supervision",
+    },
+    coordinatorCapacity: {
+      label: "Patients one coordinator can work",
+      hint: "Per month, across all their touchpoints",
+    },
+    platformCost: {
+      label: "What would you pay for coverage?",
+      hint: "Your number — Primary Logic is quoted per practice, so model it against what's at stake above",
+    },
+  },
+  rows: {
+    monthly: "Monthly cost at this volume",
+    perPatient: "Cost per patient added",
+    reach: "Who it reaches",
+    scale: "At scale",
+    risk: "What can go wrong",
+  },
   caption:
-    "Curve shapes only — the vertical axis is deliberately unlabeled. Primary Logic's pricing is quoted per practice, not published here.",
+    "Paid acquisition is priced at your own cost per net-new patient. The other two are computed from the figures you entered — a team is sized by how many coordinators the lost cohort actually needs, which is what makes its cost per patient hold flat while a fixed platform cost keeps falling.",
+  undefinedNote: "Set a recovery rate above zero to price these.",
 };
 
 export const finalCta = {
