@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-/** Display: expanded grotesk. Signage register — sturdy, institutional. */
+/** Display: expanded grotesk. Signage register: sturdy, institutional. */
 const display = Archivo({
   variable: "--font-display",
   subsets: ["latin"],
@@ -27,11 +27,11 @@ const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://primarylogi
 export const metadata: Metadata = {
   metadataBase: siteUrl,
   title: {
-    default: "Primary Logic | AI Patient Coordination for Specialty Practices",
+    default: "Primary Logic | Agents That Finish the Job",
     template: "%s | Primary Logic",
   },
   description:
-    "Primary Logic keeps responsibility for the next patient step until it is complete, declined, or handed to a person with context.",
+    "Primary Logic runs autonomous agents that own multi-week administrative jobs end to end — voice, SMS, email, and portals — priced per completed outcome, verified in your own system.",
   alternates: { canonical: "/" },
   applicationName: "Primary Logic",
   authors: [{ name: "Primary Logic" }],
@@ -39,15 +39,15 @@ export const metadata: Metadata = {
     type: "website",
     url: "/",
     siteName: "Primary Logic",
-    title: "Every referral gets followed through.",
+    title: "Agents that carry a job to the finish",
     description:
-      "AI patient coordination that stays responsible for the next step across voice, SMS, and email.",
+      "A fixed fee per completed outcome, verified in your system. Failed attempts cost you nothing.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Every referral gets followed through.",
+    title: "Agents that carry a job to the finish",
     description:
-      "AI patient coordination that stays responsible for the next step across voice, SMS, and email.",
+      "A fixed fee per completed outcome, verified in your system. Failed attempts cost you nothing.",
   },
 };
 

@@ -1,18 +1,18 @@
 "use client";
 
 import type { ReactNode } from "react";
-import SliderField from "./SliderField";
+import { economics } from "@/lib/content";
 import { useEconomics } from "./EconomicsProvider";
-import { ledger } from "@/lib/content";
+import SliderField from "./SliderField";
 
-export const money = (n: number) =>
-  n.toLocaleString("en-US", {
+const money = (value: number) =>
+  value.toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
     maximumFractionDigits: 0,
   });
 
-export const count = (n: number) => Math.round(n).toLocaleString("en-US");
+const count = (value: number) => Math.round(value).toLocaleString("en-US");
 
 function Row({
   label,
@@ -27,7 +27,7 @@ function Row({
 }) {
   return (
     <div
-      className={`flex items-baseline justify-between gap-6 px-4 py-2.5 sm:px-5 ${
+      className={`flex items-baseline justify-between gap-6 px-4 py-3 sm:px-5 ${
         band ? "bg-band" : ""
       } ${emphasis === "sub" ? "border-t border-rule-mid" : ""} ${
         emphasis === "total"
@@ -45,7 +45,7 @@ function Row({
       <span
         className={`figure-num shrink-0 ${
           emphasis === "total"
-            ? "text-[20px] font-semibold text-accent-deep sm:text-[24px]"
+            ? "text-[20px] font-semibold text-accent-deep sm:text-[25px]"
             : emphasis === "sub"
               ? "text-[17px] font-medium text-ink"
               : "text-[15px] text-ink"
@@ -59,102 +59,129 @@ function Row({
 
 export default function Ledger() {
   const { inputs, set, model } = useEconomics();
-  const { fields, rows } = ledger;
+  const { fields, rows } = economics;
+
+  function setReferralCount(value: number) {
+    set("monthlyReferrals", value);
+    if (inputs.currentBooked > value) set("currentBooked", value);
+    if (inputs.modeledBooked > value) set("modeledBooked", value);
+  }
 
   return (
-    <div className="grid gap-x-12 gap-y-8 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
+    <div className="grid gap-x-10 gap-y-8 lg:grid-cols-[minmax(0,330px)_minmax(0,1fr)]">
       <div>
-        <p className="label text-accent">Your numbers</p>
+        <p className="label text-accent">Your referral cohort</p>
         <div className="mt-2 divide-y divide-rule">
           <SliderField
-            {...fields.inbound}
-            value={inputs.inbound}
-            onChange={(v) => set("inbound", v)}
+            {...fields.monthlyReferrals}
+            value={inputs.monthlyReferrals}
+            onChange={setReferralCount}
             min={50}
-            max={3000}
+            max={5000}
             step={25}
           />
           <SliderField
-            {...fields.dropRate}
-            value={inputs.dropRate}
-            onChange={(v) => set("dropRate", v)}
+            {...fields.currentBooked}
+            value={inputs.currentBooked}
+            onChange={(value) => {
+              const next = Math.min(value, inputs.monthlyReferrals);
+              set("currentBooked", next);
+              if (inputs.modeledBooked < next) set("modeledBooked", next);
+            }}
             min={0}
-            max={75}
-            suffix="%"
+            max={Math.max(inputs.monthlyReferrals, 1)}
+            step={1}
           />
           <SliderField
-            {...fields.revenuePerPatient}
-            value={inputs.revenuePerPatient}
-            onChange={(v) => set("revenuePerPatient", v)}
-            min={100}
-            max={8000}
-            step={50}
+            {...fields.modeledBooked}
+            value={inputs.modeledBooked}
+            onChange={(value) => set("modeledBooked", Math.min(value, inputs.monthlyReferrals))}
+            min={Math.min(inputs.currentBooked, inputs.monthlyReferrals)}
+            max={Math.max(inputs.monthlyReferrals, 1)}
+            step={1}
+          />
+          <SliderField
+            {...fields.monthlyCoordinationCost}
+            value={inputs.monthlyCoordinationCost}
+            onChange={(value) => set("monthlyCoordinationCost", value)}
+            min={0}
+            max={250000}
+            step={1000}
             prefix="$"
           />
           <SliderField
-            {...fields.recoveryRate}
-            value={inputs.recoveryRate}
-            onChange={(v) => set("recoveryRate", v)}
+            {...fields.contributionPerBooking}
+            value={inputs.contributionPerBooking}
+            onChange={(value) => set("contributionPerBooking", value)}
             min={0}
-            max={80}
-            suffix="%"
+            max={2000}
+            step={25}
+            prefix="$"
           />
-          <details className="group">
-            <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between py-3 text-[13px] font-medium text-body marker:hidden">
-              {ledger.advancedLabel}
-              <span aria-hidden="true" className="figure-num text-[17px] text-accent transition-transform group-open:rotate-45">+</span>
-            </summary>
-            <SliderField
-              {...fields.acquisitionCost}
-              value={inputs.acquisitionCost}
-              onChange={(v) => set("acquisitionCost", v)}
-              min={0}
-              max={1500}
-              step={10}
-              prefix="$"
-            />
-          </details>
+          <SliderField
+            {...fields.outcomeFee}
+            value={inputs.outcomeFee}
+            onChange={(value) => set("outcomeFee", value)}
+            min={0}
+            max={500}
+            step={5}
+            prefix="$"
+          />
         </div>
       </div>
 
       <div>
-        <p className="label text-accent">What it adds up to</p>
-
-        <div className="mt-2 overflow-hidden rounded-sm border border-rule-mid bg-card">
-          <Row label={fields.inbound.label} value={count(inputs.inbound)} band />
-          <Row label={fields.dropRate.label} value={`${count(inputs.dropRate)}%`} />
-          <Row label={rows.lost} value={count(model.lostPerMonth)} emphasis="sub" />
-
+        <p className="label text-accent">What the inputs imply</p>
+        <div className="mt-2 overflow-hidden rounded-md border border-rule-mid bg-card">
+          <div className="border-b-2 border-ink px-4 py-4 sm:px-5">
+            <p className="label text-mute">Current operation</p>
+          </div>
+          <Row label={fields.monthlyReferrals.label} value={count(inputs.monthlyReferrals)} band />
+          <Row label={fields.currentBooked.label} value={count(model.currentBooked)} />
+          <Row label={rows.currentRate} value={`${model.currentBookingRate.toFixed(1)}%`} />
+          <Row label={rows.unbooked} value={count(model.unbookedReferrals)} band />
           <Row
-            label={fields.revenuePerPatient.label}
-            value={money(inputs.revenuePerPatient)}
-            band
+            label={rows.costPerBooking}
+            value={model.currentCostPerBooking === null ? "N/A" : money(model.currentCostPerBooking)}
+            emphasis="sub"
           />
-          <Row label={rows.monthly} value={money(model.monthlyLoss)} />
-          <Row label={rows.annual} value={money(model.annualLoss)} emphasis="sub" />
 
+          <div className="border-y-2 border-ink bg-ink px-4 py-3 sm:px-5">
+            <p className="label text-paper">Modeled conversion scenario</p>
+          </div>
+          <Row label={rows.modeledRate} value={`${model.modeledBookingRate.toFixed(1)}%`} band />
+          <Row label={rows.additionalBooked} value={`+${count(model.additionalBooked)}`} />
           <Row
-            label={`${fields.recoveryRate.label} — your assumption`}
-            value={`× ${count(inputs.recoveryRate)}%`}
-            band
+            label={rows.monthlyOpportunity}
+            value={money(model.monthlyContributionOpportunity)}
+            emphasis="sub"
           />
+          <Row label={rows.annualOpportunity} value={money(model.annualContributionOpportunity)} />
+
+          <div className="border-y-2 border-ink bg-ink px-4 py-3 sm:px-5">
+            <p className="label text-paper">The deal, annualized</p>
+          </div>
+          <Row label={rows.annualOperatingValue} value={money(model.annualOperatingValue)} band />
+          <Row label={rows.annualGrossSwitchingValue} value={money(model.annualGrossSwitchingValue)} emphasis="sub" />
+          <Row label={rows.annualOutcomeFee} value={`− ${money(model.annualOutcomeFee)}`} />
           <div aria-live="polite" aria-atomic="true">
-            <Row label={rows.total} value={<output>{money(model.recoverableAnnual)}</output>} emphasis="total" />
+            <Row
+              label={rows.annualCustomerRetained}
+              value={<output>{money(model.annualCustomerRetained)}</output>}
+              emphasis="total"
+            />
           </div>
         </div>
 
-        {/* Sunk acquisition sits outside the summing column on purpose —
-            recovering a patient realizes their revenue, it does not refund
-            what was spent acquiring them. */}
-        <aside className="mt-4 flex flex-col gap-2 border-l-2 border-loss/40 pl-4 sm:flex-row sm:items-baseline sm:gap-5">
-          <span className="figure-num shrink-0 text-[17px] font-medium text-loss">
-            {money(model.sunkMonthly)}
-          </span>
-          <span className="text-[13px] leading-relaxed text-body">
-            <span className="font-medium text-ink">{ledger.sunkLabel}.</span>{" "}
-            {ledger.sunkNote}
-          </span>
-        </aside>
+        <p className="mt-3 text-[12px] font-medium text-accent-deep">
+          {model.annualGrossSwitchingValue > 0
+            ? `You keep ${model.customerRetainedPct.toFixed(0)}% of the modeled gross value${model.grossValueToFee ? ` — ${model.grossValueToFee.toFixed(1)}× the fee` : ""}.`
+            : "Set the inputs above to model your cohort."}
+        </p>
+
+        <p className="mt-4 border-l-2 border-rule-mid pl-4 text-[12px] leading-[1.65] text-mute">
+          {economics.note}
+        </p>
       </div>
     </div>
   );

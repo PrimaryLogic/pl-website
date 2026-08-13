@@ -1,7 +1,7 @@
-import { hero } from "@/lib/content";
-import EmailCapture from "./EmailCapture";
+import { hero } from "@/lib/content/home";
+import EmailCapture from "../EmailCapture";
 
-export default function Hero() {
+export default function HomeHero() {
   return (
     <section className="px-5 pb-10 pt-10 sm:px-10 sm:pb-9 sm:pt-9 lg:pb-14 lg:pt-14">
       <div className="mx-auto max-w-[1180px]">
@@ -13,11 +13,11 @@ export default function Hero() {
         <p className="mt-6 max-w-[560px] text-[16px] leading-[1.62] text-body">
           {hero.body}
         </p>
-        <p className="mt-4 text-[15px] font-semibold text-accent-deep">
+        <p className="mt-4 max-w-[560px] text-[15px] font-semibold text-accent-deep">
           {hero.outcome}
         </p>
         <div className="mt-6">
-          <EmailCapture id="hero-contact" variant="compact" emailPlaceholder="name@practice.com" lane="healthcare" />
+          <EmailCapture id="hero-contact" variant="compact" />
         </div>
       </div>
     </section>

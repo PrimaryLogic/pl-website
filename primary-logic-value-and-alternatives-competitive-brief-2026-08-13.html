@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Primary Logic — Value and Alternatives Brief</title>
+  <style>
+    :root {
+      --paper: #f8f7f3;
+      --card: #fff;
+      --ink: #151713;
+      --body: #4d544e;
+      --muted: #727973;
+      --rule: #dfe2dc;
+      --green: #0a7044;
+      --green-deep: #075636;
+      --green-soft: #e8f2ec;
+      --amber: #9a5b00;
+      --amber-soft: #fbf1df;
+      --red: #a83930;
+      --red-soft: #faeae7;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: var(--green-deep); }
+    .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+    header { padding: 72px 0 44px; border-bottom: 1px solid var(--rule); }
+    .eyebrow, .kicker {
+      margin: 0;
+      color: var(--green);
+      font: 600 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    h1 { max-width: 900px; margin: 16px 0 18px; font-size: clamp(42px, 6vw, 74px); line-height: .98; letter-spacing: -.055em; }
+    h2 { margin: 0 0 22px; font-size: clamp(30px, 4vw, 46px); line-height: 1.04; letter-spacing: -.04em; }
+    h3 { margin: 0 0 10px; font-size: 19px; line-height: 1.25; letter-spacing: -.015em; }
+    p { margin: 0; color: var(--body); }
+    .lede { max-width: 820px; font-size: 19px; }
+    nav { position: sticky; top: 0; z-index: 2; border-bottom: 1px solid var(--rule); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(12px); }
+    nav .shell { display: flex; gap: 28px; overflow-x: auto; }
+    nav a { padding: 16px 0; color: var(--body); font-size: 13px; font-weight: 650; text-decoration: none; white-space: nowrap; }
+    section { padding: 64px 0; border-bottom: 1px solid var(--rule); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { padding: 26px; border: 1px solid var(--rule); border-radius: 14px; background: var(--card); }
+    .card p + p { margin-top: 14px; }
+    .critical { border-left: 4px solid var(--red); background: var(--red-soft); }
+    .thesis { border-left: 4px solid var(--green); background: var(--green-soft); }
+    .warn { border-left: 4px solid var(--amber); background: var(--amber-soft); }
+    .tag { display: inline-block; margin-bottom: 14px; padding: 5px 9px; border-radius: 99px; background: #f0f1ee; color: var(--muted); font: 600 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; }
+    .tag.red { background: #fff; color: var(--red); }
+    .tag.green { background: #fff; color: var(--green-deep); }
+    .metric { display: block; margin: 10px 0 4px; color: var(--green-deep); font-size: 36px; font-weight: 750; letter-spacing: -.04em; line-height: 1; }
+    table { width: 100%; border-collapse: collapse; background: var(--card); font-size: 14px; }
+    th, td { padding: 15px 16px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+    th { background: #f0f1ee; color: var(--muted); font: 650 10px/1.25 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; }
+    tr:last-child td { border-bottom: 0; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 14px; }
+    .callout { margin-top: 24px; padding: 22px 24px; border-top: 2px solid var(--ink); background: var(--card); }
+    .equation { margin-top: 18px; font: 650 16px/1.8 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--ink); }
+    .equation strong { color: var(--green-deep); }
+    ul, ol { margin: 14px 0 0; padding-left: 20px; color: var(--body); }
+    li + li { margin-top: 8px; }
+    .priority { display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding: 18px 0; border-top: 1px solid var(--rule); }
+    .priority:first-of-type { margin-top: 20px; border-top: 2px solid var(--ink); }
+    .number { color: var(--green-deep); font: 700 20px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .source { padding: 18px 0; border-top: 1px solid var(--rule); }
+    .source:first-of-type { border-top: 2px solid var(--ink); }
+    .source a { font-weight: 700; }
+    .source p { margin-top: 6px; font-size: 13px; }
+    .small { font-size: 12px; color: var(--muted); }
+    footer { padding: 36px 0 56px; }
+    @media (max-width: 820px) {
+      header { padding-top: 48px; }
+      section { padding: 48px 0; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      th, td { min-width: 190px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="shell">
+      <p class="eyebrow">Competitive value architecture · 13 August 2026</p>
+      <h1>Primary Logic is missing proof, not another savings claim.</h1>
+      <p class="lede">Sierra, Takeoff, and Assort make different choices, but all avoid asking a buyer to believe a synthetic ROI model before establishing the billable unit, the incumbent cost, and credible operating evidence.</p>
+    </div>
+  </header>
+
+  <nav aria-label="Brief sections">
+    <div class="shell">
+      <a href="#overview">Overview</a>
+      <a href="#comparables">Comparables</a>
+      <a href="#guidance">Guidance</a>
+      <a href="#sources">Sources</a>
+    </div>
+  </nav>
+
+  <main>
+    <section id="overview">
+      <div class="shell">
+        <p class="kicker">Overview</p>
+        <h2>The critical misses</h2>
+        <div class="grid-2">
+          <article class="card critical">
+            <span class="tag red">Remove now</span>
+            <h3>“Only one transfers ownership” is not defensible.</h3>
+            <p>Takeoff explicitly sells jobs completed end to end across channels. Assort says it orchestrates the full patient journey. Sierra sells completed outcomes rather than software usage. Primary Logic may own a more specific referral contract, but ownership in the abstract is no longer distinctive.</p>
+          </article>
+          <article class="card critical">
+            <span class="tag red">Commercial issue</span>
+            <h3>The current example gives Primary Logic nearly all the value.</h3>
+            <p>The illustrative case creates $3.15M of gross annual value, then charges $2.40M in outcome fees plus $250K implementation. The customer keeps $500K: a 1.19× benefit-cost ratio and 18.9% ROI before execution risk.</p>
+          </article>
+          <article class="card thesis">
+            <span class="tag green">What the market teaches</span>
+            <h3>Sell the unit before the total invoice.</h3>
+            <p>Sierra defines resolved work. Takeoff defines revenue-aligned work. Assort defines operating outcomes through customer evidence. Primary Logic currently jumps from a $100 unit to a $500K monthly bill without first proving the unit's conservative value.</p>
+          </article>
+          <article class="card thesis">
+            <span class="tag green">What buyers trust</span>
+            <h3>Proof stacks, not one grand ROI number.</h3>
+            <p>Assort layers revenue, labor capacity, hours saved, hold time, and satisfaction. Sierra layers conversion, service quality, and hiring avoided. The evidence forms a causal chain; the financial result is the conclusion, not the opening assumption.</p>
+          </article>
+        </div>
+
+        <div class="callout">
+          <p class="kicker">The current illustrative case, restated honestly</p>
+          <div class="equation">
+            $1.95M incremental contribution<br>
+            + $1.20M operating cost removed or avoided<br>
+            − $2.40M outcome fees<br>
+            − $0.25M implementation<br>
+            = <strong>$0.50M customer net value</strong>
+          </div>
+          <p style="margin-top:14px">Primary Logic plus implementation captures 84% of the modeled gross value. That is too little customer margin for uncertain lift, change management, integration risk, provider-capacity constraints, or a failure to remove actual cost.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="comparables">
+      <div class="shell">
+        <p class="kicker">Comparables</p>
+        <h2>Three different value systems</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Value anchor</th>
+                <th>Alternative framed</th>
+                <th>How value is proved</th>
+                <th>Lesson for Primary Logic</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Sierra</strong></td>
+                <td>A completed, agreed outcome; unresolved or escalated cases are generally not charged.</td>
+                <td>Seat-based software, usage-priced infrastructure, and legacy CX vendors whose economics conflict with automation.</td>
+                <td>Customer evidence connects autonomous resolution to conversion, CSAT, 24/7 coverage, and hiring avoided.</td>
+                <td>Make invoice criteria predictable; prove the replacement budget and business result separately. Permit blended pricing where no clean outcome exists.</td>
+              </tr>
+              <tr>
+                <td><strong>Takeoff</strong></td>
+                <td>A unit of revenue-aligned work completed end to end; no payment when the contracted outcome fails.</td>
+                <td>People, systems, and other agents; on the healthcare page, paid acquisition and BPO.</td>
+                <td>A causal story: demand was already acquired, leakage loses revenue, persistent orchestration recaptures it at a lower cost per conversion.</td>
+                <td>Outcome pricing works when the unit sits close to revenue and spend is small relative to value. Their own stated ambition is customers spending millions because agents make tens of millions.</td>
+              </tr>
+              <tr>
+                <td><strong>Assort</strong></td>
+                <td>Patient-access transformation; public pricing is not disclosed.</td>
+                <td>Overloaded staff, hiring/backfills, traditional IVR, generic voice AI, missed calls, limited hours, and manual outreach.</td>
+                <td>Named customer stories quantify revenue captured, labor cost avoided, capacity, hours saved, hold time, abandonment, appointment volume, and satisfaction.</td>
+                <td>They do not need a public ROI calculator because specific customer proof makes the value credible. Capacity and growth without headcount are first-class economic outcomes.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid-3" style="margin-top:22px">
+          <article class="card">
+            <p class="kicker">Sierra</p>
+            <span class="metric">Risk reversal</span>
+            <p>The pricing story answers “what if the agent fails?” before it answers “how much do I save?”</p>
+          </article>
+          <article class="card">
+            <p class="kicker">Takeoff</p>
+            <span class="metric">Revenue proximity</span>
+            <p>The billable unit is work directly connected to funding, approval, activation, or scheduling—not generic activity.</p>
+          </article>
+          <article class="card">
+            <p class="kicker">Assort</p>
+            <span class="metric">Evidence density</span>
+            <p>The public case is built from observed customer outcomes, not assumptions supplied by the vendor.</p>
+          </article>
+        </div>
+
+        <article class="card warn" style="margin-top:22px">
+          <span class="tag">Important caveat</span>
+          <h3>Takeoff's healthcare calculator is useful structure, weak evidence.</h3>
+          <p>Its page claims Takeoff is a fixed cost that gets cheaper at scale, while Takeoff's June 2026 company post says agents are priced on outcomes and spend grows with completed work. The page also displays “$0 upfront” where an actual Takeoff price should be. Borrow the denominator and causal comparison—not the unsupported numbers or inconsistency.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="guidance">
+      <div class="shell">
+        <p class="kicker">Guidance</p>
+        <h2>Rebuild the value story in this order</h2>
+
+        <div class="priority">
+          <div class="number">01</div>
+          <div>
+            <h3>Replace the ownership claim with a precise contract.</h3>
+            <p>Say what becomes Primary Logic's responsibility: every permitted administrative next step in an assigned referral lane until an EHR-verified kept first appointment or another agreed terminal state. Then show the residual customer work, escalation boundary, write-back, and invoice event.</p>
+          </div>
+        </div>
+        <div class="priority">
+          <div class="number">02</div>
+          <div>
+            <h3>Lead with three measurable value pools.</h3>
+            <p><strong>Capacity:</strong> hiring and backfills avoided, referrals per FTE, hours returned, after-hours coverage. <strong>Growth:</strong> incremental kept appointments that available providers can actually serve. <strong>Reliability:</strong> time to first action, percent reaching a known terminal state, queue age, duplicate work, and leakage.</p>
+          </div>
+        </div>
+        <div class="priority">
+          <div class="number">03</div>
+          <div>
+            <h3>Show value per billed outcome before annual spend.</h3>
+            <p>For the current example, each billed kept appointment carries $81.25 of incremental contribution allocated across all 24,000 kept outcomes plus $50 of operating cost removed: $131.25 gross value per billed outcome. A $100 fee leaves $31.25 before implementation and only $20.83 after it. The thin margin is visible immediately.</p>
+          </div>
+        </div>
+        <div class="priority">
+          <div class="number">04</div>
+          <div>
+            <h3>Set a customer-value floor, not merely a list price.</h3>
+            <p>Do not deploy at $100 because that is the nominal price. Reprice or disqualify unless conservative, finance-approved value clears total fees and implementation by a meaningful risk margin. A 1.19× modeled benefit-cost ratio is not enough for a new operating model.</p>
+          </div>
+        </div>
+        <div class="priority">
+          <div class="number">05</div>
+          <div>
+            <h3>Use observed evidence before a public savings promise.</h3>
+            <p>Until Primary Logic has customer proof, present a buyer-controlled model as a qualification tool, not a headline claim. Once deployments exist, replace assumptions with case-study evidence: baseline, intervention, outcome, time window, and what cost was actually removed, avoided, or redeployed.</p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <p class="kicker">Recommended website sequence</p>
+          <ol>
+            <li><strong>The operating contract:</strong> what Primary Logic owns, what it does not, and when the workflow closes.</li>
+            <li><strong>The real alternatives:</strong> staff/BPO, point automation, patient-access agents, and Primary Logic—compared by scope, residual work, evidence, and pay trigger.</li>
+            <li><strong>The unit economics:</strong> conservative value per verified kept outcome versus fee per outcome.</li>
+            <li><strong>The proof stack:</strong> capacity, conversion, reliability, and financial results from actual deployments.</li>
+            <li><strong>The buyer model:</strong> editable assumptions, with no vendor forecast presented as fact.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="sources">
+      <div class="shell">
+        <p class="kicker">Sources</p>
+        <h2>Public evidence and limitations</h2>
+
+        <div class="source">
+          <a href="https://sierra.ai/uk/blog/outcome-based-pricing-for-ai-agents">Sierra — Outcome-based pricing for AI agents</a>
+          <p>Supports Sierra's pricing-model comparison, no-charge posture for unresolved/escalated cases in most situations, agreed criteria, blended-pricing option, and critique of seat-based incentives.</p>
+        </div>
+        <div class="source">
+          <a href="https://sierra.ai/customers/sun-and-ski-sports">Sierra — Sun & Ski customer story</a>
+          <p>Supports the combined proof pattern: 3× conversion among engaged customers, higher satisfaction, after-hours coverage, and seasonal hiring avoided.</p>
+        </div>
+        <div class="source">
+          <a href="https://www.hiretakeoff.com/blog/15m">Takeoff — “I think we're onto something”</a>
+          <p>Supports end-to-end job ownership, outcome pricing, revenue-aligned work, spend scaling with customer results, and no payment for failed contracted outcomes such as unfunded loans or unapproved authorizations.</p>
+        </div>
+        <div class="source">
+          <a href="https://hiretakeoff.com/healthcare">Takeoff — Healthcare</a>
+          <p>Supports the leakage-to-recapture causal story and the public paid-ads/BPO comparison. The page's price display and fixed-cost language are internally inconsistent with Takeoff's company post, so its numbers are not treated as verified economics.</p>
+        </div>
+        <div class="source">
+          <a href="https://www.assorthealth.com/customers/senta-customer-story">Assort — SENTA customer story</a>
+          <p>Supports $1.3M additional appointment revenue, $400K+ labor cost avoided, 250+ hours saved monthly, 64% referral-outreach conversion, and a 97% hold-time reduction—all self-reported by the vendor/customer story.</p>
+        </div>
+        <div class="source">
+          <a href="https://www.assorthealth.com/customers/annapolis-internal-medicine-customer-story">Assort — Annapolis customer story</a>
+          <p>Supports the capacity framing: 220% labor-capacity increase, 75% hold-time reduction, and proactive-outreach results.</p>
+        </div>
+        <div class="source">
+          <a href="https://www.prnewswire.com/news-releases/assort-health-launches-first-voice-ai-agents-for-dermatology-enabling-over-5-increase-in-appointment-volume-and-200-labor-capacity-302743908.html">Assort — Dermatology launch release</a>
+          <p>Supports Assort's direct dermatology positioning, end-to-end patient-access scope, 5% appointment-volume growth at one named practice, and capacity/manual-coordination claims. This is company-supplied PR, not independent validation.</p>
+        </div>
+        <div class="source">
+          <a href="https://www.assorthealth.com/customers/boston-bone-joint-patient-access">Assort — BBJI customer story</a>
+          <p>Supports attrition absorbed without backfill, after-hours revenue, reduced abandonment, and expansion into new care lines.</p>
+        </div>
+
+        <div class="card warn" style="margin-top:24px">
+          <h3>Confidence and gaps</h3>
+          <p>The positioning and case-study claims above come from official vendor-controlled sources and are current as of 13 August 2026. They are useful for understanding value architecture, not for asserting independently audited performance. Sierra and Assort do not disclose public unit prices in the reviewed sources; Takeoff's healthcare-page economics conflict with its later company pricing description.</p>
+          <p style="margin-top:12px">Local Primary Logic sources used: the current business plan and messaging reconciliation. No CRM, meeting transcript, internal messaging, or sales-intelligence source was needed for this category-level comparison.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell small">Prepared for Primary Logic. Internal strategic analysis; verify every comparative public claim before publishing.</div>
+  </footer>
+</body>
+</html>

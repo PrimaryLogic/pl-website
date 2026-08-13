@@ -2,9 +2,12 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 type RequestBody = {
   email?: unknown;
+  organization?: unknown;
+  /** Legacy field name; still accepted from older clients. */
   practice?: unknown;
   website?: unknown;
   source?: unknown;
+  lane?: unknown;
 };
 
 export async function POST(request: Request) {
@@ -26,14 +29,20 @@ export async function POST(request: Request) {
   }
 
   const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
-  const practice = typeof body.practice === "string" ? body.practice.trim() : "";
+  const organization =
+    typeof body.organization === "string"
+      ? body.organization.trim()
+      : typeof body.practice === "string"
+        ? body.practice.trim()
+        : "";
   const source = typeof body.source === "string" ? body.source.slice(0, 80) : "homepage";
+  const lane = typeof body.lane === "string" ? body.lane.slice(0, 40) : "";
 
   if (!EMAIL_PATTERN.test(email) || email.length > 254) {
     return Response.json({ ok: false, message: "Enter a valid work email." }, { status: 400 });
   }
-  if (practice.length < 2 || practice.length > 120) {
-    return Response.json({ ok: false, message: "Enter your practice or organization." }, { status: 400 });
+  if ((organization.length > 0 && organization.length < 2) || organization.length > 120) {
+    return Response.json({ ok: false, message: "Enter your organization." }, { status: 400 });
   }
 
   const endpoint = process.env.DEMO_REQUEST_WEBHOOK_URL;
@@ -62,8 +71,11 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         type: "demo_request",
         email,
-        practice,
+        organization,
+        // Legacy key kept so existing webhook consumers keep working.
+        practice: organization,
         source,
+        ...(lane ? { lane } : {}),
         submittedAt: new Date().toISOString(),
       }),
       cache: "no-store",

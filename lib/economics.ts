@@ -1,109 +1,88 @@
 /**
- * The economics model behind the ledger and the three-way comparison.
- *
- * Every figure here is derived from inputs the reader supplies. Nothing in
- * this file encodes a Primary Logic performance claim or a price — the
- * platform cost is the reader's own answer to "what would you pay for this?"
- *
- * The one structural assertion the model makes is that a coordinator team
- * scales in steps of headcount while a platform fee does not. That is
- * arithmetic, not marketing: it falls out of ceil(patients / capacity).
+ * Transparent referral economics. Every result is derived from reader inputs;
+ * defaults are an explicitly illustrative qualification scenario.
  */
 
 export type Inputs = {
-  /** Referrals and new-patient calls arriving each month. */
-  inbound: number;
-  /** Percentage of those that never complete intake today. */
-  dropRate: number;
-  /** Net collections attributable to one patient in their first year. */
-  revenuePerPatient: number;
-  /** Marketing spend to acquire one net-new patient. */
-  acquisitionCost: number;
-  /** The reader's assumption about how many of the lost group come back. */
-  recoveryRate: number;
-  /** Fully loaded monthly cost of one patient coordinator. */
-  coordinatorCost: number;
-  /** Patients one coordinator can work in a month. */
-  coordinatorCapacity: number;
-  /** The reader's modelled monthly cost for coverage software. */
-  platformCost: number;
+  monthlyReferrals: number;
+  currentBooked: number;
+  modeledBooked: number;
+  monthlyCoordinationCost: number;
+  contributionPerBooking: number;
+  outcomeFee: number;
 };
 
 export const DEFAULTS: Inputs = {
-  // Sized to a multi-site specialty group. Below roughly 150 lost patients a
-  // month a single coordinator absorbs the whole workload, so the linear-vs-
-  // fixed distinction has nothing to show; these defaults sit clear of that.
-  inbound: 1200,
-  dropRate: 35,
-  revenuePerPatient: 1200,
-  acquisitionCost: 250,
-  recoveryRate: 30,
-  coordinatorCost: 5500,
-  coordinatorCapacity: 150,
-  platformCost: 4500,
+  // Illustrative 30,000-referral annual cohort. The interface asks readers to
+  // replace every figure with finance-approved values from one defined lane.
+  monthlyReferrals: 2500,
+  currentBooked: 875,
+  modeledBooked: 1000,
+  monthlyCoordinationCost: 25000,
+  contributionPerBooking: 650,
+  outcomeFee: 100,
 };
-
-/** Below this many recovered patients a month, per-patient costs are noise. */
-const MIN_DENOMINATOR = 1;
 
 export type Model = {
-  lostPerMonth: number;
-  recoveredPerMonth: number;
-  monthlyLoss: number;
-  annualLoss: number;
-  recoverableAnnual: number;
-  sunkMonthly: number;
-  coordinatorsNeeded: number;
-  teamMonthlyCost: number;
-  /** Cost to land one additional patient, three ways. null when undefined. */
-  perPatient: {
-    paid: number | null;
-    team: number | null;
-    coverage: number | null;
-  };
+  currentBooked: number;
+  modeledBooked: number;
+  currentBookingRate: number;
+  modeledBookingRate: number;
+  unbookedReferrals: number;
+  additionalBooked: number;
+  currentCostPerBooking: number | null;
+  monthlyContributionOpportunity: number;
+  annualContributionOpportunity: number;
+  annualOperatingValue: number;
+  annualGrossSwitchingValue: number;
+  annualOutcomeFee: number;
+  annualCustomerRetained: number;
+  grossValueToFee: number | null;
+  customerRetainedPct: number;
+  primaryLogicPct: number;
 };
 
-export function computeModel(i: Inputs): Model {
-  const lostPerMonth = i.inbound * (i.dropRate / 100);
-  const recoveredPerMonth = lostPerMonth * (i.recoveryRate / 100);
-
-  const monthlyLoss = lostPerMonth * i.revenuePerPatient;
-  const annualLoss = monthlyLoss * 12;
-  const recoverableAnnual = annualLoss * (i.recoveryRate / 100);
-  const sunkMonthly = lostPerMonth * i.acquisitionCost;
-
-  // A team has to work the whole lost cohort, not just the share that
-  // converts — that is what makes its cost track volume in steps.
-  const coordinatorsNeeded =
-    i.coordinatorCapacity > 0 ? Math.ceil(lostPerMonth / i.coordinatorCapacity) : 0;
-  const teamMonthlyCost = coordinatorsNeeded * i.coordinatorCost;
-
-  const divisible = recoveredPerMonth >= MIN_DENOMINATOR;
-  // With no stated capacity there is no team to price, which is not the same
-  // as a team that costs nothing.
-  const teamPriceable = divisible && i.coordinatorCapacity > 0;
+export function computeModel(inputs: Inputs): Model {
+  const monthlyReferrals = Math.max(0, inputs.monthlyReferrals);
+  const currentBooked = Math.min(Math.max(0, inputs.currentBooked), monthlyReferrals);
+  const modeledBooked = Math.min(Math.max(0, inputs.modeledBooked), monthlyReferrals);
+  const additionalBooked = Math.max(0, modeledBooked - currentBooked);
+  const monthlyCoordinationCost = Math.max(0, inputs.monthlyCoordinationCost);
+  const contributionPerBooking = Math.max(0, inputs.contributionPerBooking);
+  const outcomeFee = Math.max(0, inputs.outcomeFee);
+  const monthlyContributionOpportunity = additionalBooked * contributionPerBooking;
+  const annualContributionOpportunity = monthlyContributionOpportunity * 12;
+  const annualOperatingValue = monthlyCoordinationCost * 12;
+  const annualGrossSwitchingValue = annualContributionOpportunity + annualOperatingValue;
+  // Second-pass billing: the fee applies only to recovered kept visits — the
+  // conversions beyond the customer's own first pass — never to the baseline.
+  const annualOutcomeFee = additionalBooked * outcomeFee * 12;
+  const annualCustomerRetained = annualGrossSwitchingValue - annualOutcomeFee;
+  const grossValueToFee = annualOutcomeFee > 0 ? annualGrossSwitchingValue / annualOutcomeFee : null;
+  const customerRetainedPct =
+    annualGrossSwitchingValue > 0
+      ? Math.max(0, Math.min(100, (annualCustomerRetained / annualGrossSwitchingValue) * 100))
+      : 0;
 
   return {
-    lostPerMonth,
-    recoveredPerMonth,
-    monthlyLoss,
-    annualLoss,
-    recoverableAnnual,
-    sunkMonthly,
-    coordinatorsNeeded,
-    teamMonthlyCost,
-    perPatient: {
-      // Paid acquisition buys a net-new patient rather than recovering one,
-      // so its per-patient cost is the reader's rate directly.
-      paid: i.acquisitionCost > 0 ? i.acquisitionCost : null,
-      team: teamPriceable ? teamMonthlyCost / recoveredPerMonth : null,
-      coverage: divisible ? i.platformCost / recoveredPerMonth : null,
-    },
+    currentBooked,
+    modeledBooked,
+    currentBookingRate:
+      monthlyReferrals > 0 ? (currentBooked / monthlyReferrals) * 100 : 0,
+    modeledBookingRate:
+      monthlyReferrals > 0 ? (modeledBooked / monthlyReferrals) * 100 : 0,
+    unbookedReferrals: Math.max(0, monthlyReferrals - currentBooked),
+    additionalBooked,
+    currentCostPerBooking:
+      currentBooked > 0 ? monthlyCoordinationCost / currentBooked : null,
+    monthlyContributionOpportunity,
+    annualContributionOpportunity,
+    annualOperatingValue,
+    annualGrossSwitchingValue,
+    annualOutcomeFee,
+    annualCustomerRetained,
+    grossValueToFee,
+    customerRetainedPct,
+    primaryLogicPct: 100 - customerRetainedPct,
   };
-}
-
-/** Seeds the platform-cost slider from what is actually at stake. */
-export function suggestedPlatformCost(recoverableAnnual: number): number {
-  const monthly = (recoverableAnnual * 0.03) / 12;
-  return Math.max(500, Math.round(monthly / 500) * 500);
 }

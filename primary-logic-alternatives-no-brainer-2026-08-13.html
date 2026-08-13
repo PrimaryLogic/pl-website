@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Primary Logic — The Buyer's Real Alternatives</title>
+  <style>
+    :root {
+      --paper: #f8f7f3;
+      --card: #fff;
+      --ink: #151713;
+      --body: #4d544e;
+      --muted: #727973;
+      --rule: #dfe2dc;
+      --green: #0a7044;
+      --green-deep: #075636;
+      --green-soft: #e8f2ec;
+      --amber: #9a5b00;
+      --amber-soft: #fbf1df;
+      --red: #a83930;
+      --red-soft: #faeae7;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: var(--green-deep); }
+    .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+    header { padding: 72px 0 44px; border-bottom: 1px solid var(--rule); }
+    .eyebrow, .kicker {
+      margin: 0;
+      color: var(--green);
+      font: 600 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    h1 { max-width: 940px; margin: 16px 0 18px; font-size: clamp(40px, 5.6vw, 68px); line-height: 1; letter-spacing: -.05em; text-wrap: balance; }
+    h2 { margin: 0 0 22px; font-size: clamp(30px, 4vw, 46px); line-height: 1.04; letter-spacing: -.04em; text-wrap: balance; }
+    h3 { margin: 0 0 10px; font-size: 19px; line-height: 1.25; letter-spacing: -.015em; }
+    p { margin: 0; color: var(--body); }
+    .lede { max-width: 840px; font-size: 19px; }
+    nav { position: sticky; top: 0; z-index: 2; border-bottom: 1px solid var(--rule); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(12px); }
+    nav .shell { display: flex; gap: 28px; overflow-x: auto; }
+    nav a { padding: 16px 0; color: var(--body); font-size: 13px; font-weight: 650; text-decoration: none; white-space: nowrap; }
+    section { padding: 64px 0; border-bottom: 1px solid var(--rule); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { padding: 26px; border: 1px solid var(--rule); border-radius: 14px; background: var(--card); }
+    .card p + p { margin-top: 14px; }
+    .critical { border-left: 4px solid var(--red); background: var(--red-soft); }
+    .thesis { border-left: 4px solid var(--green); background: var(--green-soft); }
+    .warn { border-left: 4px solid var(--amber); background: var(--amber-soft); }
+    .tag { display: inline-block; margin-bottom: 14px; padding: 5px 9px; border-radius: 99px; background: #f0f1ee; color: var(--muted); font: 600 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; }
+    .tag.red { background: #fff; color: var(--red); }
+    .tag.green { background: #fff; color: var(--green-deep); }
+    .tag.amber { background: #fff; color: var(--amber); }
+    .metric { display: block; margin: 10px 0 4px; color: var(--green-deep); font-size: 34px; font-weight: 750; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+    .metric.bad { color: var(--red); }
+    table { width: 100%; border-collapse: collapse; background: var(--card); font-size: 14px; }
+    th, td { padding: 15px 16px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+    th { background: #f0f1ee; color: var(--muted); font: 650 10px/1.25 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; }
+    td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    tr.hl td { background: var(--green-soft); }
+    tr.lowlight td { background: var(--red-soft); }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 14px; }
+    .callout { margin-top: 24px; padding: 22px 24px; border-top: 2px solid var(--ink); background: var(--card); }
+    .equation { margin-top: 18px; font: 650 15px/1.9 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--ink); }
+    .equation strong { color: var(--green-deep); }
+    .equation .bad { color: var(--red); }
+    ul, ol { margin: 14px 0 0; padding-left: 20px; color: var(--body); }
+    li + li { margin-top: 8px; }
+    .priority { display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding: 18px 0; border-top: 1px solid var(--rule); }
+    .priority:first-of-type { margin-top: 20px; border-top: 2px solid var(--ink); }
+    .number { color: var(--green-deep); font: 700 20px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .source { padding: 18px 0; border-top: 1px solid var(--rule); }
+    .source:first-of-type { border-top: 2px solid var(--ink); }
+    .source a { font-weight: 700; }
+    .source p { margin-top: 6px; font-size: 13px; }
+    .small { font-size: 12px; color: var(--muted); }
+    footer { padding: 36px 0 56px; }
+    @media (max-width: 820px) {
+      header { padding-top: 48px; }
+      section { padding: 48px 0; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      th, td { min-width: 190px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="shell">
+      <p class="eyebrow">Alternatives &amp; commercial structure · 13 August 2026 · companion to the value brief</p>
+      <h1>The buyer already has a $100K answer. Sell what it can't finish.</h1>
+      <p class="lede">Assort launched a full referral-lifecycle product <em>yesterday</em> at software prices, into your exact beachhead specialties. Takeoff no longer exists — Sierra bought it and made referral-to-appointment the flagship Horizon demo. The plan's economics were written against status-quo leakage; the market the COO shops in has moved. The no-brainer still exists, but only with a different assignment boundary and a different pricing architecture.</p>
+    </div>
+  </header>
+
+  <nav aria-label="Brief sections">
+    <div class="shell">
+      <a href="#missing">What's missing</a>
+      <a href="#market">The market today</a>
+      <a href="#tree">The decision tree</a>
+      <a href="#test">The no-brainer test</a>
+      <a href="#structures">Structures that pass</a>
+      <a href="#moat">Where the moat is</a>
+      <a href="#edits">Plan edits</a>
+      <a href="#sources">Sources</a>
+    </div>
+  </nav>
+
+  <main>
+    <section id="missing">
+      <div class="shell">
+        <p class="kicker">The answer to “what am I missing”</p>
+        <h2>Three things, in order of severity</h2>
+        <div class="grid-3">
+          <article class="card critical">
+            <span class="tag red">Miss 1 · The counterfactual changed yesterday</span>
+            <h3>The buyer's alternative is no longer “do nothing.” It's a subscription.</h3>
+            <p>Assort Health launched “Referrals” on <strong>August 12, 2026</strong> — capture, parsing, eligibility screen, provider match, omnichannel outreach, live EHR booking, referring-provider status faxes — claiming 79% referral-to-appointment conversion. $1.2B valuation, $222M raised, 40+ named specialty groups heavy in ortho, ENT, derm, and GI. Pricing is a platform subscription (third-party estimates ~$1.5K–$10K+/month), not per-outcome.</p>
+            <p>Your plan's economics compare Primary Logic to leakage. The COO will compare you to Assort — and for the illustrative 60K-referral lane, that's roughly <strong>$2.4M vs. ~$100K/yr</strong> for most of the same conversion motion.</p>
+          </article>
+          <article class="card critical">
+            <span class="tag red">Miss 2 · The gating number is never collected</span>
+            <h3>You price per kept outcome. The buyer prices everything per <em>incremental</em> kept outcome.</h3>
+            <p>Every alternative — staff, BPO, software, Assort — gets converted in the CFO's spreadsheet to “cost per additional kept appointment.” Billing $100 on <em>all</em> kept outcomes makes your effective price <strong>$800 per incremental patient</strong> against $650 of contribution (the plan's own numbers). Growth alone is net-negative, which the plan concedes by requiring $700K of removed operating cost.</p>
+            <p>The qualification question the plan never asks: <strong>what does the customer currently pay, fully loaded, per kept appointment?</strong> For a centralized group it's roughly $30–60. A $100 fee on baseline volume is a 2–3× unit-price increase on work they already get done — no rhetoric survives that.</p>
+          </article>
+          <article class="card thesis">
+            <span class="tag green">Miss 3 · The wedge is inverted</span>
+            <h3>The no-brainer lives in the tail your plan disqualifies.</h3>
+            <p>The plan says “disqualify if the customer routes only its hardest inventory.” Invert that at the wedge stage. On referrals that are already aged, unresponsive, or stuck in payer work, the counterfactual conversion is near zero — <strong>every kept appointment is incremental by construction</strong>, no baseline dispute, no holdout, no exclusive-lane fight, and no head-on collision with Assort. That's where $100–150 per kept is not just defensible but obviously cheap.</p>
+            <p>Adverse selection isn't the risk to price around. Handled deliberately, it's the product.</p>
+          </article>
+        </div>
+
+        <div class="callout">
+          <p class="kicker">The one-sentence version</p>
+          <p style="margin-top:12px; font-size:17px;">You're missing that <strong>“end-to-end referral conversion” stopped being whitespace this week</strong> — it's now contested by a $1.2B specialty-native incumbent at software prices and by Sierra at the enterprise end — and that your pricing bills baseline conversion at growth prices, which fails the buyer's spreadsheet against every alternative. The defensible, no-brainer offer is narrower and better: <strong>own the failed tail, the payer-execution layer, and the kept guarantee — the three things nobody else will invoice against.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="market">
+      <div class="shell">
+        <p class="kicker">The market as of today</p>
+        <h2>What actually happened to your three comparables</h2>
+        <div class="grid-3">
+          <article class="card">
+            <p class="kicker">Takeoff → gone</p>
+            <span class="metric">$55</span>
+            <p><strong>Public price per converted patient</strong> on its healthcare page (vs. “BPO $100,” “Paid Ads $250”) before Sierra acquired it on July 23, 2026. Three people, ~$10M ARR in 7 months, five verticals, no EHR integrations, no named healthcare customers. Its price anchor survives it: your $100 hypothesis is ~2× the number the outcome-priced pioneer published.</p>
+          </article>
+          <article class="card">
+            <p class="kicker">Sierra Horizon</p>
+            <span class="metric">$150K+</span>
+            <p><strong>Reported contract minimums</strong>, plus $50–200K setup (third-party figures). Horizon's flagship example is literally “from referral to scheduled appointment… coordinates payers, providers, and patients.” But it's a platform a health system builds on — sales-led, 4–10 week+ deployments, customers like Sutter, Cigna, R1. It takes the enterprise end of the market, not your mid-market specialty group — unless you leave the deal size no reason to say no.</p>
+          </article>
+          <article class="card">
+            <p class="kicker">Assort Health</p>
+            <span class="metric">79%</span>
+            <p><strong>Claimed referral-to-appointment conversion</strong> (vs. ~50% industry baseline). Launched Referrals Aug 12, 2026. Where it stops: identifies prior-auth <em>requirements</em> but doesn't execute payer work (submission, status calls, denials); no full benefits-verification calls; no-show/reschedule recovery is a separate module; 10–16% of referrals still fall out to staff task queues at its best-automated customers; metrics stop at <em>booked</em>, and nothing is warranted.</p>
+          </article>
+        </div>
+
+        <article class="card warn" style="margin-top:22px">
+          <span class="tag amber">Benchmark reality check</span>
+          <h3>Two of the plan's assumptions need re-grounding.</h3>
+          <p><strong>Leakage is real and large</strong> — published ranges: 40–70% leakage, 45–46% of faxed referrals never scheduled, ~$820–970K/yr lost per physician (vendor-circulated figures citing AHRQ/MGMA/Duke; verify primaries before publishing). The problem you're attacking is genuine. <strong>But contribution per visit may not be $650</strong> — a commonly cited blended figure is ~$250 per completed new specialty consult, with $400+ including downstream. The fee has to be specialty-indexed to referrals whose downstream contribution actually clears it: procedure- and imaging-rich lanes, not commodity consults.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="tree">
+      <div class="shell">
+        <p class="kicker">The decision tree</p>
+        <h2>Every option on the COO's desk, in the CFO's units</h2>
+        <p class="lede" style="margin-bottom:22px">Illustrative 60,000-referral lane, 35% baseline kept rate (21,000 kept), using the plan's own +5-point lift to 40% where an alternative plausibly achieves it. Annual costs are directional estimates; the point is the rank order, which is robust.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Alternative</th>
+                <th>Annual cost</th>
+                <th>What it actually does</th>
+                <th>≈ Cost per <em>incremental</em> kept</th>
+                <th>Where it fails</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Do nothing</strong> (current staff)</td>
+                <td class="num">~$850K (sunk)</td>
+                <td>~15 patient-access FTE at $35–55K loaded + telephony/mgmt produce 21,000 kept ≈ <strong>$40 per kept</strong>. 45% annual turnover.</td>
+                <td class="num">— (forgoes ~$1.9M)</td>
+                <td>The leakage itself; turnover; no after-hours; nobody owns the tail.</td>
+              </tr>
+              <tr>
+                <td><strong>Hire more schedulers</strong></td>
+                <td class="num">+$135–270K</td>
+                <td>3–6 more FTE working the queue harder; linear, well understood.</td>
+                <td class="num">~$135–270</td>
+                <td>Diminishing returns on the unreachable tail; rehiring treadmill; caps out fast.</td>
+              </tr>
+              <tr>
+                <td><strong>BPO call center</strong></td>
+                <td class="num">~$200–700K</td>
+                <td>Offshore $8–15/hr, onshore $25–45/hr. Elastic call capacity.</td>
+                <td class="num">~$150–300</td>
+                <td>Handles call volume, not outcomes; no EHR ownership, no payer work, no persistence across weeks.</td>
+              </tr>
+              <tr>
+                <td><strong>Referral-mgmt software / EHR workqueues</strong> (ReferralMD, Epic)</td>
+                <td class="num">~$30–80K</td>
+                <td>Tracks and surfaces the queue; closed-loop reporting. ~$100/user/mo.</td>
+                <td class="num">~$50–100 (needs staff to work it)</td>
+                <td>“Organizes the work.” Humans still make the 6–8 attempts; 38% still never close.</td>
+              </tr>
+              <tr>
+                <td><strong>Engagement / self-scheduling</strong> (Luma, Artera, Phreesia)</td>
+                <td class="num">~$50–150K</td>
+                <td>Reminders, text-first outreach, self-booking. Converts the willing.</td>
+                <td class="num">~$60–120</td>
+                <td>Patient-initiated nudges; no multi-party persistence for the unresponsive tail, no payer layer.</td>
+              </tr>
+              <tr class="hl">
+                <td><strong>Assort Referrals</strong> (launched 8/12/26)</td>
+                <td class="num">~$60–150K (est.)</td>
+                <td>Capture → parse → screen → match → omnichannel outreach → live EHR booking → status faxes. Claims 79% conversion to booked.</td>
+                <td class="num"><strong>~$30–75</strong></td>
+                <td>Stops at booked; no payer execution (auth submission, benefits calls, denials); recovery in a separate SKU; 10–16% exception fallout; nothing warranted.</td>
+              </tr>
+              <tr>
+                <td><strong>Sierra Horizon</strong> (ex-Takeoff)</td>
+                <td class="num">~$150–400K+ + setup</td>
+                <td>Long-horizon agent platform; referral-to-appointment is the flagship demo; outcome-priced by negotiation.</td>
+                <td class="num">Contract-dependent</td>
+                <td>Enterprise minimums and a build-it-yourself platform motion; a specialty group buys an implementation project, not a service.</td>
+              </tr>
+              <tr class="lowlight">
+                <td><strong>Primary Logic, plan v2.1</strong> ($100 × all kept)</td>
+                <td class="num">$2.40M</td>
+                <td>Full-lane exclusive takeover, terminal-state accountability, billed on all 24,000 kept.</td>
+                <td class="num"><strong>$800</strong></td>
+                <td>Bills 21,000 baseline outcomes at growth prices; requires the buyer to also gut $700K of opex to break even; demands exclusivity and parallel-outreach shutdown — the largest change-management ask on the list at the highest price.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout">
+          <p class="kicker">Read the last column, not the price column</p>
+          <p style="margin-top:12px">Primary Logic v2.1 is simultaneously the <strong>most expensive option per incremental patient</strong> and the <strong>most disruptive to adopt</strong>. “We own everything and you pay on outcomes” doesn't rescue it, because Sierra normalized outcome pricing and Assort commoditized the conversion motion. The structure below fixes the rank order without abandoning outcome pricing.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="test">
+      <div class="shell">
+        <p class="kicker">The standard to hit</p>
+        <h2>The no-brainer test — six conditions</h2>
+        <p class="lede" style="margin-bottom:8px">An offer is a no-brainer when the buyer cannot construct a spreadsheet in which they lose. That requires all six:</p>
+        <div class="priority">
+          <div class="number">T1</div>
+          <div><h3>Zero or trivial fixed cost.</h3><p>No subscription, no seats, no minimum that bites before value. <em>Plan v2.1: passes.</em></p></div>
+        </div>
+        <div class="priority">
+          <div class="number">T2</div>
+          <div><h3>Pay only on a verified success event.</h3><p>EHR-verified kept appointment, auditable. <em>Plan v2.1: passes — this is your genuine differentiation; keep it.</em></p></div>
+        </div>
+        <div class="priority">
+          <div class="number">T3</div>
+          <div><h3>Fee per incremental kept &lt; contribution, with margin.</h3><p><em>Plan v2.1: fails — $800 effective vs. $650 contribution.</em></p></div>
+        </div>
+        <div class="priority">
+          <div class="number">T4</div>
+          <div><h3>Fee on baseline volume ≤ the customer's own cost per kept today.</h3><p>Never charge growth prices for outcomes the buyer's $40/kept machine already produces. <em>Plan v2.1: fails — $100 vs. ~$40.</em></p></div>
+        </div>
+        <div class="priority">
+          <div class="number">T5</div>
+          <div><h3>Composes with the existing stack instead of replacing it.</h3><p>No rip-out, no exclusivity demand, no parallel-outreach shutdown on day one. <em>Plan v2.1: fails — exclusive lane transfer is the biggest ask any vendor on the list makes.</em></p></div>
+        </div>
+        <div class="priority">
+          <div class="number">T6</div>
+          <div><h3>Explicit risk reversal.</h3><p>Sierra's lesson: answer “what if it fails?” before “how much do I save?” Cancel anytime, dispute windows, a net-value floor. <em>Plan v2.1: implicit at best.</em></p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="structures">
+      <div class="shell">
+        <p class="kicker">Commercial structure</p>
+        <h2>Three structures that pass — lead with the first</h2>
+
+        <article class="card thesis" style="margin-bottom:22px">
+          <span class="tag green">Recommended wedge</span>
+          <h3>1 · Second-pass conversion: own the tail, where every kept is incremental by construction.</h3>
+          <p><strong>Assignment boundary:</strong> referrals with no booked appointment after N days (e.g., 14), plus everything that falls out of the customer's staff or software first pass — Assort's 10–16% exception queue included. On this inventory the counterfactual is near zero, so T3 and T4 collapse into one trivially true statement: essentially every fee maps to a patient who otherwise didn't show up.</p>
+          <div class="equation">
+            60,000 referrals · ~42% unbooked at day 14 ≈ 25,000 assigned<br>
+            25,000 × 28% kept ≈ <strong>7,000 kept — ~all incremental</strong><br>
+            fee 7,000 × $100 = $700K &nbsp;·&nbsp; contribution 7,000 × $650 = $4.55M<br>
+            customer ROI ≈ <strong>6.5×</strong>, with zero fixed cost and zero displacement
+          </div>
+          <p><strong>Why it's the no-brainer:</strong> nothing is ripped out, nobody is fired, no exclusivity fight, no baseline dispute, no holdout debate — and it's the one position that <em>composes</em> with Assort instead of fighting a $1.2B incumbent head-on: “Keep your scheduling AI. Hand us what it can't finish; we're paid only when we convert it.” Your own economics hold: at ~$9 delivery cost per assigned tail referral, margin is ~68% at $100. And the plan's fear of adverse selection is answered by pricing <em>for</em> the tail rather than pretending the lane is average.</p>
+        </article>
+
+        <div class="grid-2">
+          <article class="card">
+            <span class="tag">Expansion structure</span>
+            <h3>2 · Baseline-band pricing for full-lane takeover.</h3>
+            <p>When a proven customer hands you the whole lane, set a contracted baseline band from trailing-12-month kept volume. Bill in-band outcomes at <strong>cost parity (~$35–50)</strong> — the buyer swaps like-for-like spend, no worse off — and outcomes above the band at a <strong>premium ($150–200)</strong>, still far below contribution.</p>
+            <div class="equation">
+              21,000 in-band × $40 = $840K<br>
+              3,000 above-band × $175 = $525K<br>
+              total <strong>$1.37M</strong> · customer nets ~$475 per incremental
+            </div>
+            <p>This dissolves the COO's #1 objection from your own stakeholder table — “paying for patients who might have converted anyway” — structurally instead of rhetorically, with no holdout and no attribution science. Baselines stop being a talking point and become a contract term.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Only if they're firing the function</span>
+            <h3>3 · Full substitution at or below in-house unit cost.</h3>
+            <p>Flat fee per kept at or below the customer's measured cost per kept (~$40–60), for buyers explicitly eliminating or redeploying the patient-access function. This is the honest version of plan v2.1 — but it compresses your margin (delivery must run under ~$20/kept), demands the hardest change management, and should be a late-stage motion for proven accounts, never the wedge.</p>
+            <p><strong>Price-anchor note:</strong> whatever structure you quote, expect to be negotiated against Takeoff's published $55/converted patient. Your counter is the unit definition: they priced <em>converted</em>; you price <em>kept</em>, on inventory everyone else already failed, with payer work included.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="moat">
+      <div class="shell">
+        <p class="kicker">Differentiation</p>
+        <h2>Where the moat actually is — three layers nobody will invoice against</h2>
+        <div class="grid-3">
+          <article class="card">
+            <span class="tag green">Layer 1</span>
+            <h3>Kept, not booked.</h3>
+            <p>Assort's headline metrics stop at booked; no-show and reschedule recovery live in a separate module, and nothing is warranted. Industry no-show runs 5–25% by specialty. A vendor paid only on <em>kept</em> is structurally forced to own confirmation, recovery, and rebooking through the first visit — and can say so in the contract. Nobody else's pricing lets them make that promise.</p>
+          </article>
+          <article class="card">
+            <span class="tag green">Layer 2</span>
+            <h3>The payer-execution layer.</h3>
+            <p>Assort identifies auth requirements; it doesn't submit auths, sit on payer status calls, run benefits verification, or chase denials. Infinitus automates payer calls but sells to payers, pharma, and systems. In auth-gated specialties, a booked appointment without executed payer work never becomes a kept, paid visit. This is the unowned execution layer — and it's inside your stated scope already.</p>
+          </article>
+          <article class="card">
+            <span class="tag green">Layer 3</span>
+            <h3>Terminal-state accountability.</h3>
+            <p>“Every assigned referral ends in one auditable terminal state” is your best product idea and no one else's contract. Software vendors report funnels; you can warrant closure. Keep it — it's the audit trail that makes per-outcome invoices trustworthy and the compliance story legible.</p>
+          </article>
+        </div>
+
+        <article class="card critical" style="margin-top:22px">
+          <span class="tag red">Beachhead warning</span>
+          <h3>Dermatology-first is now the most contested square on the board.</h3>
+          <p>ModMed — the dominant derm EHR — is shipping its own AI front office (plus the Bonsai acquisition for reactivation and self-scheduling). Assort issued a dermatology-specific launch PR and counts MDCS Dermatology as a customer. And derm is comparatively light on prior auth outside biologics, where free manufacturer hub programs already do the work — so your strongest layer (payer execution) differentiates least there. Prefer auth- and imaging-gated specialties where kept <em>requires</em> payer execution: GI, cardiology, orthopedics — while noting Assort is strong in ortho and the contest there is on scope depth, not presence. The $650-contribution assumption also needs specialty-level validation against the ~$250 blended-consult benchmark before it anchors any pricing conversation.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="edits">
+      <div class="shell">
+        <p class="kicker">Do this to the plan</p>
+        <h2>Eight concrete edits</h2>
+        <div class="priority">
+          <div class="number">01</div>
+          <div><h3>Add the gating qualification number.</h3><p>Current fully-loaded cost per kept appointment (labor + vendors + telephony + management ÷ kept volume), and the incumbent software stack. If Assort or similar is installed, sell structure 1 only.</p></div>
+        </div>
+        <div class="priority">
+          <div class="number">02</div>
+          <div><h3>Rewrite the assignment boundary to the tail.</h3><p>Assignment = unbooked at day N + first-pass fallout. Delete the contradiction between “land with an aged queue” and “disqualify hardest-inventory customers” — the tail is the wedge, priced as the tail.</p></div>
+        </div>
+        <div class="priority">
+          <div class="number">03</div>
+          <div><h3>Adopt baseline-band pricing for full-lane expansion.</h3><p>In-band at cost parity, above-band at premium. Retire “$100 on all kept outcomes” — it fails T3 and T4 in every spreadsheet a CFO will build.</p></div>
+        </div>
+        <div class="priority">
+          <div class="number">04</div>
+          <div><h3>Replace the competitive frame.</h3><p>The buyer's real tree: staff today · patient-access AI (Assort) · EHR-native AI · Primary Logic. Retire “Paid Ads” everywhere, including the website comparison module.</p></div>
+        </div>
+        <div class="priority">
+          <div class="number">05</div>
+          <div><h3>Position with Assort, then against it.</h3><p>“Keep your scheduling AI — we own what it can't finish: the tail, the payer work, and the kept guarantee.” Compete on the three layers, not on the conversion motion they've commoditized.</p></div>
+        </div>
+        <div class="priority">
+          <div class="number">06</div>
+          <div><h3>Make risk reversal a contract section.</h3><p>No fixed fees, pay per kept, month-to-month exit after the pilot window, invoice dispute rights, and a net-value floor (fees capped as a % of finance-validated value).</p></div>
+        </div>
+        <div class="priority">
+          <div class="number">07</div>
+          <div><h3>Re-select the beachhead specialty.</h3><p>Score candidates on auth burden, imaging/procedure gating, contribution per first visit, EHR concentration, and incumbent AI presence. Derm scores worst on three of five as of this week.</p></div>
+        </div>
+        <div class="priority">
+          <div class="number">08</div>
+          <div><h3>Update the “critical unknowns.”</h3><p>Add: Assort's actual price and win rate in your segment; whether Sierra Horizon reaches mid-market groups within 12 months; measured tail kept-rates by aging bucket (the number structure 1's economics stand on); and validated contribution per first visit by specialty.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sources">
+      <div class="shell">
+        <p class="kicker">Sources</p>
+        <h2>Evidence and confidence</h2>
+        <div class="source">
+          <a href="https://www.assorthealth.com/referral-automation">Assort — Referrals product</a> · <a href="https://www.prnewswire.com/news-releases/assort-health-unveils-referrals-the-first-ai-agent-that-handles-processing-triage-and-continuous-patient-conversations-for-every-referral-302848934.html">launch PR (Aug 12, 2026)</a> · <a href="https://www.prnewswire.com/news-releases/assort-health-raises-120-million-series-c-to-scale-largest-deployment-of-ai-agents-for-the-patient-journey-302808634.html">Series C ($120M, $1.2B valuation)</a>
+          <p>Product scope, 79% conversion claim, customer roster, funding. Pricing estimates ($1.5K–$10K+/mo) are competitor-published (Emitrr, OhMD) — hostile sources, directionally consistent, unverified.</p>
+        </div>
+        <div class="source">
+          <a href="https://sierra.ai/blog/sierra-acquires-takeoff">Sierra acquires Takeoff (July 23, 2026)</a> · <a href="https://sierra.ai/product/horizon">Horizon product page</a> · <a href="https://www.hiretakeoff.com/healthcare">Takeoff healthcare page ($55/converted patient)</a>
+          <p>Acquisition, Horizon's referral-to-appointment flagship example, Takeoff's public pricing anchor. Sierra contract minimums ($150K+) and setup fees are third-party reported, not vendor-published.</p>
+        </div>
+        <div class="source">
+          <a href="https://linear.health/blog/why-referrals-get-lost-primary-care-specialists">Referral leakage benchmarks</a> · <a href="https://signalscv.com/2026/04/healthcare-bpo-cost-in-2026-rates-key-drivers-and-savings-opportunities/">BPO rates</a> · <a href="https://referralmd.com/pricing/">ReferralMD pricing</a>
+          <p>Leakage (40–70%), never-scheduled rates (41–46%), scheduler costs ($35–55K loaded), BPO ($8–45/hr), software pricing. Most leakage figures circulate via vendor blogs citing AHRQ/MGMA/Duke secondhand — verify primaries before any public use.</p>
+        </div>
+        <article class="card warn" style="margin-top:24px">
+          <h3>Confidence and gaps</h3>
+          <p>Vendor scope and funding claims come from official sources, current as of 13 August 2026. All third-party pricing figures (Assort, Sierra, Decagon) are estimates from competitors or analysts. The 60K-lane economics reuse the business plan's own illustrative assumptions; the in-house $40/kept figure and the day-14 tail size are modeled, not observed — replace both with real customer data in the first qualification call. Nothing here validates the legal structure of per-kept-patient compensation; that workstream (plan §8) is unchanged and still gating.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell small">Prepared for Primary Logic · Companion to “Value and Alternatives Brief” (same date) · Internal strategy; verify every comparative claim before it reaches a public page.</div>
+  </footer>
+</body>
+</html>

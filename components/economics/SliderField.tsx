@@ -7,7 +7,7 @@ import { useId } from "react";
  *
  * The slider is for feel; the typed field is for precision, because a practice
  * administrator arrives with exact numbers. The slider's max is a comfortable
- * range, not a cap — typing a larger value is honoured and simply pins the
+ * range, not a cap. Typing a larger value is honoured and simply pins the
  * thumb to the end rather than clamping the number.
  */
 export default function SliderField({

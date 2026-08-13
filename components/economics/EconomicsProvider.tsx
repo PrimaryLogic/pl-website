@@ -13,9 +13,8 @@ type EconomicsContext = {
 const Ctx = createContext<EconomicsContext | null>(null);
 
 /**
- * Holds the numbers the reader supplies. The ledger and the cost comparison
- * are two views of one model, so dragging a slider in either moves both.
- * Server-component children pass straight through.
+ * Holds the current-operation figures the reader supplies and derives the
+ * baseline ledger. Server-component children pass straight through.
  */
 export function EconomicsProvider({ children }: { children: ReactNode }) {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);

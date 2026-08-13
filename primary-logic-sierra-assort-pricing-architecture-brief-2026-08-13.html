@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Primary Logic — Sierra and Assort Pricing Architecture</title>
+  <style>
+    :root {
+      --paper: #f7f6f1;
+      --card: #fff;
+      --ink: #131612;
+      --body: #4a514b;
+      --muted: #747b75;
+      --rule: #dde1da;
+      --green: #096b42;
+      --green-deep: #064b30;
+      --green-soft: #e8f2ec;
+      --amber: #8d5609;
+      --amber-soft: #fbf0dd;
+      --red: #9e3932;
+      --red-soft: #f9e9e6;
+      --blue: #315f7d;
+      --blue-soft: #eaf1f5;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: var(--green-deep); }
+    .shell { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+    header { padding: 68px 0 42px; border-bottom: 1px solid var(--rule); }
+    .eyebrow, .kicker {
+      margin: 0;
+      color: var(--green);
+      font: 650 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    h1 { max-width: 980px; margin: 16px 0 18px; font-size: clamp(40px, 6vw, 72px); line-height: .98; letter-spacing: -.055em; }
+    h2 { margin: 0 0 22px; font-size: clamp(29px, 4vw, 44px); line-height: 1.04; letter-spacing: -.04em; }
+    h3 { margin: 0 0 9px; font-size: 19px; line-height: 1.25; letter-spacing: -.015em; }
+    p { margin: 0; color: var(--body); }
+    strong { color: var(--ink); }
+    .lede { max-width: 880px; font-size: 19px; }
+    nav { position: sticky; top: 0; z-index: 2; border-bottom: 1px solid var(--rule); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(12px); }
+    nav .shell { display: flex; gap: 28px; overflow-x: auto; }
+    nav a { padding: 15px 0; color: var(--body); font-size: 13px; font-weight: 680; text-decoration: none; white-space: nowrap; }
+    section { padding: 60px 0; border-bottom: 1px solid var(--rule); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { padding: 25px; border: 1px solid var(--rule); border-radius: 14px; background: var(--card); }
+    .card p + p { margin-top: 13px; }
+    .thesis { border-left: 4px solid var(--green); background: var(--green-soft); }
+    .critical { border-left: 4px solid var(--red); background: var(--red-soft); }
+    .warn { border-left: 4px solid var(--amber); background: var(--amber-soft); }
+    .evidence { border-left: 4px solid var(--blue); background: var(--blue-soft); }
+    .tag { display: inline-block; margin-bottom: 14px; padding: 5px 9px; border-radius: 99px; background: #eff1ed; color: var(--muted); font: 650 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; }
+    .tag.green { color: var(--green-deep); background: #fff; }
+    .tag.red { color: var(--red); background: #fff; }
+    .tag.blue { color: var(--blue); background: #fff; }
+    .metric { display: block; margin: 9px 0 5px; color: var(--green-deep); font-size: 34px; font-weight: 760; letter-spacing: -.045em; line-height: 1; }
+    .metric.smallish { font-size: 27px; }
+    table { width: 100%; border-collapse: collapse; background: var(--card); font-size: 14px; }
+    th, td { padding: 15px 16px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+    th { background: #eff1ed; color: var(--muted); font: 650 10px/1.25 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; }
+    tr:last-child td { border-bottom: 0; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 14px; }
+    .callout { margin-top: 22px; padding: 22px 24px; border-top: 2px solid var(--ink); background: var(--card); }
+    .equation { margin-top: 17px; font: 650 15px/1.85 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--ink); }
+    .equation strong { color: var(--green-deep); }
+    .priority { display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding: 18px 0; border-top: 1px solid var(--rule); }
+    .priority:first-of-type { margin-top: 20px; border-top: 2px solid var(--ink); }
+    .number { color: var(--green-deep); font: 700 20px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .source { padding: 17px 0; border-top: 1px solid var(--rule); }
+    .source:first-of-type { border-top: 2px solid var(--ink); }
+    .source a { font-weight: 720; }
+    .source p { margin-top: 5px; font-size: 13px; }
+    ul { margin: 12px 0 0; padding-left: 20px; color: var(--body); }
+    li + li { margin-top: 8px; }
+    .small { font-size: 12px; color: var(--muted); }
+    footer { padding: 34px 0 54px; }
+    @media (max-width: 820px) {
+      header { padding-top: 46px; }
+      section { padding: 46px 0; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      th, td { min-width: 190px; }
+    }
+    @media print {
+      nav { display: none; }
+      body { background: #fff; }
+      header, section { break-inside: avoid; }
+      .card, .callout, .table-wrap { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="shell">
+      <p class="eyebrow">Pricing architecture investigation · 13 August 2026</p>
+      <h1>Bill every completed job. Do not price every job as if Primary Logic created the whole visit.</h1>
+      <p class="lede">Sierra validates outcome billing; Assort validates the revenue story. Neither public record supports taking most of the clinic's economics. End-to-end ownership earns Primary Logic the right to charge for completed administrative work—not the right to claim the clinical margin created by providers, capacity, payer mix, and care delivery.</p>
+    </div>
+  </header>
+
+  <nav aria-label="Brief sections">
+    <div class="shell">
+      <a href="#overview">Overview</a>
+      <a href="#competitors">Competitors</a>
+      <a href="#economics">Economics</a>
+      <a href="#guidance">Guidance</a>
+      <a href="#sources">Sources</a>
+    </div>
+  </nav>
+
+  <main>
+    <section id="overview">
+      <div class="shell">
+        <p class="kicker">Overview</p>
+        <h2>You are directionally right—and one step too aggressive</h2>
+        <div class="grid-2">
+          <article class="card thesis">
+            <span class="tag green">You are right</span>
+            <h3>Incremental-only billing undervalues the operating contract.</h3>
+            <p>Primary Logic works the assigned lane for every patient. If it completes 12,000 EHR-verified jobs, billing only the 1,500 judged incremental leaves most delivered work unpaid and turns baseline measurement into a recurring argument. Sierra's public logic is closer to the correct model: every agreed autonomous completion is billable; failed or escalated work is generally not.</p>
+          </article>
+          <article class="card critical">
+            <span class="tag red">You are over-indexing</span>
+            <h3>Owning the workflow does not mean owning the appointment's full value.</h3>
+            <p>Primary Logic converts existing demand. The clinic supplies reputation, referrals, provider capacity, clinical labor, payer contracts, collections, and downstream care. The economically defensible value pool is <strong>incremental contribution + operating cost displaced or avoided + execution risk transferred</strong>, not all revenue attached to every kept visit.</p>
+          </article>
+          <article class="card evidence">
+            <span class="tag blue">What Sierra proves</span>
+            <h3>Outcome billing is a risk-allocation mechanism.</h3>
+            <p>Sierra says it charges when an agreed task is completed, usually charges nothing when the interaction is unresolved or escalated, and uses blended consumption pricing when an outcome is not clean. It does not publish a universal dollar rate; task complexity and contract definition matter.</p>
+          </article>
+          <article class="card evidence">
+            <span class="tag blue">What Assort proves</span>
+            <h3>The revenue claim and the invoice can be very far apart.</h3>
+            <p>Assort markets $3.3M of annual revenue per 100 providers plus appointment and labor-capacity gains, yet publishes no outcome fee or rate card. A New York State contract shows $112,050 over 27 months for one inbound-voice scope—exactly $49,800 annualized if spread evenly. That is a module-specific datapoint, not Assort's enterprise price.</p>
+          </article>
+        </div>
+
+        <div class="callout">
+          <p class="kicker">The distinction to keep</p>
+          <div class="equation">
+            <strong>Billable population:</strong> every completed, contractually defined job<br>
+            <strong>Price ceiling:</strong> a minority of conservative switching value<br>
+            <strong>Switching value:</strong> incremental contribution + removable cost + priced risk transfer
+          </div>
+          <p style="margin-top:13px">The mistake was not charging every completion. The mistake was using a $100 universal completion fee without proving that each customer's conservative switching value can support it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="competitors">
+      <div class="shell">
+        <p class="kicker">Competitors</p>
+        <h2>Sierra prices the job; Assort prices an operating layer and sells the revenue</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Verified billing evidence</th>
+                <th>Value story</th>
+                <th>What is not public</th>
+                <th>Implication</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Sierra</strong></td>
+                <td>Charges for agreed completed outcomes; unresolved and escalated interactions are usually free. Blended pricing is available where completion is ambiguous.</td>
+                <td>Autonomous resolution, avoided service cost, saved cancellations, conversion, upsell, and cross-sell.</td>
+                <td>No verified public dollar rate or universal annual minimum.</td>
+                <td>Charge every completed job, but define job classes and rates by value and complexity. A generic outcome is not one price.</td>
+              </tr>
+              <tr>
+                <td><strong>Assort</strong></td>
+                <td>No public pricing page or disclosed outcome fee. One government record is $112,050 over 27 months for an inbound voice-agent scope.</td>
+                <td>Entire patient journey, revenue captured, appointment volume, labor capacity, hold time, and abandonment.</td>
+                <td>Whether contracts are platform, module, volume, usage, outcome, implementation, or negotiated combinations.</td>
+                <td>Large value claims do not require taking a large percentage of value. A wide value-to-price gap accelerates adoption and protects renewals.</td>
+              </tr>
+              <tr>
+                <td><strong>Primary Logic</strong></td>
+                <td>Proposed: fixed fee for every eligible EHR-verified kept first appointment in the assigned lane.</td>
+                <td>Referral conversion, administrative capacity, queue reliability, and accountability through a terminal state.</td>
+                <td>Observed lift, removed cost, downstream contribution, price elasticity, job-level cost, and customer willingness to pay.</td>
+                <td>Keep wholesale outcome billing. Replace the uniform $100 assumption with a value-qualified price architecture.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid-3" style="margin-top:20px">
+          <article class="card">
+            <p class="kicker">Sierra's transferable idea</p>
+            <span class="metric smallish">Completion certainty</span>
+            <p>Pre-agree the exact invoice event, terminal states, escalation treatment, and audit source.</p>
+          </article>
+          <article class="card">
+            <p class="kicker">Assort's transferable idea</p>
+            <span class="metric smallish">Value density</span>
+            <p>Prove revenue, capacity, and experience simultaneously; let the financial claim emerge from operating evidence.</p>
+          </article>
+          <article class="card">
+            <p class="kicker">Primary Logic's opportunity</p>
+            <span class="metric smallish">Long-horizon job</span>
+            <p>Price multi-step administrative completion, not calls, messages, agent minutes, or software seats.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="economics">
+      <div class="shell">
+        <p class="kicker">Economics</p>
+        <h2>$100 can work—but the current generic example does not earn it</h2>
+        <div class="grid-2">
+          <article class="card">
+            <span class="tag">Illustrative ICP case</span>
+            <h3>30,000 assigned referrals per year</h3>
+            <div class="equation">
+              Baseline kept: 35% = 10,500<br>
+              Primary Logic kept: 40% = 12,000<br>
+              Incremental kept: 1,500<br>
+              Contribution per incremental kept: $650<br>
+              Incremental contribution: $975,000<br>
+              Removable / avoidable operating cost: $300,000<br>
+              <strong>Conservative gross switching value: $1,275,000</strong>
+            </div>
+          </article>
+          <article class="card critical">
+            <span class="tag red">At the proposed rate</span>
+            <h3>$100 × all 12,000 kept = $1.20M</h3>
+            <div class="equation">
+              Gross switching value: $1,275,000<br>
+              Primary Logic fee: −$1,200,000<br>
+              Customer value before implementation: <strong>$75,000</strong><br>
+              Benefit / fee: <strong>1.06×</strong>
+            </div>
+            <p style="margin-top:13px">This is not a compelling operating change. Almost any integration cost, capacity constraint, attribution error, or missed cost removal destroys the customer's return.</p>
+          </article>
+        </div>
+
+        <div class="table-wrap" style="margin-top:20px">
+          <table>
+            <thead>
+              <tr>
+                <th>Fee per all kept outcomes</th>
+                <th>Annual Primary Logic fee</th>
+                <th>Customer value retained</th>
+                <th>Gross benefit / fee</th>
+                <th>Interpretation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>$35</strong></td>
+                <td>$420,000</td>
+                <td>$855,000</td>
+                <td>3.04×</td>
+                <td>Credible early-market risk sharing if contribution and cost assumptions survive diligence.</td>
+              </tr>
+              <tr>
+                <td><strong>$50</strong></td>
+                <td>$600,000</td>
+                <td>$675,000</td>
+                <td>2.13×</td>
+                <td>Plausible target when the lane is complex, cost actually moves, and provider capacity can absorb lift.</td>
+              </tr>
+              <tr>
+                <td><strong>$100</strong></td>
+                <td>$1,200,000</td>
+                <td>$75,000</td>
+                <td>1.06×</td>
+                <td>Requires materially higher downstream contribution, greater lift, or more cost removal than this case.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <article class="card warn" style="margin-top:20px">
+          <h3>A useful $100 qualification rule</h3>
+          <p>To give the customer a 2× gross benefit-to-fee ratio at $100 across 12,000 kept outcomes, the case needs at least $2.40M of conservative switching value. With $300K of removed cost, the remaining $2.10M must come from incremental contribution. At 1,500 incremental kept appointments, that means <strong>$1,400 contribution per incremental patient</strong>; at $650 contribution, it means roughly <strong>3,231 incremental kept appointments</strong>, or a lift from 35% to about 45.8%. If neither is credible, $100 is not.</p>
+        </article>
+
+        <div class="callout">
+          <p class="kicker">Why the website example feels wrong</p>
+          <p style="margin-top:12px">10,000 assigned referrals and 5,000 kept appointments each month at $100 produces a <strong>$6M annual fee</strong>. A buyer needs more than $12M of conservative annual switching value merely to see a 2× gross benefit-to-fee ratio. That may exist for a very large, procedure-heavy platform; it is not a credible generic specialty-clinic illustration without showing downstream value.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="guidance">
+      <div class="shell">
+        <p class="kicker">Guidance</p>
+        <h2>Keep the ambition; change the architecture</h2>
+
+        <div class="priority">
+          <div class="number">01</div>
+          <div>
+            <h3>Wholesale completion fee: bill every verified job.</h3>
+            <p>Every assigned referral that reaches the contracted, EHR-verified completion state is billable, whether or not it is labeled incremental. Unreachable, clinically escalated, disqualified, customer-blocked, or otherwise failed jobs are not. This is the Sierra principle applied correctly.</p>
+          </div>
+        </div>
+        <div class="priority">
+          <div class="number">02</div>
+          <div>
+            <h3>Use job classes, not one universal kept-visit rate.</h3>
+            <p>A scheduled low-complexity consultation, a kept new-patient visit, an approved authorization, a completed endoscopy, and a treatment start differ in workflow difficulty, attribution, contribution, and risk. Pre-negotiate a fee for each auditable class; route ambiguous work into a platform or volume component.</p>
+          </div>
+        </div>
+        <div class="priority">
+          <div class="number">03</div>
+          <div>
+            <h3>Add a coverage floor for the operating layer.</h3>
+            <p>Charge a fixed monthly minimum for integrations, workflow maintenance, compliance, monitoring, reserved capacity, and SLA coverage. Credit it against outcome fees if desired. This prevents low volume or customer-side blockage from making full-lane ownership economically irrational.</p>
+          </div>
+        </div>
+        <div class="priority">
+          <div class="number">04</div>
+          <div>
+            <h3>Reserve upside for outcomes that Primary Logic truly creates.</h3>
+            <p>An optional performance accelerator above an agreed baseline can capture extraordinary conversion or high-value downstream completion. The core invoice still covers all completed jobs; the accelerator prevents conservative wholesale rates from capping upside when Primary Logic demonstrably expands contribution.</p>
+          </div>
+        </div>
+        <div class="priority">
+          <div class="number">05</div>
+          <div>
+            <h3>Qualify price from the customer's switching value before quoting.</h3>
+            <p>Calculate conservative lift, contribution, cost that will actually disappear or be redeployed, capacity to serve new patients, and implementation burden. Set total Primary Logic spend so the customer retains a material majority of that value. Early deployments should optimize for undeniable renewals and proof, not maximum theoretical extraction.</p>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:20px">
+          <article class="card thesis">
+            <span class="tag green">Recommended commercial sentence</span>
+            <h3>“We charge for every referral job we finish—not every attempt we make.”</h3>
+            <p>“Your fee is set before launch from the completion class, workflow complexity, and conservative value of the lane. If we do not reach the agreed EHR-verified outcome, you do not pay the outcome fee.”</p>
+          </article>
+          <article class="card warn">
+            <span class="tag">Healthcare boundary</span>
+            <h3>Do not improvise revenue-share language.</h3>
+            <p>Healthcare per-booking, percentage-of-revenue, and value-varying arrangements can raise Anti-Kickback Statute, Stark, fee-splitting, and fair-market-value questions. An OIG opinion has permitted one fact-specific per-booking directory arrangement; it is not a general safe harbor. Healthcare counsel should review the exact fee trigger, specialty variation, federal-program exposure, and marketing language.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="sources">
+      <div class="shell">
+        <p class="kicker">Sources</p>
+        <h2>Public evidence, separated from inference</h2>
+
+        <div class="source">
+          <a href="https://sierra.ai/uk/blog/outcome-based-pricing-for-ai-agents">Sierra — Outcome-based pricing for AI agents</a>
+          <p>Official source. Supports completed-outcome billing, usually no charge for unresolved or escalated interactions, pre-agreed criteria, and blended consumption pricing when outcomes are not clean. It does not disclose dollar rates.</p>
+        </div>
+        <div class="source">
+          <a href="https://sequoiacap.com/podcast/training-data-bret-taylor/">Sequoia Capital — Training Data with Bret Taylor</a>
+          <p>Primary interview. Taylor describes a pre-negotiated rate for autonomous resolution and no charge when work escalates to a person.</p>
+        </div>
+        <div class="source">
+          <a href="https://sierra.ai/customers/homebase">Sierra — Homebase customer story</a>
+          <p>Official customer evidence. Supports the positioning that the customer is charged for helpful outcomes and ties autonomous resolution to increased capacity and reduced human ticket load.</p>
+        </div>
+        <div class="source">
+          <a href="https://www.assorthealth.com/">Assort Health — Company and platform overview</a>
+          <p>Official source. Supports entire-patient-journey scope and the currently published aggregate claims of $3.3M annual revenue per 100 providers, 5% appointment volume, and 115% labor capacity. No public pricing is shown.</p>
+        </div>
+        <div class="source">
+          <a href="https://www.assorthealth.com/customers/senta-customer-story">Assort Health — SENTA customer story</a>
+          <p>Official vendor/customer story. Supports $1.3M additional appointment revenue, $400K+ labor cost avoided, 250+ hours saved monthly, and 64% referral-outreach appointment conversion. Vendor-controlled evidence is not equivalent to an audited result.</p>
+        </div>
+        <div class="source">
+          <a href="https://wwe2.osc.state.ny.us/transparency/contracts/contractresults.cfm?ID=2370085">New York State Comptroller — Assort Health contract T507699</a>
+          <p>Government record. Shows a $112,050 current contract amount, 1 December 2025 through 29 February 2028, described as an inbound voice-agent scope. The $49,800 annualized figure is arithmetic assuming even allocation; scope, volume, implementation, and overages are not disclosed.</p>
+        </div>
+        <div class="source">
+          <a href="https://oig.hhs.gov/compliance/advisory-opinions/19-04/">HHS OIG — Advisory Opinion 19-04</a>
+          <p>Primary regulatory source. Concerns a specific online directory arrangement with per-click and per-booking provider fees. Advisory opinions are fact-specific; this brief does not treat it as approval of Primary Logic's model.</p>
+        </div>
+
+        <article class="card warn" style="margin-top:22px">
+          <h3>Confidence and open questions</h3>
+          <p><strong>High confidence:</strong> Sierra's billing mechanics, Assort's public value framing, Assort's government contract amount and term, and the arithmetic in the illustrative Primary Logic case. <strong>Medium confidence:</strong> Assort generally sells a negotiated operating layer rather than pure outcome pricing; its absence of public pricing and the single module contract support that inference but do not prove every contract structure. <strong>Unknown:</strong> Sierra's verified dollar rates, Assort's enterprise rate card, Primary Logic's observed conversion lift, downstream contribution by specialty, and actual cost removed.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell small">Prepared for Primary Logic. Internal strategic analysis, not legal advice. Validate customer economics and obtain healthcare counsel before publishing or contracting on value-linked fees.</div>
+  </footer>
+</body>
+</html>

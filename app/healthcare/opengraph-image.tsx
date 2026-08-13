@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Primary Logic | Agents that carry a job to the finish";
+export const alt = "Primary Logic | We convert the referrals your first pass couldn't";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -21,20 +21,20 @@ export default function OpenGraphImage() {
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ fontSize: 28, fontWeight: 700, letterSpacing: "-0.02em" }}>PRIMARY LOGIC</div>
-        <div style={{ fontSize: 18, color: "#0a5c37" }}>OUTCOME OPERATIONS</div>
+        <div style={{ fontSize: 18, color: "#0a5c37" }}>HEALTHCARE LANE</div>
       </div>
       <div style={{ display: "flex", flexDirection: "column", width: "88%" }}>
-        <div style={{ fontSize: 72, lineHeight: 1.04, fontWeight: 700, letterSpacing: "-0.035em" }}>
-          Agents that carry a job to the finish
+        <div style={{ fontSize: 68, lineHeight: 1.04, fontWeight: 700, letterSpacing: "-0.035em" }}>
+          We convert the referrals your first pass couldn&apos;t
         </div>
         <div style={{ marginTop: 28, fontSize: 25, lineHeight: 1.45, color: "#4a554e" }}>
-          Per completed outcome. Verified in your system. $0 for anything that doesn&apos;t finish.
+          Keep your schedulers and your scheduling software. We take the second pass.
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 18, borderTop: "2px solid #101a15", fontSize: 18, color: "#4a554e" }}>
-        <div>ONE OWNER</div>
-        <div>ONE NEXT MOVE</div>
-        <div>ONE VERIFIED OUTCOME</div>
+        <div>SECOND PASS</div>
+        <div>PER KEPT VISIT</div>
+        <div>VERIFIED IN YOUR EHR</div>
       </div>
     </div>,
     size,
