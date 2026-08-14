@@ -20,29 +20,30 @@ export type NavContent = {
 export const homeNav: NavContent = {
   wordmark: WORDMARK,
   links: [
-    { label: "How it works", href: "#loop" },
-    { label: "Jobs we take", href: "#jobs" },
-    { label: "Pricing", href: "#pricing" },
+    { label: "How it works", href: "/#work" },
     { label: "Healthcare", href: "/healthcare" },
+    { label: "Lending", href: "/lending" },
+    { label: "Pricing", href: "/#proof" },
   ],
-  cta: { label: "Start a pilot", href: "#contact" },
+  cta: { label: "Start a pilot", href: "/#contact" },
 };
 
 export const healthcareNav: NavContent = {
   wordmark: WORDMARK,
   links: [
     { label: "All lanes", href: "/" },
-    { label: "The challenge", href: "#challenge" },
-    { label: "How it works", href: "#product" },
-    { label: "Economics", href: "#economics" },
+    { label: "The leak", href: "#challenge" },
+    { label: "Pilot", href: "#pilot" },
+    { label: "Safety & billing", href: "#economics" },
   ],
-  cta: { label: "Start a pilot", href: "#contact" },
+  cta: { label: "Discuss a pilot", href: "#contact" },
 };
 
 export const footer = {
   entity: WORDMARK,
   links: [
     { label: "Healthcare", href: "/healthcare" },
+    { label: "Lending", href: "/lending" },
     { label: "Privacy", href: "/privacy-policy" },
     { label: "Terms", href: "/terms-of-service" },
     { label: "Contact", href: `mailto:${CONTACT_EMAIL}` },

@@ -1,26 +1,34 @@
+import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import { pilot } from "@/lib/content/home";
-import { Eyebrow, Heading, Section } from "../Section";
 
 export default function PilotSection() {
   return (
-    <Section id="pilot" className="sm:!py-8 lg:!py-12">
-      <Eyebrow>{pilot.eyebrow}</Eyebrow>
-      <Heading className="max-w-[560px] !text-[28px] lg:!text-[36px]">{pilot.heading}</Heading>
-      <p className="mt-4 max-w-[620px] text-[13px] leading-[1.6] text-body lg:text-[15px] lg:leading-[1.7]">
-        {pilot.intro}
-      </p>
+    <section id="proof" className="scroll-mt-6 bg-white px-4 pb-10 sm:px-6 sm:pb-14">
+      <div className="mx-auto max-w-[1392px] rounded-[20px] bg-[#f5f4f2] px-6 py-8 sm:px-10 sm:py-10 lg:px-12 lg:py-11">
+        <p className="label !text-[9.5px] text-accent">{pilot.eyebrow}</p>
+        <h2 className="display mt-4 max-w-[880px] text-[30px] leading-[1.04] text-ink sm:text-[38px] lg:text-[44px]">
+          {pilot.heading}
+        </h2>
+        <p className="mt-5 max-w-[760px] text-[14px] leading-[1.65] text-body sm:text-[15px]">{pilot.intro}</p>
 
-      <ol aria-label="How a pilot runs" className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {pilot.steps.map((step, index) => (
-          <li key={step.title} className="rounded-2xl border border-rule bg-white p-5 shadow-[0_8px_24px_rgba(18,20,16,0.04)]">
-            <p className="figure-num text-[13px] font-semibold text-accent" aria-hidden="true">
-              {String(index + 1).padStart(2, "0")}
-            </p>
-            <h3 className="mt-2.5 text-[15px] font-semibold leading-[1.35] text-ink">{step.title}</h3>
-            <p className="mt-1.5 text-[12.5px] leading-[1.6] text-body">{step.body}</p>
-          </li>
-        ))}
-      </ol>
-    </Section>
+        <ol className="mt-8 grid overflow-hidden rounded-[12px] border border-rule bg-white lg:grid-cols-4" aria-label="How a Primary Logic pilot works">
+          {pilot.steps.map((step, index) => (
+            <li key={step.title} className={`p-4 sm:p-5 ${index > 0 ? "border-t border-rule lg:border-t-0 lg:border-l" : ""}`}>
+              <div className="flex items-center justify-between gap-4">
+                <p className="figure-num text-[10.5px] font-semibold text-accent">{String(index + 1).padStart(2, "0")}</p>
+                {index < pilot.steps.length - 1 && <ArrowRight aria-hidden="true" size={14} className="hidden text-rule-mid lg:block" />}
+              </div>
+              <h3 className="display mt-4 text-[16.5px] leading-[1.15] text-ink">{step.title}</h3>
+              <p className="mt-2.5 text-[12.5px] leading-[1.6] text-body">{step.body}</p>
+            </li>
+          ))}
+        </ol>
+
+        <p className="mt-5 flex max-w-[840px] items-start gap-2.5 text-[13px] font-medium leading-[1.55] text-accent-deep">
+          <CheckCircle aria-hidden="true" size={16} weight="fill" className="mt-0.5 shrink-0" />
+          {pilot.closing}
+        </p>
+      </div>
+    </section>
   );
 }

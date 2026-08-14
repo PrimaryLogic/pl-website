@@ -3,12 +3,9 @@ import FinalCta from "../FinalCta";
 import SiteFooter from "../SiteFooter";
 import SiteNav from "../SiteNav";
 import HomeHero from "./HomeHero";
-import JobsSection from "./JobsSection";
-import LanesSection from "./LanesSection";
-import LeakSection from "./LeakSection";
+import JobTraces from "./JobTraces";
 import LoopSection from "./LoopSection";
 import PilotSection from "./PilotSection";
-import PricingSection from "./PricingSection";
 import { finalCta } from "@/lib/content/home";
 import { homeNav } from "@/lib/content";
 
@@ -24,22 +21,19 @@ const structuredData = JSON.stringify({
 
 export default function HomePage() {
   return (
-    <>
+    <div className="home-landing min-h-full bg-white">
       <a href="#main-content" className="skip-link">Skip to main content</a>
       <AnalyticsBridge />
-      <SiteNav nav={homeNav} />
+      <SiteNav nav={homeNav} variant="landing" />
       <main id="main-content" className="flex-1">
         <HomeHero />
-        <LeakSection />
+        <JobTraces />
         <LoopSection />
-        <JobsSection />
-        <LanesSection />
-        <PricingSection />
         <PilotSection />
-        <FinalCta heading={finalCta.heading} body={finalCta.body} />
+        <FinalCta heading={finalCta.heading} body={finalCta.body} variant="landing" />
       </main>
-      <SiteFooter />
+      <SiteFooter variant="landing" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData }} />
-    </>
+    </div>
   );
 }

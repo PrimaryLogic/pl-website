@@ -8,86 +8,296 @@
  */
 
 export const hero = {
-  headingLead: "Agents that carry a job",
-  headingAccent: "to the finish.",
+  eyebrow: "Outcome agents for long-horizon work",
+  headingLead: "Outcome agents for",
+  headingAccent: "long-horizon work.",
   body:
-    "Primary Logic runs autonomous agents that own slow administrative work end to end — every call, text, email, and portal step, across days or weeks — until the job reaches a verified outcome in your own system.",
+    "Primary Logic handles the job end to end and directly drives your top line - staying with the work until it's done, across days or months.",
   outcome:
-    "No seats. No subscriptions. A fixed fee per completed outcome, and failed attempts cost you nothing.",
+    "Pay only for kept visits, funded loans, and signed retainers. Every other terminal state costs $0.",
+  caseCard: {
+    tag: "Live case · illustrative",
+    jobId: "JOB 4,182",
+    chip: "Lending — refi recapture",
+    rows: [
+      { label: "Owner", value: "Agent 07" },
+      { label: "State", value: "Waiting on borrower documents" },
+      { label: "Next move", value: "Reminder call · today 6:10 PM" },
+      { label: "Last signal", value: "SMS reply · Day 3 — “can I send them Friday?”" },
+    ],
+    footer: "One owner. One next move. Always.",
+  },
 };
 
-export type LeakRow = {
-  name: string;
+export type TraceEvent = {
+  id: string;
+  day: string;
+  time: string;
+  channel: "SMS" | "Voice" | "Email" | "Portal" | "System";
+  phase: "signal" | "decision" | "task" | "interaction";
+  /** "agent" renders as an outbound message bubble; "person" as a reply; "system" as a mono event row. */
+  kind: "agent" | "person" | "system";
+  title: string;
+  text: string;
+  meta: string;
+  /** Horizontal position on the long-horizon trace, from 0–100. */
+  x: number;
+  terminal?: boolean;
+};
+
+export type Trace = {
   chip: string;
   chipTone: "loss" | "warn" | "accent";
-  line: string;
-  state: string;
-  note: string;
-  age: string;
+  previewTone: "sage" | "sand" | "blue";
+  span: string;
+  goal: string;
+  heading: string;
+  body: string;
+  href?: string;
+  linkLabel?: string;
+  dayLabels: string[];
+  initialStep: number;
+  preview: {
+    scenes: Array<{
+      channel: "Voice" | "SMS" | "Email";
+      title: string;
+      meta: string;
+      badge?: string;
+      style: "transcript" | "message";
+      lines: Array<{ speaker: string; text: string; reply?: boolean }>;
+    }>;
+    result?: {
+      title: string;
+      meta: string;
+      badge: string;
+      details: string[];
+    };
+    outcome: string;
+    outcomeMeta: string;
+  };
+  events: TraceEvent[];
+  outcome: string;
 };
 
-export const leak = {
-  eyebrow: "The leak",
-  heading: "Every pipeline leaks after the handoff.",
+export const traces = {
+  eyebrow: "One case · many interactions",
+  heading: "One agent owns every interaction.",
   intro:
-    "The first contact usually happens. It’s the fourth follow-up on day eleven that doesn’t. Work that needs weeks of persistence stalls in queues nobody owns — and quietly becomes lost revenue.",
-  rows: [
+    "These are days or weeks of work across voice, SMS, email, portals, and the customer’s system of record — not single-turn tasks.",
+  items: [
     {
-      name: "Refi lead",
-      chip: "Lending",
-      chipTone: "loss",
-      line: "Rate quoted · application started",
-      state: "Stalled at income docs",
-      note: "Two reminders sent, none since. Nobody owns attempt three.",
-      age: "Day 9",
+      chip: "Healthcare referrals",
+      chipTone: "accent",
+      previewTone: "sage",
+      span: "Day 1 → Day 9",
+      goal: "Get Luis from an aged referral to a kept first visit.",
+      heading: "From aged referral to kept first visit.",
+      body:
+        "After your team’s first pass, the agent works the unbooked tail — reaches the patient, handles the logistics, books into your real schedule, and stays on the case through the visit itself.",
+      href: "/healthcare",
+      linkLabel: "Explore healthcare",
+      dayLabels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 8", "Day 9"],
+      initialStep: 7,
+      preview: {
+        scenes: [
+          {
+            channel: "Voice",
+            title: "Luis · scheduling call",
+            meta: "Day 1 · 4m 08s",
+            badge: "connected",
+            style: "transcript",
+            lines: [
+              { speaker: "Agent", text: "I can hold Thursday at 2:15. Does that office work?" },
+              { speaker: "Luis", text: "Yes — book that one." },
+            ],
+          },
+        ],
+        result: {
+          title: "Luis arrived for his visit",
+          meta: "Day 9 · practice schedule",
+          badge: "verified",
+          details: ["Appointment marked arrived", "Referral matched and closed"],
+        },
+        outcome: "Visit kept",
+        outcomeMeta: "Day 9",
+      },
+      events: [
+        { id: "hc-01", day: "Day 1", time: "8:14 am", channel: "System", phase: "signal", kind: "system", title: "Aged referral enters the feed", text: "Luis’s referral is still unbooked after the practice’s first pass. The raw record is retained and a second-pass case opens.", meta: "REFERRAL_FEED → case opened", x: 2 },
+        { id: "hc-02", day: "Day 1", time: "8:14 am", channel: "System", phase: "decision", kind: "system", title: "Check the contact frame", text: "The runtime checks consent basis, suppression status, specialty, location, and the approved scheduling playbook before any outreach.", meta: "Policy check · passed", x: 3.5 },
+        { id: "hc-03", day: "Day 1", time: "8:16 am", channel: "System", phase: "task", kind: "system", title: "Queue the first outreach", text: "A two-option scheduling text is created as durable work with the practice’s approved language and current openings.", meta: "Scheduled · now", x: 5 },
+        { id: "hc-04", day: "Day 1", time: "8:17 am", channel: "SMS", phase: "interaction", kind: "agent", title: "Two appointment options sent", text: "Hi Luis — the practice has Tuesday at 9:40 or Thursday at 2:15. Reply 1 or 2 and I’ll hold it.", meta: "SMS → Luis", x: 6.8 },
+        { id: "hc-05", day: "Day 1", time: "12:41 pm", channel: "SMS", phase: "signal", kind: "person", title: "Luis asks about the location", text: "An inbound reply changes the job: Thursday works, but Luis needs to confirm which office is closer to work.", meta: "SMS inbound · intent detected", x: 10.1 },
+        { id: "hc-06", day: "Day 1", time: "12:41 pm", channel: "System", phase: "decision", kind: "system", title: "Answer logistics, hold the slot", text: "The playbook permits a location answer and a temporary hold. Clinical questions would route to practice staff.", meta: "Bounded next move selected", x: 11.8 },
+        { id: "hc-07", day: "Day 1", time: "12:43 pm", channel: "System", phase: "task", kind: "system", title: "Schedule a confirmation call", text: "The Thursday slot is held and a short call is queued for the time Luis requested.", meta: "Voice task · 4:00 pm", x: 13.4 },
+        { id: "hc-08", day: "Day 1", time: "4:00 pm", channel: "Voice", phase: "interaction", kind: "system", title: "Location and timing confirmed", text: "The agent calls at the promised time, resolves the logistics, and books Thursday through the practice’s existing scheduling front door.", meta: "Voice → Luis · 4 min", x: 15.2 },
+        { id: "hc-09", day: "Day 2", time: "8:02 am", channel: "System", phase: "signal", kind: "system", title: "Appointment appears in the schedule", text: "The next schedule export confirms the slot. Booked is progress, but it is not the terminal outcome and is never billable.", meta: "SCHEDULE_EXPORT → booked", x: 22.5 },
+        { id: "hc-10", day: "Day 2", time: "8:02 am", channel: "System", phase: "decision", kind: "system", title: "Keep the case open", text: "The runtime sees two remaining obligations: intake forms and a kept-visit status from the customer’s schedule.", meta: "Next obligation · intake", x: 24.2 },
+        { id: "hc-11", day: "Day 2", time: "8:04 am", channel: "System", phase: "task", kind: "system", title: "Queue the intake link", text: "A secure form reminder is scheduled with the link already associated with Luis’s appointment.", meta: "Email task · now", x: 25.9 },
+        { id: "hc-12", day: "Day 2", time: "8:05 am", channel: "Email", phase: "interaction", kind: "agent", title: "Intake link delivered", text: "The appointment details, directions, and secure intake link are sent in one concise message.", meta: "Email → Luis", x: 27.7 },
+        { id: "hc-13", day: "Day 4", time: "6:00 pm", channel: "Portal", phase: "signal", kind: "system", title: "Intake is still incomplete", text: "The promised completion window passes without a form submission. Silence becomes a new signal rather than a dropped case.", meta: "FORM_PORTAL → incomplete", x: 43.8 },
+        { id: "hc-14", day: "Day 4", time: "6:00 pm", channel: "System", phase: "decision", kind: "system", title: "Use the promised-day reminder", text: "The approved sequence calls for one soft SMS now and a staff escalation only if the form remains blocked.", meta: "Playbook step · reminder", x: 45.5 },
+        { id: "hc-15", day: "Day 4", time: "6:02 pm", channel: "System", phase: "task", kind: "system", title: "Schedule a soft check-in", text: "The message is queued for the evening window Luis chose on the call.", meta: "SMS task · 6:10 pm", x: 47.1 },
+        { id: "hc-16", day: "Day 4", time: "6:10 pm", channel: "SMS", phase: "interaction", kind: "agent", title: "Intake check-in sent", text: "A short reminder links directly to the unfinished form and offers help with administrative questions.", meta: "SMS → Luis", x: 48.9 },
+        { id: "hc-17", day: "Day 6", time: "7:22 pm", channel: "Portal", phase: "signal", kind: "system", title: "Intake form submitted", text: "The form system reports completion. The case advances to the final pre-visit promise instead of closing early.", meta: "FORM_PORTAL → complete", x: 66.2 },
+        { id: "hc-18", day: "Day 6", time: "7:22 pm", channel: "System", phase: "decision", kind: "system", title: "Prepare the visit reminder", text: "Directions, arrival time, and the practice’s approved rescheduling path are assembled for the last outreach.", meta: "Next obligation · attendance", x: 68 },
+        { id: "hc-19", day: "Day 6", time: "7:24 pm", channel: "System", phase: "task", kind: "system", title: "Schedule the day-before reminder", text: "The reminder becomes durable work and will be superseded if the schedule changes before it sends.", meta: "SMS task · Day 8", x: 69.7 },
+        { id: "hc-20", day: "Day 8", time: "9:00 am", channel: "SMS", phase: "interaction", kind: "agent", title: "Visit reminder delivered", text: "Luis receives directions, arrival time, and a reply path for any last administrative issue.", meta: "SMS → Luis", x: 82.8 },
+        { id: "hc-21", day: "Day 9", time: "10:18 am", channel: "System", phase: "signal", kind: "system", title: "Kept visit verified", text: "The practice’s own schedule marks the appointment arrived. That customer-side event closes the job and supports the invoice.", meta: "EHR_EXPORT → arrived", x: 97, terminal: true },
+      ],
+      outcome: "Day 9 · Visit kept — verified in the EHR export. Billable.",
     },
     {
-      name: "Injury claimant",
+      chip: "Lending recapture",
+      chipTone: "loss",
+      previewTone: "sand",
+      span: "Day 1 → Day 16",
+      goal: "Get Dana from a stalled application to a funded loan.",
+      heading: "From abandoned application to funded loan.",
+      body:
+        "The agent picks up applications that stalled mid-file — answers practical process questions, chases the documents, works the portal, and stays on the case until the loan funds or closes in another named state.",
+      href: "/lending",
+      linkLabel: "Explore lending",
+      dayLabels: ["Day 1", "Day 3", "Day 5", "Day 7", "Day 9", "Day 11", "Day 14", "Day 16"],
+      initialStep: 6,
+      preview: {
+        scenes: [
+          {
+            channel: "Voice",
+            title: "Dana · document check",
+            meta: "Day 3 · 6m 12s",
+            style: "transcript",
+            lines: [
+              { speaker: "Agent", text: "Your file is two pay stubs short. I can walk you through the secure upload." },
+              { speaker: "Dana", text: "Okay, I’m there now." },
+            ],
+          },
+          {
+            channel: "SMS",
+            title: "Promised-day follow-up",
+            meta: "Day 5 · 5:02 pm",
+            style: "transcript",
+            lines: [
+              { speaker: "Agent", text: "Need the upload link again, or should I move our callback?" },
+              { speaker: "Dana", text: "Resend it — I’ll finish tonight." },
+            ],
+          },
+        ],
+        outcome: "Loan funded",
+        outcomeMeta: "Day 16",
+      },
+      events: [
+        { id: "ln-01", day: "Day 1", time: "7:30 am", channel: "System", phase: "signal", kind: "system", title: "Stalled file enters the feed", text: "Dana’s application has been waiting on two pay stubs for 11 days. The raw LOS export is retained with the case.", meta: "LOS_EXPORT → stalled", x: 2 },
+        { id: "ln-02", day: "Day 1", time: "7:30 am", channel: "System", phase: "decision", kind: "system", title: "Confirm the approved recapture frame", text: "Consent basis, licensing constraints, suppression status, loan state, and approved administrative topics are checked.", meta: "Policy check · passed", x: 3.6 },
+        { id: "ln-03", day: "Day 1", time: "7:32 am", channel: "System", phase: "task", kind: "system", title: "Queue a document reminder", text: "The secure lender upload link and the exact missing-document list are assembled as durable work.", meta: "SMS task · 9:10 am", x: 5.2 },
+        { id: "ln-04", day: "Day 1", time: "9:10 am", channel: "SMS", phase: "interaction", kind: "agent", title: "Missing-document note sent", text: "Dana receives the two-item list, secure portal link, and a clear route to the loan officer for financial advice.", meta: "SMS → Dana", x: 7 },
+        { id: "ln-05", day: "Day 3", time: "3:46 pm", channel: "SMS", phase: "signal", kind: "person", title: "Dana asks for help uploading", text: "Dana replies that the files are on a work computer and asks for a call after 6 pm.", meta: "SMS inbound · callback requested", x: 17.2 },
+        { id: "ln-06", day: "Day 3", time: "3:46 pm", channel: "System", phase: "decision", kind: "system", title: "Honor the requested window", text: "The runtime can explain the portal and documents, but any product or rate question remains reserved for the loan officer.", meta: "Bounded next move · call", x: 18.9 },
+        { id: "ln-07", day: "Day 3", time: "3:48 pm", channel: "System", phase: "task", kind: "system", title: "Schedule the evening callback", text: "A call is queued for Dana’s requested time, with the file state and secure portal steps attached.", meta: "Voice task · 6:15 pm", x: 20.5 },
+        { id: "ln-08", day: "Day 3", time: "6:15 pm", channel: "Voice", phase: "interaction", kind: "system", title: "Upload process walked through", text: "The agent resolves the administrative steps. A rate question routes to the loan officer, and Dana promises the documents Friday.", meta: "Voice → Dana · 6 min", x: 22.3 },
+        { id: "ln-09", day: "Day 5", time: "5:00 pm", channel: "System", phase: "signal", kind: "system", title: "Promised day reaches its deadline", text: "The documents have not arrived by the agreed check-in time. The promise, not a generic cadence, wakes the case.", meta: "PROMISE_DUE → unmet", x: 34.1 },
+        { id: "ln-10", day: "Day 5", time: "5:00 pm", channel: "System", phase: "decision", kind: "system", title: "Send one same-day check-in", text: "The approved playbook permits a reminder and preserves the loan officer handoff for all financial questions.", meta: "Playbook step · reminder", x: 35.8 },
+        { id: "ln-11", day: "Day 5", time: "5:01 pm", channel: "System", phase: "task", kind: "system", title: "Queue the promised-day SMS", text: "The check-in is scheduled immediately and will cancel if the LOS reports the files first.", meta: "SMS task · now", x: 37.4 },
+        { id: "ln-12", day: "Day 5", time: "5:02 pm", channel: "SMS", phase: "interaction", kind: "agent", title: "Promised-day check-in sent", text: "A short note asks whether Dana needs the link again or wants the callback moved.", meta: "SMS → Dana", x: 39.2 },
+        { id: "ln-13", day: "Day 6", time: "8:14 am", channel: "Portal", phase: "signal", kind: "system", title: "Documents arrive in the portal", text: "Both pay stubs are present. The earlier reminder plan is superseded and the file returns to the lender’s review queue.", meta: "BORROWER_PORTAL → received", x: 48.8 },
+        { id: "ln-14", day: "Day 6", time: "8:14 am", channel: "System", phase: "decision", kind: "system", title: "Close the document obligation", text: "The agent marks the administrative task complete but keeps the outcome case alive for downstream status changes.", meta: "Next obligation · lender review", x: 50.5 },
+        { id: "ln-15", day: "Day 6", time: "8:16 am", channel: "System", phase: "task", kind: "system", title: "Schedule a status watch", text: "A durable check is set for the next expected LOS update; no unnecessary borrower touch is sent.", meta: "System task · Day 9", x: 52.1 },
+        { id: "ln-16", day: "Day 9", time: "11:31 am", channel: "System", phase: "signal", kind: "system", title: "File clears to close", text: "The LOS export changes the loan status. That signal triggers the lender-approved closing coordination sequence.", meta: "LOS_EXPORT → clear to close", x: 64.5 },
+        { id: "ln-17", day: "Day 9", time: "11:31 am", channel: "System", phase: "decision", kind: "system", title: "Confirm closing logistics", text: "The runtime selects the administrative next move and keeps licensed and product guidance with the lender’s team.", meta: "Next move · confirm time", x: 66.2 },
+        { id: "ln-18", day: "Day 9", time: "11:33 am", channel: "System", phase: "task", kind: "system", title: "Queue the closing call", text: "The current closing window and document checklist are attached to the call task.", meta: "Voice task · 5:30 pm", x: 67.8 },
+        { id: "ln-19", day: "Day 9", time: "5:30 pm", channel: "Voice", phase: "interaction", kind: "system", title: "Closing details confirmed", text: "Dana confirms the appointment and required identification. The case remains open because clear-to-close is not funded.", meta: "Voice → Dana · 3 min", x: 69.6 },
+        { id: "ln-20", day: "Day 16", time: "2:09 pm", channel: "System", phase: "signal", kind: "system", title: "Funded loan verified", text: "The customer’s funding report matches the case. This is the agreed terminal outcome and the only default billable event.", meta: "LOS_FUNDING_REPORT → funded", x: 97, terminal: true },
+      ],
+      outcome: "Day 16 · Funded — verified in the LOS. Billable.",
+    },
+    {
       chip: "Legal intake",
       chipTone: "warn",
-      line: "Qualified · retainer sent for signature",
-      state: "Unsigned",
-      note: "No callback scheduled. Intent is fading by the day.",
-      age: "Day 4",
+      previewTone: "blue",
+      span: "Day 1 → Day 5",
+      goal: "Get Cameron from completed consult to signed retainer.",
+      heading: "From unsigned retainer to signed engagement.",
+      body:
+        "Qualified claimants go quiet between the consult and the signature. The agent keeps the administrative steps moving, routes legal questions to counsel, resends the right link, and closes the loop.",
+      dayLabels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"],
+      initialStep: 7,
+      preview: {
+        scenes: [
+          {
+            channel: "SMS",
+            title: "Signature recovery",
+            meta: "Day 4 · 5:45 pm",
+            badge: "live",
+            style: "message",
+            lines: [
+              { speaker: "Agent", text: "I resent the agreement. Want the secure link here too?" },
+              { speaker: "Cameron", text: "Yes please.", reply: true },
+            ],
+          },
+          {
+            channel: "Email",
+            title: "Counsel-approved answer",
+            meta: "Day 4 · 5:47 pm",
+            style: "message",
+            lines: [
+              { speaker: "Agent", text: "The fee answer is in your email with a fresh signature link." },
+            ],
+          },
+        ],
+        outcome: "Retainer signed",
+        outcomeMeta: "Day 5",
+      },
+      events: [
+        { id: "lg-01", day: "Day 1", time: "8:40 am", channel: "System", phase: "signal", kind: "system", title: "Unsigned retainer enters the feed", text: "Cameron completed the consult four days ago, but the approved agreement is still unsigned in the firm’s case system.", meta: "CASE_FEED → unsigned", x: 2 },
+        { id: "lg-02", day: "Day 1", time: "8:40 am", channel: "System", phase: "decision", kind: "system", title: "Check the administrative frame", text: "Identity, contact basis, assigned matter, and the firm-approved follow-up playbook are confirmed before outreach.", meta: "Policy check · passed", x: 4.4 },
+        { id: "lg-03", day: "Day 1", time: "8:42 am", channel: "System", phase: "task", kind: "system", title: "Queue a signature check-in", text: "The current signature link and a counsel escalation route are attached to a short call task.", meta: "Voice task · 12:30 pm", x: 6.8 },
+        { id: "lg-04", day: "Day 1", time: "12:30 pm", channel: "Voice", phase: "interaction", kind: "system", title: "Cameron answers the call", text: "The link is easy to resolve; a fee question is not. The agent routes that question to intake counsel and promises a fresh link afterward.", meta: "Voice → Cameron · 7 min", x: 10.2 },
+        { id: "lg-05", day: "Day 1", time: "1:08 pm", channel: "System", phase: "signal", kind: "system", title: "Counsel response arrives", text: "Intake counsel supplies the approved answer and confirms that the agreement itself has not changed.", meta: "INTERNAL_HANDOFF → answered", x: 14.5 },
+        { id: "lg-06", day: "Day 1", time: "1:08 pm", channel: "System", phase: "decision", kind: "system", title: "Send the approved response", text: "The runtime uses counsel’s exact language, resends the current agreement, and records the source of the answer.", meta: "Bounded next move · email", x: 16.9 },
+        { id: "lg-07", day: "Day 1", time: "1:10 pm", channel: "System", phase: "task", kind: "system", title: "Queue the counsel-approved email", text: "The agreement summary, answer, and signature link are scheduled together so no context is lost.", meta: "Email task · now", x: 19.3 },
+        { id: "lg-08", day: "Day 1", time: "1:11 pm", channel: "Email", phase: "interaction", kind: "agent", title: "Fresh signature link delivered", text: "Cameron receives the firm-approved answer and a new signature link in the same thread.", meta: "Email → Cameron", x: 21.7 },
+        { id: "lg-09", day: "Day 2", time: "6:00 pm", channel: "System", phase: "signal", kind: "system", title: "Agreement remains unsigned", text: "The requested review window passes without a signature. Silence becomes a scheduled signal, not an abandoned lead.", meta: "PROMISE_DUE → unsigned", x: 37.5 },
+        { id: "lg-10", day: "Day 2", time: "6:00 pm", channel: "System", phase: "decision", kind: "system", title: "Wait until Cameron’s preferred time", text: "The playbook calls for one Friday-evening reminder, then a named unreachable state if the sequence completes.", meta: "Next move · scheduled SMS", x: 39.9 },
+        { id: "lg-11", day: "Day 2", time: "6:02 pm", channel: "System", phase: "task", kind: "system", title: "Schedule the Friday nudge", text: "The reminder becomes durable work and will cancel automatically if the case system reports a signature first.", meta: "SMS task · Day 4", x: 42.3 },
+        { id: "lg-12", day: "Day 4", time: "5:45 pm", channel: "SMS", phase: "interaction", kind: "agent", title: "Signature reminder sent", text: "A concise reminder repeats the secure link and the firm’s direct contact path for any legal question.", meta: "SMS → Cameron", x: 70.8 },
+        { id: "lg-13", day: "Day 5", time: "9:12 am", channel: "System", phase: "signal", kind: "system", title: "Signature event arrives", text: "The firm’s e-sign system reports a completed agreement and returns the signed document identifier.", meta: "ESIGN_WEBHOOK → completed", x: 91.2 },
+        { id: "lg-14", day: "Day 5", time: "9:12 am", channel: "System", phase: "decision", kind: "system", title: "Reconcile against the firm’s record", text: "The signed event is matched to the intake case before the runtime closes the work or supports an invoice.", meta: "Evidence check · matched", x: 93.6 },
+        { id: "lg-15", day: "Day 5", time: "9:13 am", channel: "System", phase: "task", kind: "system", title: "Close the case as completed", text: "The case history, handoff, approved response, and customer-side evidence are fixed as the terminal record.", meta: "Case task · close", x: 95.5 },
+        { id: "lg-16", day: "Day 5", time: "9:14 am", channel: "System", phase: "signal", kind: "system", title: "Signed retainer verified", text: "The firm’s signed-case log is authoritative. The job is complete and the agreed outcome is billable.", meta: "CASE_SYSTEM → signed", x: 97.5, terminal: true },
+      ],
+      outcome: "Day 5 · Retainer signed — verified in the case system. Billable.",
     },
-    {
-      name: "Referred patient",
-      chip: "Healthcare",
-      chipTone: "accent",
-      line: "Referral received · first pass done",
-      state: "Unreached after two attempts",
-      note: "Out of the queue, off the report, still unbooked.",
-      age: "Day 12",
-    },
-  ] as LeakRow[],
-  footnote: "Illustrative examples, not customer data.",
+  ] as Trace[],
+  footnote: "Illustrative traces, not customer data or transcripts.",
 };
 
 export const loop = {
-  eyebrow: "How it runs",
-  heading: "One agent owns the job. A loop keeps it moving.",
+  eyebrow: "The agent loop",
+  heading: "Powered by the Primary Logic runtime.",
   intro:
-    "A job isn’t a ticket that waits for a human to pick it up. Each one is held by an agent that runs the same loop until the work is finished.",
+    "A case is never a process left running in the background. Each signal wakes the runtime, which chooses one bounded next action, executes it, and records what came back.",
+  runtime:
+    "The same harness powers every lane: durable case memory across weeks of interactions, deterministic policy for predictable behavior, and compliance guardrails checked again when anything sends.",
+  caption: "Whatever comes back becomes the next signal. The loop runs until the job is done.",
   steps: [
     {
-      title: "Watch",
+      title: "Signal",
       body:
         "The agent listens for anything that changes the job: an inbound reply, a portal status flip, a document arriving — or silence past a deadline, which is a signal too.",
     },
     {
-      title: "Decide",
+      title: "Decision",
       body:
         "It reads the job’s full history and current state, then picks the single next move, checked against the playbook you approved. Anything outside the playbook escalates to your team.",
     },
     {
-      title: "Act",
+      title: "Task",
       body:
-        "It makes the call, sends the text or email, or works the portal. Multi-party, multi-channel, on schedule — for as many days as the job takes.",
+        "The next move becomes durable scheduled work. A crash loses nothing; a new reply supersedes the old plan before anything sends.",
     },
     {
-      title: "Record",
+      title: "Interaction",
       body:
-        "Every action and response lands in the job’s auditable history, and completions are verified against your system of record before anything is billable.",
+        "The agent calls, texts, emails, or works the portal inside a bounded frame. Whatever comes back is recorded as the next signal.",
     },
   ],
   terminalStates: {
@@ -224,10 +434,10 @@ export const pricing = {
 };
 
 export const pilot = {
-  eyebrow: "Proof",
-  heading: "No case studies yet. A better offer instead.",
+  eyebrow: "Proof, not promises",
+  heading: "No borrowed logos. A pilot that proves itself in your records.",
   intro:
-    "We’re early, and we won’t dress that up with borrowed logos or invented percentages. What we offer is a pilot structured so the proof shows up in your numbers, not ours.",
+    "We’re early, and we won’t dress that up with invented percentages. Keep your current process running. Give us a slice of the same leaking inventory. Your system decides what completed and what is billable.",
   steps: [
     {
       title: "Pick one leaking lane.",
@@ -246,10 +456,11 @@ export const pilot = {
       body: "You verify each one in your own system before it’s billable. If nothing completes, the pilot cost you nothing.",
     },
   ],
+  closing: "No seats. No subscription. No charge for declined, unreachable, escalated, blocked, or disqualified cases.",
 };
 
 export const finalCta = {
   heading: "Send us what’s leaking.",
   body:
-    "A pilot starts with a copy of one feed and changes nothing about how you operate. Completions are verified in your system, billed per outcome — and if nothing completes, you owe nothing.",
+    "A pilot starts with a copy of one feed and changes nothing about how you operate. You verify every completion in your own system before it is billable.",
 };

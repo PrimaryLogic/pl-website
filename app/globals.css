@@ -6,7 +6,7 @@
   --color-band: #f4f3f0;
   --color-ink: #121410;
   --color-body: #4e554f;
-  --color-mute: #717871;
+  --color-mute: #6d746d;
   --color-rule: #e2e3df;
   --color-rule-mid: #bdc4bd;
   --color-accent: #087747;
@@ -80,6 +80,64 @@ body {
 
 .contact-join input {
   padding-left: 24px;
+}
+
+.contact-join--landing {
+  min-height: 54px;
+  border: 0;
+  background: #f1f1ef;
+  padding: 4px;
+  box-shadow: none;
+}
+
+.contact-join--landing input {
+  min-height: 46px;
+  background: transparent;
+}
+
+.timeline-control {
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-rule-mid);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-ink);
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
+}
+
+.timeline-control:hover,
+.timeline-control:focus-visible {
+  border-color: var(--color-ink);
+}
+
+.timeline-control--primary {
+  border-color: var(--color-ink);
+  background: var(--color-ink);
+  color: white;
+}
+
+.outcome-rail {
+  scrollbar-width: none;
+}
+
+.outcome-rail::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 520px) {
+  .contact-join--landing input {
+    min-width: 0;
+    padding-left: 16px;
+    font-size: 13px;
+  }
+
+  .contact-join--landing button {
+    min-width: 0;
+    padding-inline: 18px;
+  }
 }
 
 /* ---- Referral journey ------------------------------------------------ */
@@ -984,6 +1042,15 @@ summary::-webkit-details-marker {
 
   .contact-join button {
     width: 100%;
+  }
+
+  .contact-join.contact-join--landing {
+    display: flex;
+    border-radius: 999px;
+  }
+
+  .contact-join--landing button {
+    width: auto;
   }
 
   .rj-stats,

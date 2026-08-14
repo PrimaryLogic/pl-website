@@ -412,3 +412,150 @@ export const finalCta = {
   heading: "Give us the referrals you’ve written off.",
   body: "A pilot starts with a copy of your referral feed — webhook, email, or CSV — and changes nothing about how your team works today. Kept first visits are verified in your EHR before they’re billable. If none are kept, you pay nothing.",
 };
+
+/**
+ * Editorial landing-page copy for the healthcare lane. This object stays
+ * separate from the legacy economics demo above so the conversion page can
+ * remain concise without weakening the claim controls used elsewhere.
+ */
+export const healthcareLanding = {
+  hero: {
+    eyebrow: "Second-pass referral recovery for multi-site specialty groups",
+    headingLead: "Recover the specialty referrals",
+    headingAccent: "your first pass couldn’t finish.",
+    body:
+      "We’re recruiting design partners to test one aged or unworked cohort beside their current process. Primary Logic is being built to own the approved administrative follow-through while your team keeps clinical judgment.",
+    proof:
+      "No migration. No seat purchase. Your EHR or scheduling report decides what counts as a kept first visit.",
+    brief: {
+      status: "Now recruiting design partners",
+      heading: "A narrow pilot, not a replacement.",
+      items: [
+        { label: "Best fit", value: "Centralized, multi-site specialty groups" },
+        { label: "Cohort", value: "Aged or unworked referrals already touched by the first pass" },
+        { label: "Input", value: "CSV, scheduled report, or approved inbox feed" },
+        { label: "Verification", value: "Periodic EHR or scheduling report from your system" },
+      ],
+      note: "Pilot scope is subject to BAA, consent mapping, and applicable federal and state legal review.",
+    },
+    handoff: [
+      { label: "Cohort", value: "One leaking referral slice", note: "Your first pass has already touched it" },
+      { label: "Follow-through", value: "One owner for the next action", note: "Approved voice, SMS, email, and staff routing" },
+      { label: "Evidence", value: "The customer-side kept record", note: "Our activity log cannot create an invoice" },
+    ],
+  },
+  leak: {
+    eyebrow: "Where the queue leaks",
+    heading: "A referral is lost when the next action loses its owner.",
+    intro:
+      "The queue can still look active: a voicemail was left, a form was opened, a payer asked for detail. The loss begins when no person or system is accountable for waking the case again.",
+    rows: [
+      { patient: "Patient A", specialty: "Dermatology", lastSignal: "Voicemail left", age: "6 days", next: "No retry scheduled" },
+      { patient: "Patient B", specialty: "Rheumatology", lastSignal: "Intake link opened", age: "11 days", next: "Insurance field incomplete" },
+      { patient: "Patient C", specialty: "Gastroenterology", lastSignal: "Payer requested detail", age: "18 days", next: "Staff review never routed" },
+    ],
+    note: "Illustrative referral queue. No patient data or measured performance claim.",
+  },
+  workflow: {
+    eyebrow: "One referral · three checkpoints",
+    heading: "Follow the next action all the way to customer-side evidence.",
+    intro:
+      "The pilot is designed around a simple discipline: preserve the signal, assign the next administrative action, and stop only at an explicit outcome or human boundary.",
+    caseLabel: "Illustrative specialty referral",
+    steps: [
+      {
+        day: "Day 0",
+        channel: "Queue",
+        title: "Referral tail received",
+        signal: "An aged referral appears in the practice’s scheduled export.",
+        action: "Preserve the source record and schedule the first approved contact window.",
+        next: "Call at 4:30 PM, the patient’s preferred time.",
+        evidence: "Source row + intake timestamp",
+      },
+      {
+        day: "Day 1",
+        channel: "SMS",
+        title: "Abandoned intake resumed",
+        signal: "The link was opened, but the insurance field is incomplete.",
+        action: "Answer the administrative question and ask the patient to finish the missing field.",
+        next: "Recheck after the patient’s stated break window.",
+        evidence: "Inbound reply + completed field",
+      },
+      {
+        day: "Day 8",
+        channel: "EHR report",
+        title: "Kept first visit reconciled",
+        signal: "The customer’s schedule export records the first visit as arrived or checked in.",
+        action: "Match the customer-side event to the eligible referral and close the case with its evidence.",
+        next: "Terminal: outcome completed.",
+        evidence: "Customer-side kept-status record",
+      },
+    ],
+  },
+  guardrails: {
+    eyebrow: "Administrative by design",
+    heading: "Persistent on follow-through. Strict at the boundary.",
+    intro:
+      "Primary Logic is being designed to pursue an administrative outcome. It does not practice medicine, change clinical policy, or invent missing facts.",
+    items: [
+      { title: "BAA before PHI", body: "Security review, a signed BAA, minimum-necessary intake mapping, access logging, and approved PHI-path vendors come first." },
+      { title: "Your systems stay authoritative", body: "We operate through approved channels and read customer reports for verification. We do not replace your EHR or define completion ourselves." },
+      { title: "Every case ends explicitly", body: "Completed, declined, unreachable, ineligible, escalated, blocked, or withdrawn — never silently forgotten in a queue." },
+      { title: "Humans own judgment", body: "Clinical content, distress, policy exceptions, and unclear identity route to designated staff with full context." },
+    ],
+  },
+  economics: {
+    eyebrow: "One meter",
+    heading: "Pay for kept visits, not attempts or appointments.",
+    intro:
+      "Before any live pilot, the order form must fix eligibility, attribution, evidence, disputes, and the per-kept-visit fee. A customer-side report—not our telemetry—decides what qualifies.",
+    billable: {
+      label: "Billable",
+      title: "Kept first visit",
+      body: "An eligible second-pass referral marked arrived, checked in, or completed in the agreed customer-side report.",
+    },
+    zeroFee: [
+      "Appointment booked but not kept",
+      "Patient declined or opted out",
+      "Unreachable after the agreed sequence",
+      "Ineligible, blocked, withdrawn, or escalated",
+    ],
+    note:
+      "Healthcare outcome pricing and contract structure remain subject to federal and state counsel review before any live or scaled launch.",
+  },
+  pilot: {
+    eyebrow: "A design-partner pilot",
+    heading: "Test one cohort without replacing anything.",
+    intro:
+      "The proposed pilot runs beside the current process on a narrowly defined aged or unworked cohort. No migration, exclusivity, or seat purchase is required.",
+    steps: [
+      { title: "Qualify the cohort", body: "Define one referral slice the first pass has already touched, plus the consent and escalation rules." },
+      { title: "Work the second pass", body: "Use the approved channels while your team and current tools remain in place." },
+      { title: "Reconcile the evidence", body: "Match claimed kept visits against your EHR or scheduling report before any outcome can qualify." },
+    ],
+    closing: "Pilot scope, BAA, contact policy, evidence rules, and legally reviewed pricing are agreed before the first outreach.",
+  },
+  answers: [
+    {
+      q: "Is Primary Logic live today?",
+      a: "Not yet. We are recruiting design partners for the first healthcare build and pilot. Live outreach begins only after the product, BAA, contact policy, evidence rules, and legal structure are ready.",
+    },
+    {
+      q: "Is this a replacement for our scheduling team or AI?",
+      a: "No. Keep the people and tools that make the first pass. Primary Logic takes the aged or unworked tail they could not finish.",
+    },
+    {
+      q: "Do we need a deep EHR integration?",
+      a: "No. Intake can start from a copy of an existing queue, and verification can use a periodic customer-side report. The pilot order defines eligibility, attribution, evidence, and disputes before work begins.",
+    },
+    {
+      q: "Who handles clinical questions?",
+      a: "Your designated staff. Primary Logic handles approved administrative tasks and routes clinical, policy, identity, and distress exceptions with context.",
+    },
+  ],
+  finalCta: {
+    heading: "See if your referral tail fits the first pilot.",
+    body:
+      "Tell us where follow-through breaks, what export already exists, and how your team records a kept first visit. We’ll reply with fit, open questions, and the smallest credible pilot shape.",
+  },
+};

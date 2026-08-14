@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, type FormEvent } from "react";
+import { ArrowRight } from "@phosphor-icons/react/dist/csr/ArrowRight";
 import { CONTACT_EMAIL } from "@/lib/content";
 import { track } from "@/lib/analytics";
 
@@ -13,14 +14,16 @@ export default function EmailCapture({
   emailPlaceholder = "name@company.com",
   orgLabel = "Organization",
   orgPlaceholder = "Your organization",
+  helperText,
   lane,
 }: {
   id?: string;
-  variant?: "compact" | "full";
+  variant?: "compact" | "full" | "landing";
   buttonLabel?: string;
   emailPlaceholder?: string;
   orgLabel?: string;
   orgPlaceholder?: string;
+  helperText?: string;
   lane?: string;
 }) {
   const [status, setStatus] = useState<Status>("idle");
@@ -28,7 +31,8 @@ export default function EmailCapture({
   const started = useRef(false);
   const emailId = `${id ?? "demo"}-email`;
   const orgId = `${id ?? "demo"}-organization`;
-  const compact = variant === "compact";
+  const compact = variant !== "full";
+  const landing = variant === "landing";
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -67,7 +71,7 @@ export default function EmailCapture({
   return (
     <form
       id={id}
-      className={compact ? "max-w-[460px]" : "w-full"}
+      className={compact ? (landing ? "w-full max-w-[520px]" : "max-w-[460px]") : "w-full"}
       onSubmit={submit}
       onFocus={() => {
         if (started.current) return;
@@ -75,7 +79,7 @@ export default function EmailCapture({
         track("demo_form_started", { placement: id ?? "demo", lane });
       }}
     >
-      <div className={compact ? "contact-join" : "grid gap-4 sm:grid-cols-2"}>
+      <div className={compact ? `contact-join ${landing ? "contact-join--landing" : ""}` : "grid gap-4 sm:grid-cols-2"}>
         <div className={compact ? "min-w-0 flex-1" : ""}>
           <label htmlFor={emailId} className={compact ? "sr-only" : "mb-1 block text-[11px] font-medium text-ink"}>Work email</label>
           <input
@@ -86,8 +90,8 @@ export default function EmailCapture({
             required
             placeholder={emailPlaceholder}
             className={compact
-              ? "min-h-[56px] w-full border-0 bg-white px-5 text-[15px] text-ink outline-none placeholder:text-mute"
-              : "min-h-10 w-full rounded-[5px] border border-rule bg-white px-3.5 py-2 text-[13px] text-ink outline-none placeholder:text-mute focus:border-accent"}
+              ? "min-h-[50px] w-full border-0 bg-white px-5 text-[14px] text-ink placeholder:text-mute focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent"
+              : "min-h-10 w-full rounded-[5px] border border-rule bg-white px-3.5 py-2 text-[13px] text-ink placeholder:text-mute focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"}
           />
         </div>
         {!compact && <div>
@@ -100,7 +104,7 @@ export default function EmailCapture({
             required
             maxLength={120}
             placeholder={orgPlaceholder}
-            className="min-h-10 w-full rounded-[5px] border border-rule bg-white px-3.5 py-2 text-[13px] text-ink outline-none placeholder:text-mute focus:border-accent"
+            className="min-h-10 w-full rounded-[5px] border border-rule bg-white px-3.5 py-2 text-[13px] text-ink placeholder:text-mute focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           />
         </div>}
 
@@ -108,9 +112,14 @@ export default function EmailCapture({
           <button
             type="submit"
             disabled={status === "submitting"}
-            className="min-h-[56px] shrink-0 bg-accent px-7 text-[15px] font-semibold text-white transition-colors hover:bg-accent-deep disabled:cursor-wait disabled:opacity-65 sm:min-w-[168px]"
+            className={`min-h-[50px] shrink-0 bg-accent px-6 text-[13px] font-semibold whitespace-nowrap text-white transition-colors hover:bg-accent-deep disabled:cursor-wait disabled:opacity-65 sm:min-w-[150px] sm:px-6 sm:text-[14px] ${landing ? "inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full" : ""}`}
           >
-            {status === "submitting" ? "Sending…" : buttonLabel}
+            {status === "submitting" ? "Sending…" : (
+              <>
+                <span>{buttonLabel}</span>
+                {landing && <ArrowRight aria-hidden="true" size={16} weight="bold" />}
+              </>
+            )}
           </button>
         )}
       </div>
@@ -129,6 +138,10 @@ export default function EmailCapture({
           {status === "submitting" ? "Sending…" : buttonLabel}
         </button>
       </div>}
+
+      {helperText && !message ? (
+        <p className="mt-2 pl-1 text-[11px] leading-[1.5] text-mute">{helperText}</p>
+      ) : null}
 
       <div className={`${message ? "mt-3" : ""} min-h-0 text-[13px] leading-[1.55]`} role="status" aria-live="polite">
         {message && (

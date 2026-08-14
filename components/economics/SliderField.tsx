@@ -36,7 +36,7 @@ export default function SliderField({
   return (
     <div className="py-4">
       <div className="flex items-baseline justify-between gap-4">
-        <label htmlFor={id} className="text-[14px] leading-snug font-medium text-ink">
+        <label htmlFor={id} className="text-[13px] leading-snug font-medium text-ink">
           {label}
         </label>
         <div className="flex shrink-0 items-baseline gap-0.5">
@@ -50,7 +50,7 @@ export default function SliderField({
               onChange(Number.isFinite(next) ? next : 0);
             }}
             aria-label={label}
-            className="figure-num w-[7ch] border-b border-rule-mid bg-transparent pb-0.5 text-right text-[16px] font-medium text-ink outline-none focus:border-accent"
+            className="figure-num w-[7ch] border-b border-rule-mid bg-transparent pb-0.5 text-right text-[15px] font-medium text-ink outline-none focus:border-accent"
           />
           {suffix && <span className="figure-num text-[14px] text-mute">{suffix}</span>}
         </div>
@@ -67,7 +67,7 @@ export default function SliderField({
         className="pl-range mt-2 w-full"
       />
 
-      {hint && <p className="mt-1.5 text-[12px] leading-snug text-mute">{hint}</p>}
+      {hint && <p className="mt-1.5 text-[11.5px] leading-snug text-mute">{hint}</p>}
     </div>
   );
 }

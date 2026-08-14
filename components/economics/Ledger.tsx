@@ -36,7 +36,7 @@ function Row({
       }`}
     >
       <span
-        className={`text-[14px] leading-snug ${
+        className={`text-[13px] leading-snug ${
           emphasis === "total" ? "font-semibold text-ink" : "text-body"
         }`}
       >
@@ -45,10 +45,10 @@ function Row({
       <span
         className={`figure-num shrink-0 ${
           emphasis === "total"
-            ? "text-[20px] font-semibold text-accent-deep sm:text-[25px]"
+            ? "text-[18px] font-semibold text-accent-deep sm:text-[22px]"
             : emphasis === "sub"
-              ? "text-[17px] font-medium text-ink"
-              : "text-[15px] text-ink"
+              ? "text-[15.5px] font-medium text-ink"
+              : "text-[14px] text-ink"
         }`}
       >
         {value}

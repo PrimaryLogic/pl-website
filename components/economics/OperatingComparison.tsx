@@ -35,7 +35,7 @@ export default function OperatingComparison() {
               <div role="cell">
                 <span className="label block !text-[10px] text-mute md:hidden">{alternatives.columns.model}</span>
                 <div className="mt-1.5 flex flex-wrap items-center gap-2 md:mt-0">
-                  <p className={`text-[14px] font-semibold ${option.primary ? "text-accent-deep" : "text-ink"}`}>
+                  <p className={`text-[13px] font-semibold ${option.primary ? "text-accent-deep" : "text-ink"}`}>
                     {option.model}
                   </p>
                   {option.primary && (
@@ -44,14 +44,14 @@ export default function OperatingComparison() {
                     </span>
                   )}
                 </div>
-                <p className="mt-1 text-[11.5px] leading-[1.45] text-mute">{option.purchase}</p>
+                <p className="mt-1 text-[11px] leading-[1.45] text-mute">{option.purchase}</p>
               </div>
 
               {columns.map(([key, label]) => (
                 <div key={key} role="cell">
                   <span className="label block !text-[10px] text-mute md:hidden">{label}</span>
                   <p
-                    className={`mt-1.5 text-[12.5px] leading-[1.5] md:mt-0 ${
+                    className={`mt-1.5 text-[12px] leading-[1.5] md:mt-0 ${
                       option.primary && key === "billing" ? "font-semibold text-accent-deep" : "text-body"
                     }`}
                   >

@@ -2,23 +2,23 @@ import type { Metadata } from "next";
 import HealthcarePage from "@/components/HealthcarePage";
 
 export const metadata: Metadata = {
-  title: "Specialty Referral Conversion",
+  title: "Specialty Referral Recovery Design-Partner Pilots",
   description:
-    "Keep your schedulers and scheduling software — Primary Logic takes the second pass. We work the referrals your first pass couldn't finish, paid per kept first visit verified in your EHR.",
+    "Primary Logic is recruiting design partners for second-pass specialty referral recovery pilots verified against customer-side EHR or scheduling reports.",
   alternates: { canonical: "/healthcare" },
   openGraph: {
     type: "website",
     url: "/healthcare",
     siteName: "Primary Logic",
-    title: "We convert the referrals your first pass couldn't",
+    title: "Recover the referrals your first pass couldn’t finish",
     description:
-      "Second-pass referral conversion, paid per kept first visit verified in your EHR. Everything else is $0.",
+      "Design-partner pilots for multi-site specialty groups. One aged cohort, no replacement, customer-side verification.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "We convert the referrals your first pass couldn't",
+    title: "Recover the referrals your first pass couldn’t finish",
     description:
-      "Second-pass referral conversion, paid per kept first visit verified in your EHR. Everything else is $0.",
+      "Design-partner pilots for multi-site specialty groups. One aged cohort, no replacement, customer-side verification.",
   },
 };
 

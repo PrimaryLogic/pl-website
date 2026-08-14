@@ -1,70 +1,98 @@
-import { ArrowRight, ArrowsClockwise, CheckCircle } from "@phosphor-icons/react/dist/ssr";
+import { ArrowDown, ArrowsClockwise, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import { loop } from "@/lib/content/home";
-import { Eyebrow, Heading, Section } from "../Section";
+
+function StepCopy({ index }: { index: number }) {
+  const step = loop.steps[index];
+  return (
+    <div>
+      <p className="figure-num text-[9.5px] tracking-[0.14em] text-[#8f8983] uppercase">
+        {String(index + 1).padStart(2, "0")} · {step.title}
+      </p>
+      <p className="mt-2 max-w-[300px] text-[12.5px] leading-[1.58] text-[#bdb8b2]">{step.body}</p>
+    </div>
+  );
+}
 
 export default function LoopSection() {
   return (
-    <Section id="loop" className="sm:!py-8 lg:!py-12">
-      <Eyebrow>{loop.eyebrow}</Eyebrow>
-      <Heading className="max-w-[720px] !text-[30px] lg:!text-[42px]">{loop.heading}</Heading>
-      <p className="mt-4 max-w-[560px] text-[13px] leading-[1.6] text-body lg:text-[15px] lg:leading-[1.7]">
-        {loop.intro}
-      </p>
-
-      <ol aria-label="The working loop" className="mt-8 grid gap-3 md:grid-cols-4 md:gap-0">
-        {loop.steps.map((step, index) => (
-          <li key={step.title} className="relative flex md:pr-8">
-            <div className="w-full rounded-2xl border border-rule bg-white p-5 shadow-[0_8px_24px_rgba(18,20,16,0.04)]">
-              <div className="flex items-center justify-between gap-3">
-                <p className="display text-[19px] text-ink">{step.title}</p>
-                <span className="figure-num rounded-full bg-band px-2.5 py-1 text-[10.5px] font-medium text-body">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-              </div>
-              <p className="mt-2.5 text-[12.5px] leading-[1.6] text-body">{step.body}</p>
-            </div>
-            <div
-              className="absolute -right-0.5 top-1/2 hidden -translate-y-1/2 md:flex md:items-center md:justify-center md:pr-1.5"
-              aria-hidden="true"
-            >
-              {index < loop.steps.length - 1 ? (
-                <ArrowRight size={17} weight="bold" className="text-accent" />
-              ) : (
-                <ArrowsClockwise size={17} weight="bold" className="text-mute" />
-              )}
-            </div>
-          </li>
-        ))}
-      </ol>
-      <p className="mt-2 hidden text-right text-[11px] text-mute md:block" aria-hidden="true">
-        Record loops back to Watch until the job is done.
-      </p>
-
-      <div className="mt-7 rounded-2xl border border-rule bg-white p-5 shadow-[0_8px_24px_rgba(18,20,16,0.04)] sm:p-6">
-        <div className="grid gap-6 lg:grid-cols-[minmax(220px,.7fr)_minmax(0,1.3fr)] lg:items-start">
+    <section id="loop" className="scroll-mt-6 bg-white px-4 pb-14 sm:px-6 sm:pb-20">
+      <div className="mx-auto max-w-[1392px] rounded-[20px] bg-[#191612] px-6 py-8 text-white sm:px-10 sm:py-10 lg:px-12 lg:py-11">
+        <div className="grid gap-4 lg:grid-cols-[.95fr_1.05fr] lg:gap-20">
           <div>
-            <h3 className="display text-[25px] leading-[1.08] text-ink sm:text-[28px]">
-              {loop.terminalStates.heading}
-            </h3>
-            <p className="mt-3 max-w-[430px] text-[13px] leading-[1.65] text-body">
-              {loop.terminalStates.body}
+            <p className="label !text-[9.5px] text-[#8f8983]">{loop.eyebrow}</p>
+            <h2 className="display mt-3 max-w-[560px] text-[28px] leading-[1.04] text-white sm:text-[34px] lg:text-[38px]">
+              {loop.heading}
+            </h2>
+          </div>
+          <div className="lg:pt-4">
+            <p className="max-w-[600px] text-[14px] leading-[1.6] text-[#c9c5bf] sm:text-[15px]">{loop.intro}</p>
+            <p className="mt-3 max-w-[620px] text-[12.5px] leading-[1.65] text-[#8f8983] sm:text-[13px]">{loop.runtime}</p>
+          </div>
+        </div>
+
+        <div className="my-7 h-px bg-white/10" />
+
+        <ol className="grid gap-3 lg:hidden" aria-label="Primary Logic agent loop">
+          {loop.steps.map((step, index) => (
+            <li key={step.title} className="rounded-[9px] border border-white/15 px-4 py-4">
+              <div className="flex items-center justify-between gap-4">
+                <p className="figure-num text-[10px] tracking-[0.14em] text-[#8f8983] uppercase">{String(index + 1).padStart(2, "0")}</p>
+                <h3 className="text-[14px] font-semibold uppercase">{step.title}</h3>
+              </div>
+              <p className="mt-3 text-[13px] leading-[1.58] text-[#bdb8b2]">{step.body}</p>
+            </li>
+          ))}
+          <li className="flex items-center justify-center gap-2 py-2 text-[13px] text-[#bdb8b2]">
+            <ArrowsClockwise aria-hidden="true" size={16} /> Next signal
+          </li>
+        </ol>
+
+        <div className="hidden min-h-[440px] grid-cols-[1fr_310px_1fr] gap-10 lg:grid">
+          <div className="flex flex-col justify-around text-right">
+            <div className="ml-auto"><StepCopy index={0} /></div>
+            <div className="ml-auto"><StepCopy index={2} /></div>
+          </div>
+
+          <div className="flex flex-col items-center justify-center">
+            <p className="figure-num mb-4 text-[9.5px] tracking-[0.16em] text-[#8f8983] uppercase">Primary Logic runtime</p>
+            {loop.steps.map((step, index) => (
+              <div key={step.title} className="contents">
+                <div className={`flex min-h-[48px] w-full items-center justify-between rounded-[7px] border px-4 ${index === 1 ? "border-accent bg-accent/5" : "border-white/20"}`}>
+                  <span className={`inline-flex size-2.5 items-center justify-center rounded-full ${index === 1 ? "bg-accent" : "border border-white/35"}`} />
+                  <span className="text-[12px] font-semibold uppercase">{step.title}</span>
+                </div>
+                {index < loop.steps.length - 1 && <ArrowDown aria-hidden="true" size={16} className="my-1.5 text-white/30" />}
+              </div>
+            ))}
+            <p className="mt-4 flex items-center gap-2 text-[12px] text-[#bdb8b2]">
+              <ArrowsClockwise aria-hidden="true" size={16} /> Next signal
             </p>
           </div>
-          <div>
-            <ul className="grid gap-2 sm:grid-cols-2" aria-label="Job terminal states">
+
+          <div className="flex flex-col justify-around">
+            <StepCopy index={1} />
+            <StepCopy index={3} />
+          </div>
+        </div>
+
+        <div className="mt-7 border-t border-white/10 pt-6">
+          <div className="grid gap-5 lg:grid-cols-[.7fr_1.3fr] lg:items-start">
+            <div>
+              <p className="label !text-[9.5px] text-[#8f8983]">Auditable endings</p>
+              <h3 className="display mt-2.5 text-[21px] leading-[1.1] text-white">{loop.terminalStates.heading}</h3>
+              <p className="mt-2.5 text-[12.5px] leading-[1.58] text-[#bdb8b2]">{loop.terminalStates.note}</p>
+            </div>
+            <ul className="grid gap-2 sm:grid-cols-2">
               {loop.terminalStates.items.map((item) => (
-                <li key={item} className="flex items-start gap-2.5 rounded-xl bg-band px-3.5 py-3 text-[13px] font-medium text-ink">
-                  <CheckCircle aria-hidden="true" size={17} weight="fill" className="mt-0.5 shrink-0 text-accent" />
+                <li key={item} className="flex gap-2.5 rounded-[7px] border border-white/10 px-3.5 py-2.5 text-[12px] leading-[1.5] text-[#c9c5bf]">
+                  <CheckCircle aria-hidden="true" size={16} weight="fill" className="mt-0.5 shrink-0 text-accent" />
                   {item}
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-[12.5px] font-medium leading-[1.6] text-accent-deep">
-              {loop.terminalStates.note}
-            </p>
           </div>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }

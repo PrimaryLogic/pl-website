@@ -20,8 +20,8 @@ export default function ChallengeSection() {
       <div className="grid gap-x-14 gap-y-10 md:grid-cols-[minmax(240px,.68fr)_minmax(0,1.32fr)] md:items-center">
         <div>
           <Eyebrow tone="loss">{challenge.eyebrow}</Eyebrow>
-          <Heading className="max-w-[430px] !text-[30px] lg:!text-[38px]">{challenge.heading}</Heading>
-          <p className="mt-5 max-w-[430px] text-[14px] leading-[1.7] text-body">{challenge.intro}</p>
+          <Heading className="max-w-[430px] !text-[25px] lg:!text-[31px]">{challenge.heading}</Heading>
+          <p className="mt-4 max-w-[430px] text-[13.5px] leading-[1.7] text-body">{challenge.intro}</p>
         </div>
 
         <ol aria-label="Illustrative stalled patients" className="grid gap-4">
