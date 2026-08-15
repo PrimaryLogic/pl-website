@@ -2148,3 +2148,19 @@ summary::-webkit-details-marker {
 .pl-hero__form .contact-join--landing input { min-height: 42px; font-size: 14px; }
 .pl-hero__form .contact-join--landing button { min-height: 42px; font-size: 13.5px; }
 .pl-hero__center .pl-eyebrow { font-size: 12.5px; }
+
+/* Mobile hero: keep the industry pills on one row, sized to fit. */
+@media (max-width: 640px) {
+  .pl-hero { padding-top: 40px; }
+  .pl-hero__center .pl-hero__title { font-size: clamp(32px, 9vw, 40px); }
+  .pl-hero__center .pl-hero__body { font-size: 16px; }
+  .pl-hero__center .pl-hero__proof { gap: 6px 14px; font-size: 13px; }
+  .pl-switcher { width: 100%; }
+  .pl-tabs--bar { display: flex; flex-wrap: nowrap; width: 100%; padding: 3px; }
+  .pl-tabs--bar .pl-tab { flex: 1 1 0; min-height: 36px; padding: 0 6px; font-size: 12.5px; white-space: nowrap; }
+  .pl-case__head { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .pl-case__span { order: -1; }
+}
+@media (max-width: 360px) {
+  .pl-tabs--bar .pl-tab { font-size: 11.5px; padding: 0 4px; }
+}
