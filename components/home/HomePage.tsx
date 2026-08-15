@@ -187,8 +187,8 @@ export default function HomePage() {
                   {pricing.compare.rows.map((row) => (
                     <tr key={row[0]}>
                       <th scope="row">{row[0]}</th>
-                      <td>{row[1]}</td>
-                      <td className="is-primary">{row[2]}</td>
+                      <td data-label={pricing.compare.columns[1]}>{row[1]}</td>
+                      <td className="is-primary" data-label={pricing.compare.columns[2]}>{row[2]}</td>
                     </tr>
                   ))}
                 </tbody>
