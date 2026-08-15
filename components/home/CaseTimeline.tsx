@@ -34,22 +34,18 @@ export default function CaseTimeline({
 }) {
   const [shown, setShown] = useState(0);
 
-  // Replays on a loop: reveal one beat per tick, hold on the finished case,
-  // then blur everything and start again. Parents remount (via `key`) to restart.
+  // Reveals one beat per tick, then holds. Parents remount (via `key`) to replay.
   useEffect(() => {
     const total = story.beats.length;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       const once = window.setTimeout(() => setShown(total), 0);
       return () => window.clearTimeout(once);
     }
-    const holdTicks = 7; // ~3s on the completed case
-    const restTicks = 2; // brief blurred pause before replaying
     let i = 0;
     const tick = window.setInterval(() => {
       i += 1;
-      if (i <= total) setShown(i);
-      else if (i === total + holdTicks) setShown(0);
-      else if (i >= total + holdTicks + restTicks) i = 0;
+      setShown(i);
+      if (i >= total) window.clearInterval(tick);
     }, 420);
     return () => window.clearInterval(tick);
   }, [story]);
