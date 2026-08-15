@@ -80,7 +80,7 @@ export default function LendingPage() {
     <div className="min-h-full bg-white">
       <a href="#main-content" className="skip-link">Skip to main content</a>
       <AnalyticsBridge />
-      <SiteNav nav={lendingNav} variant="landing" />
+      <SiteNav nav={lendingNav} variant="operator" />
 
       <main id="main-content" className="flex-1">
         <section className="bg-white px-4 pb-12 pt-8 sm:px-6 sm:pb-16 sm:pt-12 lg:pt-14">
@@ -262,7 +262,7 @@ export default function LendingPage() {
 
         <FinalCta heading={finalCta.heading} body={finalCta.body} emailPlaceholder="name@lender.com" lane="lending" variant="landing" />
       </main>
-      <SiteFooter variant="landing" />
+      <SiteFooter variant="operator" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData }} />
     </div>
   );

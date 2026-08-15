@@ -20,12 +20,12 @@ export const lendingNav: NavContent = {
 };
 
 export const hero = {
-  eyebrow: "Lending recapture · pilot design",
-  heading: "Funded loans, not follow-up activity.",
+  eyebrow: "Consumer lending · selective pilot design",
+  heading: "Start where the fee model is clean: funded loans, not follow-up activity.",
   body:
-    "Send a copy of abandoned applications or payoff-triggered lists. We work the administrative steps across voice, SMS, email, and your existing portal until the file funds or reaches another named ending.",
+    "Start with HELOC, home-improvement, personal-loan, or auto-refi queues. We work the administrative steps across voice, SMS, email, and your existing portal until the file funds or reaches another named ending.",
   note:
-    "The default billable event is a funded loan verified in your LOS. No funded loan, no invoice.",
+    "The default billable event is a funded loan verified in your LOS. Mortgage quoting stays with a licensed MLO; no funded loan, no invoice.",
   caseFile: {
     id: "FILE 04-182",
     label: "Illustrative recovery trace",
@@ -40,7 +40,7 @@ export const leak = {
   eyebrow: "The leak",
   heading: "Demand you already paid for is going quiet inside the file.",
   intro:
-    "The borrower started. Your team sourced the opportunity. The loan did not die from one clean rejection; it stalled between documents, calls, portals, and next steps nobody had time to keep owning.",
+    "The borrower started. Your team sourced the opportunity. The loan did not die from one clean rejection; it stalled between documents, calls, portals, and next steps nobody had time to keep owning. The first lane should be the one where outcome pricing is easiest to defend.",
   sources: [
     {
       number: "01",

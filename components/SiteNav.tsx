@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { homeNav, type NavContent } from "@/lib/content";
 
 export default function SiteNav({
@@ -6,8 +7,34 @@ export default function SiteNav({
   variant = "default",
 }: {
   nav?: NavContent;
-  variant?: "default" | "landing";
+  variant?: "default" | "landing" | "operator";
 }) {
+  if (variant === "operator") {
+    return (
+      <header className="pl-nav">
+        <div className="pl-nav__inner">
+          <Link href="/" className="pl-wordmark" aria-label="Primary Logic home">
+            <span className="pl-wordmark__mark" aria-hidden="true" />
+            <span>{nav.wordmark}</span>
+          </Link>
+
+          <nav className="pl-nav__links" aria-label="Primary navigation">
+            {nav.links.map((link) => (
+              <Link key={link.href} href={link.href}>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <Link href={nav.cta.href} className="pl-button pl-button--primary pl-nav__cta" data-analytics="nav-cta">
+            <span>{nav.cta.label}</span>
+            <ArrowUpRight aria-hidden="true" size={15} weight="bold" />
+          </Link>
+        </div>
+      </header>
+    );
+  }
+
   const landing = variant === "landing";
 
   return (

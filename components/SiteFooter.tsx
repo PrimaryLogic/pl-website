@@ -1,7 +1,30 @@
 import Link from "next/link";
 import { footer } from "@/lib/content";
 
-export default function SiteFooter({ variant = "default" }: { variant?: "default" | "landing" }) {
+export default function SiteFooter({ variant = "default" }: { variant?: "default" | "landing" | "operator" }) {
+  if (variant === "operator") {
+    return (
+      <footer className="pl-footer">
+        <div className="pl-footer__inner">
+          <div className="pl-footer__brand">
+            <p className="pl-footer__wordmark">Primary Logic</p>
+            <p className="pl-footer__note">Revenue follow-through, paid per result.</p>
+          </div>
+          <nav className="pl-footer__links" aria-label="Footer navigation">
+            {footer.links.map((link) =>
+              link.href.startsWith("/") ? (
+                <Link key={link.href} href={link.href}>{link.label}</Link>
+              ) : (
+                <a key={link.href} href={link.href}>{link.label}</a>
+              ),
+            )}
+          </nav>
+          <p className="pl-footer__copy">© {new Date().getFullYear()} Primary Logic</p>
+        </div>
+      </footer>
+    );
+  }
+
   const landing = variant === "landing";
   return (
     <footer className={landing ? "mt-auto bg-white px-5 pb-10 sm:px-10" : "mt-auto border-t border-rule bg-white px-5 py-6 sm:px-10"}>

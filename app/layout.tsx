@@ -1,25 +1,26 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { IBM_Plex_Mono, Inter, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 
-/** Display: expanded grotesk. Signage register: sturdy, institutional. */
-const display = Archivo({
-  variable: "--font-display",
+const display = Schibsted_Grotesk({
   subsets: ["latin"],
-  axes: ["wdth"],
+  weight: ["500", "600", "700"],
+  variable: "--font-display-web",
+  display: "swap",
 });
 
-const body = IBM_Plex_Sans({
-  variable: "--font-body",
+const body = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
+  variable: "--font-body-web",
+  display: "swap",
 });
 
-/** Every number on this page is set in mono, tabular-lining. */
 const mono = IBM_Plex_Mono({
-  variable: "--font-mono",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500"],
+  variable: "--font-mono-web",
+  display: "swap",
 });
 
 const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://primarylogic.com");
@@ -27,11 +28,11 @@ const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://primarylogi
 export const metadata: Metadata = {
   metadataBase: siteUrl,
   title: {
-    default: "Primary Logic | Agents That Finish the Job",
+    default: "Primary Logic | Revenue follow-through, paid per result",
     template: "%s | Primary Logic",
   },
   description:
-    "Primary Logic runs autonomous agents that own multi-week administrative jobs end to end — voice, SMS, email, and portals — priced per completed outcome, verified in your own system.",
+    "Primary Logic works the leads, patients, and cases your team can’t get to — by phone, text, and email, for as long as it takes — and you pay only when the outcome shows up in your own system.",
   alternates: { canonical: "/" },
   applicationName: "Primary Logic",
   authors: [{ name: "Primary Logic" }],
@@ -39,22 +40,22 @@ export const metadata: Metadata = {
     type: "website",
     url: "/",
     siteName: "Primary Logic",
-    title: "Agents that carry a job to the finish",
+    title: "Revenue follow-through, paid per result",
     description:
-      "A fixed fee per completed outcome, verified in your system. Failed attempts cost you nothing.",
+      "We work the demand your team can’t get to until it turns into a kept visit, a signed retainer, or a funded loan. You pay per completed outcome.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Agents that carry a job to the finish",
+    title: "Revenue follow-through, paid per result",
     description:
-      "A fixed fee per completed outcome, verified in your system. Failed attempts cost you nothing.",
+      "We work the demand your team can’t get to until it turns into a kept visit, a signed retainer, or a funded loan. You pay per completed outcome.",
   },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#f7f8f6",
+  themeColor: "#f7f7f4",
   colorScheme: "light",
 };
 
@@ -63,7 +64,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${display.variable} ${body.variable} ${mono.variable} h-full antialiased`}
+      className={`h-full antialiased ${display.variable} ${body.variable} ${mono.variable}`}
     >
       <body className="min-h-full flex flex-col bg-paper text-ink">{children}</body>
     </html>

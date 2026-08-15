@@ -35,7 +35,7 @@ export default function HealthcarePage() {
     <div className="min-h-full bg-white">
       <a href="#main-content" className="skip-link">Skip to main content</a>
       <AnalyticsBridge />
-      <SiteNav nav={healthcareNav} variant="landing" />
+      <SiteNav nav={healthcareNav} variant="operator" />
 
       <main id="main-content" className="flex-1">
         <section className="bg-white px-4 pb-14 pt-10 sm:px-6 sm:pb-16 sm:pt-14">
@@ -275,7 +275,7 @@ export default function HealthcarePage() {
         />
       </main>
 
-      <SiteFooter variant="landing" />
+      <SiteFooter variant="operator" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData }} />
     </div>
   );

@@ -420,21 +420,21 @@ export const finalCta = {
  */
 export const healthcareLanding = {
   hero: {
-    eyebrow: "Second-pass referral recovery for multi-site specialty groups",
-    headingLead: "Recover the specialty referrals",
-    headingAccent: "your first pass couldn’t finish.",
+    eyebrow: "Treatment coordination for elective healthcare groups",
+    headingLead: "Work the patients who already said yes",
+    headingAccent: "but never scheduled.",
     body:
-      "We’re recruiting design partners to test one aged or unworked cohort beside their current process. Primary Logic is being built to own the approved administrative follow-through while your team keeps clinical judgment.",
+      "We’re recruiting design partners to test one diagnosed, unscheduled treatment cohort beside their current process. Primary Logic is being built to own the approved administrative follow-through—from financing questions and intake to rescheduling and the kept visit—while your team keeps clinical judgment.",
     proof:
-      "No migration. No seat purchase. Your EHR or scheduling report decides what counts as a kept first visit.",
+      "No migration. No seat purchase. Your PMS or scheduling report decides what counts as a kept treatment visit.",
     brief: {
       status: "Now recruiting design partners",
-      heading: "A narrow pilot, not a replacement.",
+      heading: "A treatment tail, not a replacement.",
       items: [
-        { label: "Best fit", value: "Centralized, multi-site specialty groups" },
-        { label: "Cohort", value: "Aged or unworked referrals already touched by the first pass" },
-        { label: "Input", value: "CSV, scheduled report, or approved inbox feed" },
-        { label: "Verification", value: "Periodic EHR or scheduling report from your system" },
+        { label: "Best fit", value: "Dental, fertility, LASIK, medspa, or DSO groups" },
+        { label: "Cohort", value: "Diagnosed treatment plans or consults that never reached the calendar" },
+        { label: "Input", value: "PMS export, scheduled report, or approved inbox feed" },
+        { label: "Verification", value: "Practice schedule or production report from your system" },
       ],
       note: "Pilot scope is subject to BAA, consent mapping, and applicable federal and state legal review.",
     },
@@ -446,28 +446,28 @@ export const healthcareLanding = {
   },
   leak: {
     eyebrow: "Where the queue leaks",
-    heading: "A referral is lost when the next action loses its owner.",
+    heading: "A treatment plan is lost when the next action loses its owner.",
     intro:
-      "The queue can still look active: a voicemail was left, a form was opened, a payer asked for detail. The loss begins when no person or system is accountable for waking the case again.",
+      "The queue can still look active: a consult was completed, financing was discussed, a form was opened. The loss begins when no person or system is accountable for waking the case again.",
     rows: [
-      { patient: "Patient A", specialty: "Dermatology", lastSignal: "Voicemail left", age: "6 days", next: "No retry scheduled" },
-      { patient: "Patient B", specialty: "Rheumatology", lastSignal: "Intake link opened", age: "11 days", next: "Insurance field incomplete" },
-      { patient: "Patient C", specialty: "Gastroenterology", lastSignal: "Payer requested detail", age: "18 days", next: "Staff review never routed" },
+      { patient: "Patient A", specialty: "Full-arch consult", lastSignal: "Financing link opened", age: "6 days", next: "No retry scheduled" },
+      { patient: "Patient B", specialty: "Implant plan", lastSignal: "Consult completed", age: "11 days", next: "No next appointment" },
+      { patient: "Patient C", specialty: "IVF consult", lastSignal: "Forms started", age: "18 days", next: "Treatment coordinator never reconnected" },
     ],
-    note: "Illustrative referral queue. No patient data or measured performance claim.",
+    note: "Illustrative treatment queue. No patient data or measured performance claim.",
   },
   workflow: {
     eyebrow: "One referral · three checkpoints",
     heading: "Follow the next action all the way to customer-side evidence.",
     intro:
       "The pilot is designed around a simple discipline: preserve the signal, assign the next administrative action, and stop only at an explicit outcome or human boundary.",
-    caseLabel: "Illustrative specialty referral",
+    caseLabel: "Illustrative treatment plan",
     steps: [
       {
         day: "Day 0",
         channel: "Queue",
-        title: "Referral tail received",
-        signal: "An aged referral appears in the practice’s scheduled export.",
+        title: "Treatment tail received",
+        signal: "A diagnosed plan appears in the practice’s scheduled export without a future appointment.",
         action: "Preserve the source record and schedule the first approved contact window.",
         next: "Call at 4:30 PM, the patient’s preferred time.",
         evidence: "Source row + intake timestamp",
@@ -475,18 +475,18 @@ export const healthcareLanding = {
       {
         day: "Day 1",
         channel: "SMS",
-        title: "Abandoned intake resumed",
-        signal: "The link was opened, but the insurance field is incomplete.",
-        action: "Answer the administrative question and ask the patient to finish the missing field.",
+        title: "The next barrier resolved",
+        signal: "The financing or intake link was opened, but the patient has not selected a next appointment.",
+        action: "Answer the administrative question and move the patient back to an approved scheduling path.",
         next: "Recheck after the patient’s stated break window.",
         evidence: "Inbound reply + completed field",
       },
       {
         day: "Day 8",
         channel: "EHR report",
-        title: "Kept first visit reconciled",
-        signal: "The customer’s schedule export records the first visit as arrived or checked in.",
-        action: "Match the customer-side event to the eligible referral and close the case with its evidence.",
+        title: "Kept treatment visit reconciled",
+        signal: "The customer’s schedule export records the treatment visit as arrived or checked in.",
+        action: "Match the customer-side event to the eligible patient and close the case with its evidence.",
         next: "Terminal: outcome completed.",
         evidence: "Customer-side kept-status record",
       },
@@ -506,16 +506,16 @@ export const healthcareLanding = {
   },
   economics: {
     eyebrow: "One meter",
-    heading: "Pay for kept visits, not attempts or appointments.",
+    heading: "Pay for kept treatment visits, not attempts or appointments.",
     intro:
       "Before any live pilot, the order form must fix eligibility, attribution, evidence, disputes, and the per-kept-visit fee. A customer-side report—not our telemetry—decides what qualifies.",
     billable: {
       label: "Billable",
-      title: "Kept first visit",
-      body: "An eligible second-pass referral marked arrived, checked in, or completed in the agreed customer-side report.",
+      title: "Kept treatment visit",
+      body: "An eligible patient from the practice’s own queue marked arrived, checked in, or completed in the agreed customer-side report.",
     },
     zeroFee: [
-      "Appointment booked but not kept",
+      "Consult booked but not kept",
       "Patient declined or opted out",
       "Unreachable after the agreed sequence",
       "Ineligible, blocked, withdrawn, or escalated",
@@ -525,7 +525,7 @@ export const healthcareLanding = {
   },
   pilot: {
     eyebrow: "A design-partner pilot",
-    heading: "Test one cohort without replacing anything.",
+      heading: "Test one treatment cohort without replacing anything.",
     intro:
       "The proposed pilot runs beside the current process on a narrowly defined aged or unworked cohort. No migration, exclusivity, or seat purchase is required.",
     steps: [
@@ -556,6 +556,6 @@ export const healthcareLanding = {
   finalCta: {
     heading: "See if your referral tail fits the first pilot.",
     body:
-      "Tell us where follow-through breaks, what export already exists, and how your team records a kept first visit. We’ll reply with fit, open questions, and the smallest credible pilot shape.",
+      "Tell us where treatment follow-through breaks, what export already exists, and how your team records a kept visit. We’ll reply with fit, open questions, and the smallest credible pilot shape.",
   },
 };

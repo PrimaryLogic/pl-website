@@ -20,21 +20,22 @@ export type NavContent = {
 export const homeNav: NavContent = {
   wordmark: WORDMARK,
   links: [
-    { label: "How it works", href: "/#work" },
-    { label: "Healthcare", href: "/healthcare" },
+    { label: "How it works", href: "/#how" },
+    { label: "Pricing", href: "/#pricing" },
+    { label: "Dental", href: "/healthcare" },
+    { label: "Legal", href: "/legal" },
     { label: "Lending", href: "/lending" },
-    { label: "Pricing", href: "/#proof" },
   ],
-  cta: { label: "Start a pilot", href: "/#contact" },
+  cta: { label: "Start a pilot", href: "/#pilot" },
 };
 
 export const healthcareNav: NavContent = {
   wordmark: WORDMARK,
   links: [
     { label: "All lanes", href: "/" },
-    { label: "The leak", href: "#challenge" },
+    { label: "Treatment tail", href: "#challenge" },
     { label: "Pilot", href: "#pilot" },
-    { label: "Safety & billing", href: "#economics" },
+    { label: "Boundary & billing", href: "#economics" },
   ],
   cta: { label: "Discuss a pilot", href: "#contact" },
 };
@@ -43,6 +44,7 @@ export const footer = {
   entity: WORDMARK,
   links: [
     { label: "Healthcare", href: "/healthcare" },
+    { label: "Legal intake", href: "/legal" },
     { label: "Lending", href: "/lending" },
     { label: "Privacy", href: "/privacy-policy" },
     { label: "Terms", href: "/terms-of-service" },
