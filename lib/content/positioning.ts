@@ -125,7 +125,7 @@ export const hero = {
   primaryCta: { label: "Start a pilot", href: "#pilot" },
   secondaryCta: { label: "See how it works", href: "#how" },
   proof: ["No seats", "No subscription", "$0 if it doesn’t complete"],
-  form: { button: "Start a pilot", placeholder: "Work email", helper: "We reply within one business day. No sales sequence." },
+  form: { button: "Start a pilot", placeholder: "Work email" },
   caseLabel: "One case, illustrative",
 };
 
@@ -295,7 +295,6 @@ export const pilot = {
   form: {
     button: "Start a pilot",
     placeholder: "Work email",
-    helper: "We reply within one business day. No sales sequence.",
   },
 };
 

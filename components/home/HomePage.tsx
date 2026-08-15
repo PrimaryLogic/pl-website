@@ -260,7 +260,7 @@ export default function HomePage() {
                 <h2>{pilot.heading}</h2>
                 <p className="pl-pilot__body">{pilot.body}</p>
                 <div className="pl-pilot__form">
-                  <EmailCapture id="homepage-pilot" variant="landing" buttonLabel={pilot.form.button} emailPlaceholder={pilot.form.placeholder} helperText={pilot.form.helper} lane="homepage" />
+                  <EmailCapture id="homepage-pilot" variant="landing" buttonLabel={pilot.form.button} emailPlaceholder={pilot.form.placeholder} lane="homepage" />
                 </div>
                 <ul className="pl-pilot__summary" aria-label="Pilot design">
                   {pilot.summary.map((s) => <li key={s}>{s}</li>)}

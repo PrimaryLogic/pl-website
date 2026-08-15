@@ -110,7 +110,7 @@ export default function LegalPage() {
                 <h2>{legalLane.pilot.heading}</h2>
                 <p className="pl-pilot__body">{legalLane.pilot.body}</p>
                 <div className="pl-pilot__form">
-                  <EmailCapture id="legal-pilot" variant="landing" buttonLabel="Start a pilot" emailPlaceholder="Work email" helperText="We reply within one business day. No sales sequence." lane="legal" />
+                  <EmailCapture id="legal-pilot" variant="landing" buttonLabel="Start a pilot" emailPlaceholder="Work email" lane="legal" />
                 </div>
               </div>
               <ol className="pl-pilot__steps">

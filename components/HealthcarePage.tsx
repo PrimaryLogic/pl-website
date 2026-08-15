@@ -59,7 +59,7 @@ export default function HealthcarePage() {
                     variant="landing"
                     buttonLabel="Discuss a pilot"
                     emailPlaceholder="Enter your work email"
-                    helperText="Work email only · reply within one business day"
+                    helperText="Work email only"
                     lane="healthcare"
                   />
                 </div>
@@ -269,7 +269,7 @@ export default function HealthcarePage() {
           body={finalCta.body}
           emailPlaceholder="Enter your work email"
           buttonLabel="Discuss a pilot"
-          helperText="Work email only · reply within one business day"
+          helperText="Work email only"
           lane="healthcare"
           variant="landing"
         />
