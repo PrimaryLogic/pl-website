@@ -50,5 +50,4 @@ export const legalLane = {
       { title: "Reconcile signed cases", body: "Your signed-case log against our case history, inside the agreed attribution window. Only matches are billed." },
     ],
   },
-  closing: "A retainer is a finish line. Make the path to it accountable.",
 };

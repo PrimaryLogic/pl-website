@@ -122,7 +122,6 @@ export default function LegalPage() {
                 ))}
               </ol>
             </div>
-            <p className="pl-closing">{legalLane.closing}</p>
           </div>
         </section>
       </main>

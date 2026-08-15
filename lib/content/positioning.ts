@@ -297,7 +297,3 @@ export const pilot = {
     placeholder: "Work email",
   },
 };
-
-export const closing = {
-  line: "Own the whole job, or don’t call it automation.",
-};

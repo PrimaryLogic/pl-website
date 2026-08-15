@@ -12,7 +12,6 @@ import {
   XCircle,
 } from "@phosphor-icons/react/dist/ssr";
 import {
-  closing,
   contrast,
   controls,
   how,
@@ -278,7 +277,6 @@ export default function HomePage() {
                 ))}
               </ol>
             </div>
-            <p className="pl-closing">{closing.line}</p>
           </div>
         </section>
       </main>
