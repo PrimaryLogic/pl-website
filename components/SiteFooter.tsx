@@ -8,7 +8,6 @@ export default function SiteFooter({ variant = "default" }: { variant?: "default
         <div className="pl-footer__inner">
           <div className="pl-footer__brand">
             <p className="pl-footer__wordmark">Primary Logic</p>
-            <p className="pl-footer__note">Revenue follow-through, paid per result.</p>
           </div>
           <nav className="pl-footer__links" aria-label="Footer navigation">
             {footer.links.map((link) =>

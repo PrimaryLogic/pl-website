@@ -1797,11 +1797,11 @@ summary::-webkit-details-marker {
   align-items: start;
   width: min(100% - 48px, 1160px);
   margin: 0 auto;
-  padding: 44px 0 40px;
+  padding: 32px 0 28px;
 }
 .pl-footer__wordmark { margin: 0; font-family: var(--font-display); font-size: 16px; font-weight: 600; letter-spacing: -0.02em; color: var(--pl-ink); }
 .pl-footer__note { margin: 6px 0 0; color: var(--pl-mute); font-size: 13.5px; }
-.pl-footer__links { display: flex; flex-wrap: wrap; gap: 8px 22px; justify-self: end; }
+.pl-footer__links { display: flex; flex-wrap: wrap; gap: 6px 18px; justify-self: end; }
 .pl-footer__links a { color: var(--pl-body); font-size: 13.5px; text-decoration: none; }
 .pl-footer__links a:hover { color: var(--pl-ink); }
 .pl-footer__copy { grid-column: 1 / -1; margin: 0; color: var(--pl-mute); font-size: 12.5px; }
@@ -2062,9 +2062,10 @@ summary::-webkit-details-marker {
 .pl-pilot__steps { display: flex; flex-direction: column; }
 .pl-pilot__steps li { display: grid; grid-template-columns: 36px 1fr; gap: 16px; padding: 20px 0; border-top: 1px solid var(--pl-line); }
 .pl-pilot__steps li:last-child { border-bottom: 1px solid var(--pl-line); }
+.pl-pilot__steps li { padding: 18px 0; }
 .pl-pilot__index { display: inline-flex; width: 30px; height: 30px; align-items: center; justify-content: center; border-radius: 999px; background: var(--pl-green-soft); color: var(--pl-green-deep); font-family: var(--font-mono); font-size: 13px; font-weight: 500; }
 .pl-pilot__steps p { margin-top: 6px; color: var(--pl-body); font-size: 15px; }
-.pl-closing { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--pl-line); font-family: var(--font-display); font-size: 20px; font-weight: 600; letter-spacing: -0.015em; color: var(--pl-ink); }
+.pl-closing { margin-top: 40px; font-family: var(--font-display); font-size: 18px; font-weight: 600; letter-spacing: -0.015em; color: var(--pl-body); }
 @media (max-width: 900px) { .pl-pilot__grid { grid-template-columns: 1fr; gap: 40px; } }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2179,4 +2180,11 @@ summary::-webkit-details-marker {
   .pl-compare tbody td.is-primary { background: transparent; border-left: 0; }
   .pl-compare tbody td.is-primary::before { color: var(--pl-green-deep); }
   .pl-compare tbody td + td { border-top: 1px dashed var(--pl-line); }
+}
+
+@media (max-width: 720px) {
+  .pl-footer__inner { gap: 14px; padding: 28px 0 24px; }
+  .pl-footer__links a { font-size: 13px; }
+  .pl-closing { margin-top: 28px; font-size: 16px; }
+  .pl-pilot { padding-bottom: 56px; }
 }
