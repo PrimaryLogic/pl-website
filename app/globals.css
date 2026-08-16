@@ -2188,3 +2188,32 @@ summary::-webkit-details-marker {
   .pl-closing { margin-top: 28px; font-size: 16px; }
   .pl-pilot { padding-bottom: 56px; }
 }
+
+/* Audit pass: plainer storyboard, wider section heads, content-sized cards. */
+.pl-section-head { max-width: 820px; }
+.pl-case__span { display: none; }
+.pl-beat__meta { font-family: var(--font-body); font-size: 12.5px; font-weight: 500; letter-spacing: 0; }
+.pl-beat--system .pl-beat__card { background: var(--pl-bg); border: 1px solid var(--pl-line); padding: 10px 12px; }
+.pl-beat--terminal .pl-beat__card { background: var(--pl-green-soft); border-color: transparent; }
+.pl-case--wide .pl-beat--system .pl-beat__card { padding-left: 12px; }
+.pl-case--wide .pl-beat__text { font-size: 14px; }
+.pl-case--wide .pl-beat__note { font-size: 12.5px; margin-top: 8px; padding-top: 8px; border-top: 1px dashed rgba(14,107,71,0.25); }
+.pl-stat dd { margin-top: 0; }
+.pl-stat dt { margin-top: 6px; }
+.pl-step, .pl-control { display: flex; flex-direction: column; }
+.pl-contrast-wrap { margin-top: 56px; }
+.pl-contrast__title { margin-bottom: 16px; font-size: 20px; }
+.pl-lanes-row { margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--pl-line); }
+.pl-lanes-row__title { margin-bottom: 18px; color: var(--pl-mute); font-size: 14px; font-weight: 600; }
+.pl-lanes-row .pl-lane { padding: 20px 20px 18px; background: var(--pl-surface); }
+.pl-lane__top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.pl-lanes-row .pl-lane h3 { font-size: 17px; }
+.pl-lanes-row .pl-lane__link { margin-top: 0; font-size: 13.5px; white-space: nowrap; }
+.pl-lanes-row .pl-lane__body { margin-top: 10px; font-size: 14.5px; }
+.pl-lanes-row .pl-lane__outcome { margin-top: 14px; padding: 0; border: 0; background: transparent; display: flex; gap: 6px; align-items: baseline; }
+.pl-lanes-row .pl-lane__outcome span { font-size: 12.5px; }
+.pl-lanes-row .pl-lane__outcome strong { margin-top: 0; font-size: 15px; }
+@media (max-width: 720px) { .pl-lanes-row { margin-top: 48px; padding-top: 32px; } }
+.pl-beat__day, .pl-beat__time { font-family: var(--font-body); }
+.pl-beat__day { font-weight: 600; }
+.pl-case__label { font-size: 13px; }

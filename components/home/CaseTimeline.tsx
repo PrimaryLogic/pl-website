@@ -54,12 +54,11 @@ export default function CaseTimeline({
     <div id={id} role={labelledBy ? "tabpanel" : undefined} aria-labelledby={labelledBy} className={`pl-case${layout === "wide" ? " pl-case--wide" : ""}`}>
       <div className="pl-case__head">
         <div>
-          <p className="pl-case__label">{hero.caseLabel} · {story.audience}</p>
+          <p className="pl-case__label">{hero.caseLabel} — {story.personLabel}, {story.span}</p>
           <p className="pl-case__goal">
             Get {story.person} to a <strong>{story.outcomeShort}</strong>
           </p>
         </div>
-        <span className="pl-case__span">{story.span}</span>
       </div>
 
       <ol className="pl-case__list" key={story.key} style={{ "--beats": story.beats.length } as CSSProperties}>
@@ -82,7 +81,11 @@ export default function CaseTimeline({
                 <p className="pl-beat__meta">
                   <Ico aria-hidden="true" size={14} weight={beat.terminal ? "fill" : "regular"} />
                   <span>
-                    {beat.actor === "us" ? `${beat.channel} → ${story.person}` : beat.actor === "them" ? `${story.person} · ${beat.channel}` : beat.channel}
+                    {beat.actor === "us"
+                      ? `We ${beat.channel === "Call" ? "call" : beat.channel === "Email" ? "email" : "text"} ${story.person}`
+                      : beat.actor === "them"
+                        ? `${story.person} replies`
+                        : story.systemLabel}
                   </span>
                 </p>
                 <p className="pl-beat__text">{beat.text}</p>
@@ -97,7 +100,7 @@ export default function CaseTimeline({
         <CheckCircle aria-hidden="true" size={20} weight="fill" />
         <div>
           <strong>{story.outcome}</strong>
-          <span>Verified in {story.verifiedIn}. This is the only thing you’re billed for.</span>
+          <span>Verified in {story.verifiedIn}. The only thing you pay for.</span>
         </div>
       </div>
     </div>

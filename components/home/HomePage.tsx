@@ -1,6 +1,6 @@
 import Link from "next/link";
 import {
-  ArrowRight,
+  ArrowsLeftRight,
   ArrowUpRight,
   Check,
   CheckCircle,
@@ -12,7 +12,6 @@ import {
   XCircle,
 } from "@phosphor-icons/react/dist/ssr";
 import {
-  contrast,
   controls,
   how,
   lanes,
@@ -95,8 +94,8 @@ export default function HomePage() {
               <dl className="pl-stats">
                 {leak.stats.map((s) => (
                   <div key={s.figure} className="pl-stat">
-                    <dt>{s.label}</dt>
                     <dd>{s.figure}</dd>
+                    <dt>{s.label}</dt>
                     <p className="pl-stat__source">{s.source}</p>
                   </div>
                 ))}
@@ -118,30 +117,27 @@ export default function HomePage() {
                 </li>
               ))}
             </ol>
-          </div>
-        </section>
 
-        {/* 4 · Contrast */}
-        <section id="contrast" className="pl-section pl-section--tint">
-          <div className="pl-container">
-            <SectionHead eyebrow={contrast.eyebrow} heading={contrast.heading} body={contrast.body} />
-            <div className="pl-contrast" role="table" aria-label="Assistant versus Primary Logic">
-              <div className="pl-contrast__head" role="row">
-                <span role="columnheader" className="pl-contrast__a">{contrast.columns.a}</span>
-                <span role="columnheader" className="pl-contrast__b">{contrast.columns.b}</span>
-              </div>
-              {contrast.rows.map((r) => (
-                <div key={r.a} className="pl-contrast__row" role="row">
-                  <span role="cell" className="pl-contrast__a"><Minus aria-hidden="true" size={16} /> {r.a}</span>
-                  <span role="cell" className="pl-contrast__b"><Check aria-hidden="true" size={16} weight="bold" /> {r.b}</span>
+            <div className="pl-contrast-wrap">
+              <h3 className="pl-contrast__title">{how.contrast.heading}</h3>
+              <div className="pl-contrast" role="table" aria-label="An assistant versus Primary Logic">
+                <div className="pl-contrast__head" role="row">
+                  <span role="columnheader" className="pl-contrast__a">{how.contrast.columns.a}</span>
+                  <span role="columnheader" className="pl-contrast__b">{how.contrast.columns.b}</span>
                 </div>
-              ))}
+                {how.contrast.rows.map((r) => (
+                  <div key={r.a} className="pl-contrast__row" role="row">
+                    <span role="cell" className="pl-contrast__a"><Minus aria-hidden="true" size={16} /> {r.a}</span>
+                    <span role="cell" className="pl-contrast__b"><Check aria-hidden="true" size={16} weight="bold" /> {r.b}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
         {/* 5 · Setup */}
-        <section id="setup" className="pl-section">
+        <section id="setup" className="pl-section pl-section--tint">
           <div className="pl-container">
             <SectionHead eyebrow={setup.eyebrow} heading={setup.heading} body={setup.body} />
             <div className="pl-setup">
@@ -154,7 +150,7 @@ export default function HomePage() {
                   {setup.yours.items.map((it) => <li key={it}><Check aria-hidden="true" size={16} weight="bold" /> {it}</li>)}
                 </ul>
               </div>
-              <div className="pl-setup__arrow" aria-hidden="true"><ArrowRight size={22} weight="bold" /></div>
+              <div className="pl-setup__arrow" aria-hidden="true"><ArrowsLeftRight size={22} weight="bold" /></div>
               <div className="pl-setup__col pl-setup__col--ours">
                 <div className="pl-setup__title">
                   <h3>{setup.ours.title}</h3>
@@ -170,7 +166,7 @@ export default function HomePage() {
         </section>
 
         {/* 6 · Pricing */}
-        <section id="pricing" className="pl-section pl-section--tint">
+        <section id="pricing" className="pl-section">
           <div className="pl-container">
             <SectionHead eyebrow={pricing.eyebrow} heading={pricing.heading} body={pricing.body} />
             <div className="pl-pricing">
@@ -214,7 +210,7 @@ export default function HomePage() {
         </section>
 
         {/* 7 · Controls */}
-        <section id="guardrails" className="pl-section">
+        <section id="guardrails" className="pl-section pl-section--tint">
           <div className="pl-container">
             <SectionHead eyebrow={controls.eyebrow} heading={controls.heading} />
             <div className="pl-controls">
@@ -232,24 +228,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 8 · Lanes */}
-        <section id="lanes" className="pl-section pl-section--tint">
-          <div className="pl-container">
-            <SectionHead eyebrow={lanes.eyebrow} heading={lanes.heading} body={lanes.body} />
-            <div className="pl-lanes">
-              {lanes.cards.map((card) => (
-                <Link key={card.key} href={card.href} className={`pl-lane pl-lane--${card.key}`} data-analytics={`lane-${card.key}`}>
-                  <h3>{card.title}</h3>
-                  <p className="pl-lane__outcome"><span>You pay per</span><strong>{card.outcome}</strong></p>
-                  <p className="pl-lane__body">{card.body}</p>
-                  <p className="pl-lane__verified"><Check aria-hidden="true" size={14} weight="bold" /> {card.verified}</p>
-                  <span className="pl-lane__link">Learn more <ArrowUpRight aria-hidden="true" size={15} weight="bold" /></span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* 9 · Pilot */}
         <section id="pilot" className="pl-section pl-pilot">
           <div className="pl-container">
@@ -261,9 +239,6 @@ export default function HomePage() {
                 <div className="pl-pilot__form">
                   <EmailCapture id="homepage-pilot" variant="landing" buttonLabel={pilot.form.button} emailPlaceholder={pilot.form.placeholder} lane="homepage" />
                 </div>
-                <ul className="pl-pilot__summary" aria-label="Pilot design">
-                  {pilot.summary.map((s) => <li key={s}>{s}</li>)}
-                </ul>
               </div>
               <ol className="pl-pilot__steps">
                 {pilot.steps.map((s, i) => (
@@ -276,6 +251,22 @@ export default function HomePage() {
                   </li>
                 ))}
               </ol>
+            </div>
+
+            <div className="pl-lanes-row" aria-labelledby="lanes-heading">
+              <p id="lanes-heading" className="pl-lanes-row__title">{lanes.heading}</p>
+              <div className="pl-lanes">
+                {lanes.cards.map((card) => (
+                  <Link key={card.key} href={card.href} className="pl-lane" data-analytics={`lane-${card.key}`}>
+                    <div className="pl-lane__top">
+                      <h3>{card.title}</h3>
+                      <span className="pl-lane__link">{card.action} <ArrowUpRight aria-hidden="true" size={15} weight="bold" /></span>
+                    </div>
+                    <p className="pl-lane__body">{card.body}</p>
+                    <p className="pl-lane__outcome"><span>You pay per</span> <strong>{card.outcome}</strong></p>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </section>

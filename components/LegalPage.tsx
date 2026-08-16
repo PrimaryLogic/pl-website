@@ -71,8 +71,8 @@ export default function LegalPage() {
               </ol>
               <dl className="pl-stats">
                 <div className="pl-stat">
-                  <dt>{legalLane.leak.stat.label}</dt>
                   <dd>{legalLane.leak.stat.figure}</dd>
+                  <dt>{legalLane.leak.stat.label}</dt>
                   <p className="pl-stat__source">{legalLane.leak.stat.source}</p>
                 </div>
               </dl>
