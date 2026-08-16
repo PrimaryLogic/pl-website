@@ -2235,3 +2235,4 @@ summary::-webkit-details-marker {
 }
 .pl-hero__center .pl-hero__title { max-width: 26ch; }
 .pl-hero__center .pl-hero__body { max-width: 760px; font-weight: 500; }
+.pl-nav { border-bottom: 0; }
