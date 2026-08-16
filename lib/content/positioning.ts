@@ -11,25 +11,41 @@
 
 export type VerticalKey = "dental" | "legal" | "lending";
 
-export type CaseBeat = {
-  day: string;
-  time: string;
-  /** Who is acting. "system" rows are events from the customer's own software. */
-  actor: "us" | "them" | "system";
-  channel: "Text" | "Call" | "Email" | "Your system";
+export type ActorKind = "us" | "person" | "team" | "system";
+
+export type CaseAction = {
+  /** Who acts. "us" = Primary Logic, "person" = the patient/claimant/borrower,
+   *  "team" = the customer's staff (hand-offs), "system" = the customer's software. */
+  kind: ActorKind;
+  /** Pill text, e.g. "Primary Logic", "Luis", "Front desk", "PMS". */
+  actor: string;
+  /** Small channel tag, e.g. "SMS", "Phone", "Email", "Workflow", "Hand-off". */
+  channel: string;
   text: string;
-  /** Short note under the beat, e.g. a hand-off. */
-  note?: string;
-  /** The verified finish; rendered as the terminal stamp. */
-  terminal?: boolean;
+  /** Optional two-line exchange rendered as chat bubbles. */
+  transcript?: Array<{ who: "agent" | "person"; text: string }>;
+};
+
+export type CaseStep = {
+  /** Time label above the rail: "Day 1", "+3 hours", "Day 9". */
+  when: string;
+  /** Clock time within the day, e.g. "9:40 am". */
+  time?: string;
+  /** System chip on the signal card, e.g. "PMS". */
+  system?: string;
+  /** What happened — the trigger for this column. */
+  signal: string;
+  /** What we remember going into this step. */
+  memory?: string;
+  actions: CaseAction[];
+  /** Present on the final column only. */
+  outcome?: { system: string; label: string };
 };
 
 export type VerticalStory = {
   key: VerticalKey;
   tab: string;
   audience: string;
-  /** Plain name for the customer's software, e.g. "Your schedule". */
-  systemLabel: string;
   outcome: string;
   outcomeShort: string;
   verifiedIn: string;
@@ -46,7 +62,7 @@ export type VerticalStory = {
   person: string;
   personLabel: string;
   span: string;
-  beats: CaseBeat[];
+  steps: CaseStep[];
   href: string;
 };
 
@@ -55,7 +71,6 @@ export const verticals: VerticalStory[] = [
     key: "dental",
     tab: "Healthcare",
     audience: "Dental groups and DSOs",
-    systemLabel: "Your schedule",
     outcome: "Kept treatment visit",
     outcomeShort: "kept visit",
     verifiedIn: "your practice schedule",
@@ -64,25 +79,79 @@ export const verticals: VerticalStory[] = [
     forLabel: "For healthcare providers",
     channels: ["Phone", "SMS", "Email", "Web chat"],
     systems: ["EHR", "PMS"],
-    exampleTitle: "From unscheduled treatment to a kept visit",
-    exampleBody: "Primary Logic coordinates the patient, your front desk, and financing questions until the visit is kept.",
+    exampleTitle: "Get Luis’s implant consult booked and confirmed.",
+    exampleBody: "Primary Logic coordinates the patient, your front desk, and financing until the visit is confirmed.",
     person: "Luis",
     personLabel: "a dental patient",
-    span: "Day 1 to Day 9",
+    span: "Day 1 to Day 2",
     href: "/healthcare",
-    beats: [
-      { day: "Day 1", time: "9:00 am", actor: "system", channel: "Your system", text: "Implant consult diagnosed a month ago. Still unscheduled." },
-      { day: "Day 1", time: "10:00 am", actor: "us", channel: "Text", text: "Hi Luis — Dr. Patel’s office. We have Tuesday 9:30 or Thursday 2:00 for your consult. Reply 1 or 2 and I’ll hold it." },
-      { day: "Day 2", time: "12:30 pm", actor: "them", channel: "Text", text: "Thursday works. Which office is that?" },
-      { day: "Day 2", time: "4:00 pm", actor: "us", channel: "Call", text: "Called at the time Luis asked for. Confirmed the office, booked Thursday. Sent a reminder the day before.", note: "Financing question → your coordinator." },
-      { day: "Day 9", time: "10:30 am", actor: "system", channel: "Your system", text: "Appointment marked arrived in your schedule.", terminal: true },
+    steps: [
+      {
+        when: "Day 1",
+        time: "9:40 am",
+        system: "PMS",
+        signal: "Implant consult diagnosed 30 days ago, never scheduled",
+        memory: "Treatment plan, provider, and quoted fee attached.",
+        actions: [
+          { kind: "us", actor: "Primary Logic", channel: "", text: "Checks consent, pulls two open consult times" },
+          { kind: "person", actor: "Patient", channel: "SMS", text: "", transcript: [
+            { who: "agent", text: "Hi Luis — Dr. Patel’s office. Tuesday 9:30 or Thursday 2:00 for your implant consult?" },
+            { who: "person", text: "Can I get back to you tonight?" },
+          ] },
+        ],
+      },
+      {
+        when: "Day 1",
+        time: "6:12 pm",
+        system: "SMS",
+        signal: "Luis replies after work",
+        memory: "Luis answers in the evening.",
+        actions: [
+          { kind: "us", actor: "Primary Logic", channel: "", text: "Holds Thursday 2:00, routes the financing question" },
+          { kind: "person", actor: "Patient", channel: "SMS", text: "", transcript: [
+            { who: "person", text: "Thursday works. Do you offer payment plans?" },
+            { who: "agent", text: "We do — our coordinator will send the options. Holding Thursday at 2:00 for you." },
+          ] },
+          { kind: "team", actor: "Coordinator", channel: "Hand-off", text: "Sends the financing options" },
+          { kind: "system", actor: "PMS", channel: "Workflow", text: "Books Thursday 2:00 pm" },
+        ],
+      },
+      {
+        when: "Day 2",
+        time: "9:00 am",
+        system: "PMS",
+        signal: "Visit is tomorrow; intake forms still open",
+        memory: "Luis answers texts in the evening.",
+        actions: [
+          { kind: "us", actor: "Primary Logic", channel: "", text: "Sends the reminder, intake link, and directions" },
+          { kind: "person", actor: "Patient", channel: "SMS", text: "", transcript: [
+            { who: "agent", text: "See you tomorrow at 2:00 — intake form and directions below. Reply YES to confirm." },
+            { who: "person", text: "Will do after work." },
+          ] },
+        ],
+      },
+      {
+        when: "Day 2",
+        time: "7:48 pm",
+        system: "SMS",
+        signal: "Intake complete, Luis confirms",
+        memory: "Luis prefers SMS, evenings, and the downtown office — saved for next time.",
+        actions: [
+          { kind: "us", actor: "Primary Logic", channel: "", text: "Verifies intake and the confirmation" },
+          { kind: "person", actor: "Patient", channel: "SMS", text: "", transcript: [
+            { who: "person", text: "YES — form’s done." },
+            { who: "agent", text: "You’re all set, Luis. See you Thursday at 2:00." },
+          ] },
+          { kind: "system", actor: "PMS", channel: "Workflow", text: "Marks the visit confirmed" },
+        ],
+        outcome: { system: "PMS", label: "Visit booked and confirmed" },
+      },
     ],
   },
   {
     key: "legal",
     tab: "Legal",
     audience: "Personal-injury and mass-tort firms",
-    systemLabel: "Your case system",
     outcome: "Signed retainer",
     outcomeShort: "signed retainer",
     verifiedIn: "your case management system",
@@ -91,25 +160,75 @@ export const verticals: VerticalStory[] = [
     forLabel: "For law firms",
     channels: ["Phone", "SMS", "Email"],
     systems: ["CMS", "E-sign"],
-    exampleTitle: "From unsigned retainer to signed engagement",
-    exampleBody: "Primary Logic coordinates the claimant, your intake attorney, and e-sign until the retainer is signed.",
+    exampleTitle: "Get Cameron’s retainer signed.",
+    exampleBody: "Primary Logic coordinates the claimant, your attorney, and e-sign until the retainer is signed.",
     person: "Cameron",
     personLabel: "an injury claimant",
-    span: "Day 1 to Day 4",
+    span: "Day 1 to Day 2",
     href: "/legal",
-    beats: [
-      { day: "Day 1", time: "9:00 am", actor: "system", channel: "Your system", text: "Consult done a week ago. Retainer still unsigned." },
-      { day: "Day 1", time: "12:30 pm", actor: "us", channel: "Call", text: "Reached Cameron and resent the agreement link.", note: "Fee question → your intake attorney." },
-      { day: "Day 1", time: "2:00 pm", actor: "us", channel: "Email", text: "Your attorney’s answer, in their words, with a fresh signature link in the same thread." },
-      { day: "Day 3", time: "6:00 pm", actor: "us", channel: "Text", text: "Still unsigned, so a short reminder — at the evening time Cameron said works — with the link and your firm’s direct line." },
-      { day: "Day 4", time: "9:00 am", actor: "system", channel: "Your system", text: "Signed retainer recorded in your case system.", terminal: true },
+    steps: [
+      {
+        when: "Day 1",
+        time: "10:05 am",
+        system: "CMS",
+        signal: "Consult done a week ago, retainer still unsigned",
+        memory: "Matter, consult notes, and retainer version attached.",
+        actions: [
+          { kind: "us", actor: "Primary Logic", channel: "", text: "Checks conflicts and consent, calls Cameron" },
+          { kind: "person", actor: "Claimant", channel: "Phone", text: "", transcript: [
+            { who: "agent", text: "Hi Cameron — I’ve resent the agreement. Anything holding you up?" },
+            { who: "person", text: "Just a question about how the fee works." },
+          ] },
+          { kind: "team", actor: "Intake attorney", channel: "Hand-off", text: "Answers the fee question" },
+        ],
+      },
+      {
+        when: "Day 1",
+        time: "12:30 pm",
+        system: "CMS",
+        signal: "Attorney’s answer received",
+        memory: "The attorney’s exact wording is on file.",
+        actions: [
+          { kind: "us", actor: "Primary Logic", channel: "", text: "Sends the answer in the attorney’s words" },
+          { kind: "person", actor: "Claimant", channel: "Email", text: "", transcript: [
+            { who: "agent", text: "Here’s the fee answer from Attorney Ruiz, in her words — and a fresh link to sign." },
+            { who: "person", text: "Thanks, that clears it up. I’ll look tonight." },
+          ] },
+          { kind: "system", actor: "E-sign", channel: "Workflow", text: "Issues a fresh signature link" },
+        ],
+      },
+      {
+        when: "Day 2",
+        time: "7:15 pm",
+        system: "E-sign",
+        signal: "Agreement opened, not signed",
+        memory: "Cameron reads messages in the evening.",
+        actions: [
+          { kind: "us", actor: "Primary Logic", channel: "", text: "Sends the evening reminder" },
+          { kind: "person", actor: "Claimant", channel: "SMS", text: "", transcript: [
+            { who: "agent", text: "Your agreement is ready to sign — link below. Takes about a minute." },
+            { who: "person", text: "Signing now." },
+          ] },
+        ],
+      },
+      {
+        when: "Day 2",
+        time: "7:32 pm",
+        system: "E-sign",
+        signal: "Signature complete",
+        memory: "Cameron prefers evening SMS; the fee wording is saved for the next claimant.",
+        actions: [
+          { kind: "us", actor: "Primary Logic", channel: "", text: "Verifies the signature, notifies the attorney" },
+          { kind: "system", actor: "CMS", channel: "Workflow", text: "Records the signed retainer" },
+        ],
+        outcome: { system: "CMS", label: "Signed retainer" },
+      },
     ],
   },
   {
     key: "lending",
     tab: "Lending",
     audience: "Credit unions, fintech lenders, and home-improvement finance",
-    systemLabel: "Your loan system",
     outcome: "Funded loan",
     outcomeShort: "funded loan",
     verifiedIn: "your loan origination system",
@@ -118,21 +237,73 @@ export const verticals: VerticalStory[] = [
     forLabel: "For lenders",
     channels: ["Phone", "Email"],
     systems: ["CRM", "LOS"],
-    exampleTitle: "From stalled application to funded loan",
-    exampleBody: "Primary Logic coordinates the borrower, the documents, and your loan officer until the loan funds.",
+    exampleTitle: "Get Dana’s stalled application to funding.",
+    exampleBody: "Primary Logic coordinates the borrower, documents, and your loan officer until the loan funds.",
     person: "Dana",
     personLabel: "a stalled borrower",
-    span: "Day 1 to Day 14",
+    span: "Day 1 to Day 10",
     href: "/lending",
-    beats: [
-      { day: "Day 1", time: "9:00 am", actor: "system", channel: "Your system", text: "Application waiting on two pay stubs for two weeks." },
-      { day: "Day 1", time: "10:00 am", actor: "us", channel: "Text", text: "Hi Dana — your file is two pay stubs from complete. Here’s the secure upload link and exactly what’s needed." },
-      { day: "Day 2", time: "4:00 pm", actor: "them", channel: "Text", text: "The files are on my work computer. Can someone call after 6?" },
-      { day: "Day 2", time: "6:00 pm", actor: "us", channel: "Call", text: "Called at 6 and walked Dana through the upload. Documents arrived the next morning; closing confirmed Day 10.", note: "Rate question → your loan officer." },
-      { day: "Day 14", time: "2:00 pm", actor: "system", channel: "Your system", text: "Loan funded — recorded in your loan system.", terminal: true },
+    steps: [
+      {
+        when: "Day 1",
+        time: "9:15 am",
+        system: "LOS",
+        signal: "Application stalled 14 days, two pay stubs missing",
+        memory: "File, missing items, and loan officer attached.",
+        actions: [
+          { kind: "us", actor: "Primary Logic", channel: "", text: "Checks consent, sends a secure upload link" },
+          { kind: "person", actor: "Borrower", channel: "Email", text: "", transcript: [
+            { who: "agent", text: "Hi Dana — your file is two pay stubs from complete. Secure upload link inside." },
+            { who: "person", text: "They’re on my work computer. Can someone call after 6?" },
+          ] },
+        ],
+      },
+      {
+        when: "Day 1",
+        time: "6:05 pm",
+        system: "Phone",
+        signal: "Scheduled call with Dana",
+        memory: "Dana is reachable after 6 pm.",
+        actions: [
+          { kind: "us", actor: "Primary Logic", channel: "", text: "Calls at 6, stays on for the upload" },
+          { kind: "person", actor: "Borrower", channel: "Phone", text: "", transcript: [
+            { who: "agent", text: "I’ll stay on while you upload — the two most recent stubs." },
+            { who: "person", text: "Done. What rate am I looking at?" },
+          ] },
+          { kind: "team", actor: "Loan officer", channel: "Hand-off", text: "Answers the rate question" },
+          { kind: "system", actor: "LOS", channel: "Workflow", text: "Marks the documents received" },
+        ],
+      },
+      {
+        when: "Day 8",
+        time: "11:20 am",
+        system: "LOS",
+        signal: "Clear to close",
+        memory: "Dana prefers evenings.",
+        actions: [
+          { kind: "us", actor: "Primary Logic", channel: "", text: "Confirms closing time and what to bring" },
+          { kind: "person", actor: "Borrower", channel: "Phone", text: "", transcript: [
+            { who: "agent", text: "You’re clear to close. Thursday at 5:30? Bring your ID." },
+            { who: "person", text: "Yes, that works." },
+          ] },
+        ],
+      },
+      {
+        when: "Day 10",
+        time: "5:45 pm",
+        system: "LOS",
+        signal: "Loan funded",
+        memory: "Dana is reachable after 6 pm; closing details stay on file.",
+        actions: [
+          { kind: "us", actor: "Primary Logic", channel: "", text: "Verifies funding against the file" },
+          { kind: "system", actor: "LOS", channel: "Workflow", text: "Records the funding" },
+        ],
+        outcome: { system: "LOS", label: "Funded loan" },
+      },
     ],
   },
 ];
+
 
 export const hero = {
   heading: "Turn missed demand into completed outcomes.",

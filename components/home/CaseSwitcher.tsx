@@ -25,13 +25,8 @@ export default function CaseSwitcher() {
         </div>
       </div>
 
-      <CaseTimeline
-        key={story.key}
-        story={story}
-        layout="wide"
-        id={`${tabsId}-panel`}
-        labelledBy={`${tabsId}-${story.key}`}
-        tabs={
+      <div className="pl-case-wrap">
+        <div className="pl-case__tabs">
           <div className="pl-tabs pl-tabs--bar" role="tablist" aria-label="Choose an example">
             {verticals.map((v) => (
               <button
@@ -51,8 +46,9 @@ export default function CaseSwitcher() {
               </button>
             ))}
           </div>
-        }
-      />
+        </div>
+        <CaseTimeline key={story.key} story={story} id={`${tabsId}-panel`} labelledBy={`${tabsId}-${story.key}`} />
+      </div>
     </div>
   );
 }

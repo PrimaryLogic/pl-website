@@ -48,7 +48,7 @@ export default function LegalPage() {
                 </ul>
                 </div>
               </div>
-              <CaseTimeline story={story} layout="wide" />
+              <CaseTimeline story={story} />
             </div>
           </div>
         </section>
