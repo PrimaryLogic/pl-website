@@ -18,13 +18,15 @@ export default function SiteNav({
             <span>{nav.wordmark}</span>
           </Link>
 
-          <nav className="pl-nav__links" aria-label="Primary navigation">
-            {nav.links.map((link) => (
-              <Link key={link.href} href={link.href}>
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+          {nav.links.length > 0 ? (
+            <nav className="pl-nav__links" aria-label="Primary navigation">
+              {nav.links.map((link) => (
+                <Link key={link.href} href={link.href}>
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          ) : null}
 
           <Link href={nav.cta.href} className="pl-button pl-button--primary pl-nav__cta" data-analytics="nav-cta">
             <span>{nav.cta.label}</span>

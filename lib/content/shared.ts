@@ -19,13 +19,7 @@ export type NavContent = {
 
 export const homeNav: NavContent = {
   wordmark: WORDMARK,
-  links: [
-    { label: "How it works", href: "/#how" },
-    { label: "Pricing", href: "/#pricing" },
-    { label: "Dental", href: "/healthcare" },
-    { label: "Legal", href: "/legal" },
-    { label: "Lending", href: "/lending" },
-  ],
+  links: [],
   cta: { label: "Start a pilot", href: "/#pilot" },
 };
 
@@ -43,9 +37,6 @@ export const healthcareNav: NavContent = {
 export const footer = {
   entity: WORDMARK,
   links: [
-    { label: "Healthcare", href: "/healthcare" },
-    { label: "Legal intake", href: "/legal" },
-    { label: "Lending", href: "/lending" },
     { label: "Privacy", href: "/privacy-policy" },
     { label: "Terms", href: "/terms-of-service" },
     { label: "Contact", href: `mailto:${CONTACT_EMAIL}` },

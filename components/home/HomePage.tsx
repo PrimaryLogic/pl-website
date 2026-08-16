@@ -1,7 +1,5 @@
-import Link from "next/link";
 import {
   ArrowsLeftRight,
-  ArrowUpRight,
   Check,
   CheckCircle,
   Lock,
@@ -14,7 +12,6 @@ import {
 import {
   controls,
   how,
-  lanes,
   leak,
   pilot,
   pricing,
@@ -251,22 +248,6 @@ export default function HomePage() {
                   </li>
                 ))}
               </ol>
-            </div>
-
-            <div className="pl-lanes-row" aria-labelledby="lanes-heading">
-              <p id="lanes-heading" className="pl-lanes-row__title">{lanes.heading}</p>
-              <div className="pl-lanes">
-                {lanes.cards.map((card) => (
-                  <Link key={card.key} href={card.href} className="pl-lane" data-analytics={`lane-${card.key}`}>
-                    <div className="pl-lane__top">
-                      <h3>{card.title}</h3>
-                      <span className="pl-lane__link">{card.action} <ArrowUpRight aria-hidden="true" size={15} weight="bold" /></span>
-                    </div>
-                    <p className="pl-lane__body">{card.body}</p>
-                    <p className="pl-lane__outcome"><span>You pay per</span> <strong>{card.outcome}</strong></p>
-                  </Link>
-                ))}
-              </div>
             </div>
           </div>
         </section>
