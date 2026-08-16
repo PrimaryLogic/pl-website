@@ -4,7 +4,11 @@ import {
   ArrowUpRight,
   Check,
   CheckCircle,
+  Lock,
   Minus,
+  Notebook,
+  ShieldCheck,
+  UserCircle,
   XCircle,
 } from "@phosphor-icons/react/dist/ssr";
 import {
@@ -33,6 +37,8 @@ const structuredData = JSON.stringify({
   description:
     "Primary Logic works the leads, patients, and cases a team can’t get to — by phone, text, and email — until the outcome is verified in the customer’s own system. Priced per completed outcome.",
 }).replace(/</g, "\\u003c");
+
+const controlIcons = [UserCircle, Lock, ShieldCheck, Notebook];
 
 function SectionHead({
   eyebrow,
@@ -208,12 +214,16 @@ export default function HomePage() {
           <div className="pl-container">
             <SectionHead eyebrow={controls.eyebrow} heading={controls.heading} />
             <div className="pl-controls">
-              {controls.items.map((c) => (
-                <article key={c.title} className="pl-control">
-                  <h3>{c.title}</h3>
-                  <p>{c.body}</p>
-                </article>
-              ))}
+              {controls.items.map((c, i) => {
+                const Ico = controlIcons[i % controlIcons.length];
+                return (
+                  <article key={c.title} className="pl-control">
+                    <Ico aria-hidden="true" size={22} />
+                    <h3>{c.title}</h3>
+                    <p>{c.body}</p>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </section>
