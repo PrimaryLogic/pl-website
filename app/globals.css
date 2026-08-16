@@ -2217,3 +2217,21 @@ summary::-webkit-details-marker {
 .pl-beat__day, .pl-beat__time { font-family: var(--font-body); }
 .pl-beat__day { font-weight: 600; }
 .pl-case__label { font-size: 13px; }
+
+/* Hero, left-aligned. */
+.pl-hero { padding-top: 88px; }
+.pl-hero__center { align-items: flex-start; text-align: left; max-width: none; margin: 0; }
+.pl-hero__center .pl-hero__title { max-width: 18ch; font-size: clamp(40px, 5.6vw, 72px); letter-spacing: -0.035em; line-height: 1.02; }
+.pl-hero__center .pl-hero__body { margin: 26px 0 0; max-width: 720px; font-size: clamp(18px, 1.7vw, 22px); line-height: 1.45; }
+.pl-hero__form { justify-content: flex-start; margin-top: 36px; }
+.pl-hero__form form { align-items: flex-start; }
+.pl-hero__form .contact-join--landing { width: min(100%, 560px); }
+.pl-switcher { justify-content: flex-start; margin-top: 8px; }
+.pl-hero__stack { gap: 44px; }
+@media (max-width: 640px) {
+  .pl-hero { padding-top: 48px; }
+  .pl-hero__center .pl-hero__title { font-size: clamp(34px, 9.5vw, 42px); }
+  .pl-hero__center .pl-hero__body { font-size: 17px; }
+}
+.pl-hero__center .pl-hero__title { max-width: 26ch; }
+.pl-hero__center .pl-hero__body { max-width: 760px; font-weight: 500; }
