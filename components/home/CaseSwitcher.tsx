@@ -25,29 +25,34 @@ export default function CaseSwitcher() {
         </div>
       </div>
 
-      <div className="pl-switcher">
-        <div className="pl-tabs pl-tabs--bar" role="tablist" aria-label="Choose your industry">
-          {verticals.map((v) => (
-            <button
-              key={v.key}
-              id={`${tabsId}-${v.key}`}
-              role="tab"
-              type="button"
-              aria-selected={v.key === active}
-              aria-controls={`${tabsId}-panel`}
-              className="pl-tab"
-              onClick={() => {
-                setActive(v.key);
-                track("hero_vertical_selected", { vertical: v.key });
-              }}
-            >
-              {v.tab}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <CaseTimeline key={story.key} story={story} layout="wide" id={`${tabsId}-panel`} labelledBy={`${tabsId}-${story.key}`} />
+      <CaseTimeline
+        key={story.key}
+        story={story}
+        layout="wide"
+        id={`${tabsId}-panel`}
+        labelledBy={`${tabsId}-${story.key}`}
+        tabs={
+          <div className="pl-tabs pl-tabs--bar" role="tablist" aria-label="Choose an example">
+            {verticals.map((v) => (
+              <button
+                key={v.key}
+                id={`${tabsId}-${v.key}`}
+                role="tab"
+                type="button"
+                aria-selected={v.key === active}
+                aria-controls={`${tabsId}-panel`}
+                className="pl-tab"
+                onClick={() => {
+                  setActive(v.key);
+                  track("hero_vertical_selected", { vertical: v.key });
+                }}
+              >
+                {v.tab}
+              </button>
+            ))}
+          </div>
+        }
+      />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import type { Icon } from "@phosphor-icons/react";
 import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
 import { ChatCircleText } from "@phosphor-icons/react/dist/csr/ChatCircleText";
@@ -25,12 +25,15 @@ export default function CaseTimeline({
   id,
   labelledBy,
   layout = "column",
+  tabs,
 }: {
   story: VerticalStory;
   id?: string;
   labelledBy?: string;
   /** "wide" lays the beats out left-to-right on large screens. */
   layout?: "column" | "wide";
+  /** Optional switcher rendered inside the panel header. */
+  tabs?: ReactNode;
 }) {
   const [shown, setShown] = useState(0);
 
@@ -52,12 +55,12 @@ export default function CaseTimeline({
 
   return (
     <div id={id} role={labelledBy ? "tabpanel" : undefined} aria-labelledby={labelledBy} className={`pl-case${layout === "wide" ? " pl-case--wide" : ""}`}>
+      {tabs ? <div className="pl-case__tabs">{tabs}</div> : null}
       <div className="pl-case__head">
         <div>
-          <p className="pl-case__label">{hero.caseLabel} — {story.personLabel}, {story.span}</p>
-          <p className="pl-case__goal">
-            Get {story.person} to a <strong>{story.outcomeShort}</strong>
-          </p>
+          <p className="pl-case__label">{hero.caseLabel} · For {story.audience.charAt(0).toLowerCase() + story.audience.slice(1)}</p>
+          <p className="pl-case__goal">{story.exampleTitle}</p>
+          <p className="pl-case__sub">Get {story.person} to a <strong>{story.outcomeShort}</strong> — {story.span}.</p>
         </div>
       </div>
 

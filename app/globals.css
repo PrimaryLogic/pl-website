@@ -2239,3 +2239,11 @@ summary::-webkit-details-marker {
 .pl-hero__center .pl-hero__body { max-width: 860px; }
 .pl-hero__center .pl-hero__body { max-width: 900px; }
 .pl-hero__center .pl-hero__body { max-width: 960px; }
+
+/* Switcher lives inside the example panel. */
+.pl-case__tabs { display: flex; margin-bottom: 18px; }
+.pl-case__tabs .pl-tabs--bar { margin: 0; }
+.pl-case__sub { margin-top: 6px; color: var(--pl-body); font-size: 15px; }
+.pl-case__sub strong { color: var(--pl-green-deep); font-weight: 600; }
+.pl-case--wide .pl-case__head { align-items: flex-start; }
+.pl-hero__stack { gap: 40px; }

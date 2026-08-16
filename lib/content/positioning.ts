@@ -35,6 +35,8 @@ export type VerticalStory = {
   verifiedIn: string;
   queue: string;
   headline: { lead: string; accent: string };
+  /** Panel title for the example, e.g. "From referral to kept visit". */
+  exampleTitle: string;
   person: string;
   personLabel: string;
   span: string;
@@ -45,7 +47,7 @@ export type VerticalStory = {
 export const verticals: VerticalStory[] = [
   {
     key: "dental",
-    tab: "Dental & DSOs",
+    tab: "Healthcare",
     audience: "Dental groups and DSOs",
     systemLabel: "Your schedule",
     outcome: "Kept treatment visit",
@@ -53,6 +55,7 @@ export const verticals: VerticalStory[] = [
     verifiedIn: "your practice schedule",
     queue: "diagnosed treatment that never got scheduled",
     headline: { lead: "Patients who said yes to treatment", accent: "and never came back." },
+    exampleTitle: "From unscheduled treatment to a kept visit",
     person: "Luis",
     personLabel: "a dental patient",
     span: "Day 1 to Day 9",
@@ -67,7 +70,7 @@ export const verticals: VerticalStory[] = [
   },
   {
     key: "legal",
-    tab: "PI & mass tort",
+    tab: "Legal",
     audience: "Personal-injury and mass-tort firms",
     systemLabel: "Your case system",
     outcome: "Signed retainer",
@@ -75,6 +78,7 @@ export const verticals: VerticalStory[] = [
     verifiedIn: "your case management system",
     queue: "qualified claimants who went quiet before signing",
     headline: { lead: "Claimants who qualified", accent: "and never signed." },
+    exampleTitle: "From unsigned retainer to signed engagement",
     person: "Cameron",
     personLabel: "an injury claimant",
     span: "Day 1 to Day 5",
@@ -89,7 +93,7 @@ export const verticals: VerticalStory[] = [
   },
   {
     key: "lending",
-    tab: "Consumer lending",
+    tab: "Lending",
     audience: "Credit unions, fintech lenders, and home-improvement finance",
     systemLabel: "Your loan system",
     outcome: "Funded loan",
@@ -97,6 +101,7 @@ export const verticals: VerticalStory[] = [
     verifiedIn: "your loan origination system",
     queue: "applications that stalled mid-file",
     headline: { lead: "Borrowers who applied", accent: "and never funded." },
+    exampleTitle: "From stalled application to funded loan",
     person: "Dana",
     personLabel: "a stalled borrower",
     span: "Day 1 to Day 16",
