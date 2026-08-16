@@ -7,7 +7,8 @@ import { ChatCircleText } from "@phosphor-icons/react/dist/csr/ChatCircleText";
 import { Phone } from "@phosphor-icons/react/dist/csr/Phone";
 import { EnvelopeSimple } from "@phosphor-icons/react/dist/csr/EnvelopeSimple";
 import { Database } from "@phosphor-icons/react/dist/csr/Database";
-import { hero, type CaseBeat, type VerticalStory } from "@/lib/content/positioning";
+import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
+import type { CaseBeat, VerticalStory } from "@/lib/content/positioning";
 
 const channelIcon: Record<CaseBeat["channel"], Icon> = {
   Text: ChatCircleText,
@@ -58,10 +59,23 @@ export default function CaseTimeline({
       {tabs ? <div className="pl-case__tabs">{tabs}</div> : null}
       <div className="pl-case__head">
         <div>
-          <p className="pl-case__label">{hero.caseLabel} · For {story.audience.charAt(0).toLowerCase() + story.audience.slice(1)}</p>
+          <p className="pl-case__label">{story.forLabel}</p>
           <p className="pl-case__goal">{story.exampleTitle}</p>
-          <p className="pl-case__sub">Get {story.person} to a <strong>{story.outcomeShort}</strong> — {story.span}.</p>
+          <p className="pl-case__sub">{story.exampleBody}</p>
         </div>
+      </div>
+
+      <div className="pl-case__meta">
+        <span className="pl-case__meta-label">Reaches by:</span>
+        {story.channels.map((c) => {
+          const Ico = c === "Phone" ? Phone : c === "Email" ? EnvelopeSimple : c === "Web chat" ? Globe : ChatCircleText;
+          return <span key={c} className="pl-case__meta-item"><Ico aria-hidden="true" size={14} /> {c}</span>;
+        })}
+        <span className="pl-case__meta-divider" aria-hidden="true" />
+        <span className="pl-case__meta-label">Works in:</span>
+        {story.systems.map((sys) => (
+          <span key={sys} className="pl-case__meta-item"><Database aria-hidden="true" size={14} /> {sys}</span>
+        ))}
       </div>
 
       <ol className="pl-case__list" key={story.key} style={{ "--beats": story.beats.length } as CSSProperties}>

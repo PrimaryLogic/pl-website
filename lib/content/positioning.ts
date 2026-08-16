@@ -37,6 +37,12 @@ export type VerticalStory = {
   headline: { lead: string; accent: string };
   /** Panel title for the example, e.g. "From referral to kept visit". */
   exampleTitle: string;
+  /** One line under the title: who we coordinate, until what. */
+  exampleBody: string;
+  /** "For healthcare providers" etc. */
+  forLabel: string;
+  channels: Array<"Phone" | "SMS" | "Email" | "Web chat">;
+  systems: string[];
   person: string;
   personLabel: string;
   span: string;
@@ -55,17 +61,21 @@ export const verticals: VerticalStory[] = [
     verifiedIn: "your practice schedule",
     queue: "diagnosed treatment that never got scheduled",
     headline: { lead: "Patients who said yes to treatment", accent: "and never came back." },
+    forLabel: "For healthcare providers",
+    channels: ["Phone", "SMS", "Email", "Web chat"],
+    systems: ["EHR", "PMS"],
     exampleTitle: "From unscheduled treatment to a kept visit",
+    exampleBody: "Primary Logic coordinates the patient, your front desk, and financing questions until the visit is kept.",
     person: "Luis",
     personLabel: "a dental patient",
     span: "Day 1 to Day 9",
     href: "/healthcare",
     beats: [
-      { day: "Day 1", time: "8:14 am", actor: "system", channel: "Your system", text: "Implant consult diagnosed 34 days ago. Still unscheduled." },
-      { day: "Day 1", time: "8:17 am", actor: "us", channel: "Text", text: "Hi Luis — Dr. Patel’s office. We have Tuesday 9:40 or Thursday 2:15 for your consult. Reply 1 or 2 and I’ll hold it." },
-      { day: "Day 1", time: "12:41 pm", actor: "them", channel: "Text", text: "Thursday works. Which office is that?" },
-      { day: "Day 1", time: "4:00 pm", actor: "us", channel: "Call", text: "Called at the time Luis asked for. Confirmed the office, booked Thursday. Sent reminders on Day 4 and Day 8.", note: "Financing question → your coordinator." },
-      { day: "Day 9", time: "10:18 am", actor: "system", channel: "Your system", text: "Appointment marked arrived in your schedule.", terminal: true },
+      { day: "Day 1", time: "9:00 am", actor: "system", channel: "Your system", text: "Implant consult diagnosed a month ago. Still unscheduled." },
+      { day: "Day 1", time: "10:00 am", actor: "us", channel: "Text", text: "Hi Luis — Dr. Patel’s office. We have Tuesday 9:30 or Thursday 2:00 for your consult. Reply 1 or 2 and I’ll hold it." },
+      { day: "Day 2", time: "12:30 pm", actor: "them", channel: "Text", text: "Thursday works. Which office is that?" },
+      { day: "Day 2", time: "4:00 pm", actor: "us", channel: "Call", text: "Called at the time Luis asked for. Confirmed the office, booked Thursday. Sent a reminder the day before.", note: "Financing question → your coordinator." },
+      { day: "Day 9", time: "10:30 am", actor: "system", channel: "Your system", text: "Appointment marked arrived in your schedule.", terminal: true },
     ],
   },
   {
@@ -78,17 +88,21 @@ export const verticals: VerticalStory[] = [
     verifiedIn: "your case management system",
     queue: "qualified claimants who went quiet before signing",
     headline: { lead: "Claimants who qualified", accent: "and never signed." },
+    forLabel: "For law firms",
+    channels: ["Phone", "SMS", "Email"],
+    systems: ["CMS", "E-sign"],
     exampleTitle: "From unsigned retainer to signed engagement",
+    exampleBody: "Primary Logic coordinates the claimant, your intake attorney, and e-sign until the retainer is signed.",
     person: "Cameron",
     personLabel: "an injury claimant",
-    span: "Day 1 to Day 5",
+    span: "Day 1 to Day 4",
     href: "/legal",
     beats: [
-      { day: "Day 1", time: "8:40 am", actor: "system", channel: "Your system", text: "Consult done four days ago. Retainer still unsigned." },
+      { day: "Day 1", time: "9:00 am", actor: "system", channel: "Your system", text: "Consult done a week ago. Retainer still unsigned." },
       { day: "Day 1", time: "12:30 pm", actor: "us", channel: "Call", text: "Reached Cameron and resent the agreement link.", note: "Fee question → your intake attorney." },
-      { day: "Day 1", time: "1:11 pm", actor: "us", channel: "Email", text: "Your attorney’s answer, in their words, with a fresh signature link in the same thread." },
-      { day: "Day 4", time: "5:45 pm", actor: "us", channel: "Text", text: "Still unsigned, so a short reminder — at the evening time Cameron said works — with the link and your firm’s direct line." },
-      { day: "Day 5", time: "9:14 am", actor: "system", channel: "Your system", text: "Signed retainer recorded in your case system.", terminal: true },
+      { day: "Day 1", time: "2:00 pm", actor: "us", channel: "Email", text: "Your attorney’s answer, in their words, with a fresh signature link in the same thread." },
+      { day: "Day 3", time: "6:00 pm", actor: "us", channel: "Text", text: "Still unsigned, so a short reminder — at the evening time Cameron said works — with the link and your firm’s direct line." },
+      { day: "Day 4", time: "9:00 am", actor: "system", channel: "Your system", text: "Signed retainer recorded in your case system.", terminal: true },
     ],
   },
   {
@@ -101,17 +115,21 @@ export const verticals: VerticalStory[] = [
     verifiedIn: "your loan origination system",
     queue: "applications that stalled mid-file",
     headline: { lead: "Borrowers who applied", accent: "and never funded." },
+    forLabel: "For lenders",
+    channels: ["Phone", "Email"],
+    systems: ["CRM", "LOS"],
     exampleTitle: "From stalled application to funded loan",
+    exampleBody: "Primary Logic coordinates the borrower, the documents, and your loan officer until the loan funds.",
     person: "Dana",
     personLabel: "a stalled borrower",
-    span: "Day 1 to Day 16",
+    span: "Day 1 to Day 14",
     href: "/lending",
     beats: [
-      { day: "Day 1", time: "7:30 am", actor: "system", channel: "Your system", text: "Application waiting on two pay stubs for 11 days." },
-      { day: "Day 1", time: "9:10 am", actor: "us", channel: "Text", text: "Hi Dana — your file is two pay stubs from complete. Here’s the secure upload link and exactly what’s needed." },
-      { day: "Day 3", time: "3:46 pm", actor: "them", channel: "Text", text: "The files are on my work computer. Can someone call after 6?" },
-      { day: "Day 3", time: "6:15 pm", actor: "us", channel: "Call", text: "Called at 6:15 and walked Dana through the upload. Documents arrived Day 6; closing confirmed Day 9.", note: "Rate question → your loan officer." },
-      { day: "Day 16", time: "2:09 pm", actor: "system", channel: "Your system", text: "Loan funded — recorded in your loan system.", terminal: true },
+      { day: "Day 1", time: "9:00 am", actor: "system", channel: "Your system", text: "Application waiting on two pay stubs for two weeks." },
+      { day: "Day 1", time: "10:00 am", actor: "us", channel: "Text", text: "Hi Dana — your file is two pay stubs from complete. Here’s the secure upload link and exactly what’s needed." },
+      { day: "Day 2", time: "4:00 pm", actor: "them", channel: "Text", text: "The files are on my work computer. Can someone call after 6?" },
+      { day: "Day 2", time: "6:00 pm", actor: "us", channel: "Call", text: "Called at 6 and walked Dana through the upload. Documents arrived the next morning; closing confirmed Day 10.", note: "Rate question → your loan officer." },
+      { day: "Day 14", time: "2:00 pm", actor: "system", channel: "Your system", text: "Loan funded — recorded in your loan system.", terminal: true },
     ],
   },
 ];
