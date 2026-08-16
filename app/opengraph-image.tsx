@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Primary Logic | Agents that carry a job to the finish";
+export const alt = "Primary Logic | Turn missed demand into completed outcomes.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -35,20 +35,18 @@ export default async function OpenGraphImage() {
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ fontFamily: display ? "Display" : "sans-serif", fontSize: 26, fontWeight: 600, letterSpacing: "-0.02em" }}>Primary Logic</div>
-        <div style={{ fontSize: 18, color: "#0a5c37" }}>OUTCOME OPERATIONS</div>
       </div>
       <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-        <div style={{ fontFamily: display ? "Display" : "sans-serif", fontSize: 58, lineHeight: 1.06, whiteSpace: "nowrap", fontWeight: 600, letterSpacing: "-0.03em" }}>
-          Agents that carry a job to the finish
+        <div style={{ fontFamily: display ? "Display" : "sans-serif", fontSize: 46, lineHeight: 1.06, whiteSpace: "nowrap", fontWeight: 600, letterSpacing: "-0.03em" }}>
+          Turn missed demand into completed outcomes.
         </div>
         <div style={{ marginTop: 22, fontSize: 22, lineHeight: 1.45, whiteSpace: "nowrap", color: "#4a554e" }}>
-          Per completed outcome. Verified in your system. $0 for anything that doesn&apos;t finish.
+          Primary Logic works after-hours, overflow, and aged leads until the job is complete.
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 18, borderTop: "2px solid #101a15", fontSize: 18, color: "#4a554e" }}>
-        <div>ONE OWNER</div>
-        <div>ONE NEXT MOVE</div>
-        <div>ONE VERIFIED OUTCOME</div>
+        <div>PER COMPLETED OUTCOME</div>
+        <div>FINISHES THE JOB, ACROSS DAYS OR WEEKS</div>
       </div>
     </div>,
     { ...size, fonts: fonts.length ? fonts : undefined },

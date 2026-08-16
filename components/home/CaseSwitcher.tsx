@@ -1,7 +1,6 @@
 "use client";
 
 import { useId, useState } from "react";
-import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
 import { hero, verticals, type VerticalKey } from "@/lib/content/positioning";
 import { track } from "@/lib/analytics";
 import CaseTimeline from "./CaseTimeline";
@@ -24,11 +23,6 @@ export default function CaseSwitcher() {
         <div className="pl-hero__form">
           <EmailCapture id="hero-pilot" variant="landing" buttonLabel={hero.form.button} emailPlaceholder={hero.form.placeholder} lane="homepage-hero" />
         </div>
-        <ul className="pl-hero__proof" aria-label="Commercial terms">
-          {hero.proof.map((p) => (
-            <li key={p}><CheckCircle aria-hidden="true" size={16} weight="fill" /> {p}</li>
-          ))}
-        </ul>
       </div>
 
       <div className="pl-switcher">

@@ -114,10 +114,9 @@ export const verticals: VerticalStory[] = [
 export const hero = {
   heading: "Turn missed demand into completed outcomes.",
   body:
-    "Primary Logic completes jobs end to end and drives your top line — staying with the work until it’s done, across days or months.",
+    "Primary Logic works after-hours, overflow, and aged leads until the job is complete — across days or weeks.",
   primaryCta: { label: "Start a pilot", href: "#pilot" },
   secondaryCta: { label: "See how it works", href: "#how" },
-  proof: ["No seats", "No subscription", "$0 if it doesn’t complete"],
   form: { button: "Start a pilot", placeholder: "Work email" },
   caseLabel: "Example",
 };
