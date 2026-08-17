@@ -73,7 +73,7 @@ export default function HomePage() {
         </section>
 
         {/* 2 · The leak */}
-        <section id="problem" className="pl-section pl-section--tint">
+        <section id="problem" className="pl-section">
           <div className="pl-container">
             <SectionHead eyebrow={leak.eyebrow} heading={leak.heading} body={leak.body} />
             <div className="pl-leak">
@@ -102,7 +102,7 @@ export default function HomePage() {
         </section>
 
         {/* 3 · How it works */}
-        <section id="how" className="pl-section">
+        <section id="how" className="pl-section pl-section--tint">
           <div className="pl-container">
             <SectionHead eyebrow={how.eyebrow} heading={how.heading} body={how.body} />
             <ol className="pl-steps">
@@ -134,7 +134,7 @@ export default function HomePage() {
         </section>
 
         {/* 5 · Setup */}
-        <section id="setup" className="pl-section pl-section--tint">
+        <section id="setup" className="pl-section">
           <div className="pl-container">
             <SectionHead eyebrow={setup.eyebrow} heading={setup.heading} body={setup.body} />
             <div className="pl-setup">
@@ -163,7 +163,7 @@ export default function HomePage() {
         </section>
 
         {/* 6 · Pricing */}
-        <section id="pricing" className="pl-section">
+        <section id="pricing" className="pl-section pl-section--tint">
           <div className="pl-container">
             <SectionHead eyebrow={pricing.eyebrow} heading={pricing.heading} body={pricing.body} />
             <div className="pl-pricing">
@@ -207,7 +207,7 @@ export default function HomePage() {
         </section>
 
         {/* 7 · Controls */}
-        <section id="guardrails" className="pl-section pl-section--tint">
+        <section id="guardrails" className="pl-section">
           <div className="pl-container">
             <SectionHead eyebrow={controls.eyebrow} heading={controls.heading} />
             <div className="pl-controls">
