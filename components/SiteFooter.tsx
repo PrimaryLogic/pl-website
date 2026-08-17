@@ -6,9 +6,6 @@ export default function SiteFooter({ variant = "default" }: { variant?: "default
     return (
       <footer className="pl-footer">
         <div className="pl-footer__inner">
-          <div className="pl-footer__brand">
-            <p className="pl-footer__wordmark">Primary Logic</p>
-          </div>
           <nav className="pl-footer__links" aria-label="Footer navigation">
             {footer.links.map((link) =>
               link.href.startsWith("/") ? (

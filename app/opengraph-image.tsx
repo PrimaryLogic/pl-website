@@ -41,7 +41,7 @@ export default async function OpenGraphImage() {
           Turn missed demand into completed outcomes.
         </div>
         <div style={{ marginTop: 22, fontSize: 22, lineHeight: 1.45, whiteSpace: "nowrap", color: "#4a554e" }}>
-          Primary Logic works after-hours, overflow, and aged leads until the job is complete.
+          AI employees that own the leads your team can’t get to, until the revenue is won.
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 18, borderTop: "2px solid #101a15", fontSize: 18, color: "#4a554e" }}>

@@ -10,7 +10,7 @@ type Status = "idle" | "submitting" | "success" | "error";
 export default function EmailCapture({
   id,
   variant = "full",
-  buttonLabel = "Start a pilot",
+  buttonLabel = "Design a pilot",
   emailPlaceholder = "name@company.com",
   orgLabel = "Organization",
   orgPlaceholder = "Your organization",

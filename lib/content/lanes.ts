@@ -1,533 +1,474 @@
 /**
  * Copy for the three lane pages (/healthcare, /legal, /lending).
  *
- * The homepage tells the general story (missed demand → completed outcome,
- * how it works, pricing model). A lane page is for a buyer who already knows
- * that and wants specifics: which queues we take, what we do at each moment,
- * where the licensed line sits, how a case can end, what exactly is billed,
- * and what a pilot looks like for them. Nothing here repeats the homepage's
- * generic "how it works" block.
+ * Each lane page mirrors the homepage's sections and voice for a single buyer:
+ * hero + pilot brief, the problem in their queue, how the work runs (with a
+ * compact one-job example), operating authority, outcome-based pricing,
+ * onboarding, and a closing CTA.
  *
- * Vocabulary: demand → job → outcome. Plain buyer language, no internal terms.
+ * Positioning: Primary Logic completes the workflow autonomously inside the
+ * customer's systems and rules. No staff hand-offs; anything outside its
+ * authority closes uncompleted and is never billed. It answers only from
+ * approved knowledge already recorded in the customer's systems.
  *
- * CLAIM RULE: no metrics about our own results; competitors are never named;
- * industry stats carry a source; illustrative figures say so.
+ * CLAIM RULE: no metrics about our own results; competitors never named;
+ * industry stats carry a source; illustrative examples say so.
  */
 
 import type { NavContent } from "./shared";
 import { WORDMARK } from "./shared";
 
 export type LaneKey = "dental" | "legal" | "lending";
+export type LaneSlug = "healthcare" | "legal" | "lending";
 
 export type LaneContent = {
   key: LaneKey;
-  slug: "healthcare" | "legal" | "lending";
+  slug: LaneSlug;
   title: string;
   description: string;
-  nav: NavContent;
   hero: {
     eyebrow: string;
     heading: string;
     body: string;
     form: { button: string; placeholder: string };
-    /** The "brief" card beside the hero copy. */
-    brief: {
-      title: string;
-      rows: Array<{ label: string; value: string }>;
-      note?: string;
-    };
+    brief: { title: string; rows: Array<{ label: string; value: string }> };
   };
-  queues: {
+  problem: {
     eyebrow: string;
     heading: string;
     body: string;
-    items: Array<{ title: string; body: string }>;
-  };
-  leak: {
-    eyebrow: string;
-    heading: string;
-    body: string;
-    /** Each moment: where it breaks and what we do about it. */
-    moments: Array<{ title: string; breaks: string; weDo: string }>;
+    moments: Array<{ title: string; body: string }>;
     stats: Array<{ figure: string; label: string; source: string }>;
   };
-  split: {
+  how: {
     eyebrow: string;
     heading: string;
     body: string;
-    ours: { title: string; tag: string; items: string[] };
-    yours: { title: string; tag: string; items: string[] };
-    note?: string;
+    principles: Array<{ title: string; body: string }>;
+    example: {
+      title: string;
+      person: string;
+      memory: string[];
+      nodes: Array<{ channel: "SMS" | "Phone" | "Email" | "System" | "Outcome"; label: string; when: string }>;
+    };
   };
-  endings: {
+  authority: {
     eyebrow: string;
     heading: string;
     body: string;
-    items: Array<{ label: string; body: string; billable?: boolean }>;
-    note: string;
+    tenets: Array<{ title: string; body: string; tags: Array<{ label: string; detail: string }> }>;
   };
   pricing: {
     eyebrow: string;
     heading: string;
     body: string;
-    billable: { title: string; body: string };
-    free: { title: string; items: string[] };
-    note: string;
+    steps: Array<{ key: string; body: string; emphasized?: boolean }>;
+    trust: string;
+    cta: { label: string; href: string };
   };
-  faq: {
-    eyebrow: string;
-    heading: string;
-    items: Array<{ q: string; a: string }>;
-  };
-  pilot: {
+  onboarding: {
     eyebrow: string;
     heading: string;
     body: string;
-    steps: Array<{ title: string; body: string }>;
-    close: string;
+    steps: Array<{ title: string; body: string; meta: string }>;
+  };
+  pilot: {
+    heading: string;
+    body: string;
     form: { button: string; placeholder: string };
   };
 };
 
-const laneNav: NavContent = {
+export const laneNav: NavContent = {
   wordmark: WORDMARK,
   links: [],
-  cta: { label: "Start a pilot", href: "#pilot" },
+  cta: { label: "Design a pilot", href: "#pilot" },
 };
 
 export const lanes: LaneContent[] = [
-  // ───────────────────────────────────────────────────────────── Healthcare
+  // ── Healthcare
   {
-    key: "dental",
-    slug: "healthcare",
-    title: "Primary Logic for healthcare providers | Kept treatment visits, paid per visit",
-    description:
-      "Primary Logic works diagnosed-but-unscheduled treatment by phone, text, email, and web chat until the visit is booked, confirmed, and kept in your practice schedule. Priced per kept visit.",
-    nav: laneNav,
-    hero: {
-      eyebrow: "For dental groups, DSOs, and elective healthcare",
-      heading: "Turn unscheduled treatment into kept visits.",
-      body:
-        "Primary Logic works the patients who were diagnosed and never booked — the ones your front desk can’t get back to — by phone, text, email, and web chat, until the visit is on your schedule and kept. Clinical judgment stays with your team.",
-      form: { button: "Start a pilot", placeholder: "Work email" },
-      brief: {
-        title: "The pilot, in one card",
-        rows: [
-          { label: "Best fit", value: "Dental, DSO, fertility, LASIK, and medspa groups" },
-          { label: "We take", value: "Diagnosed treatment and consults that never reached the calendar" },
-          { label: "You send", value: "Your unscheduled-treatment report — export, scheduled report, or inbox feed" },
-          { label: "Verified in", value: "Your practice schedule or production report" },
-          { label: "You pay", value: "A fixed fee per kept treatment visit. $0 otherwise." },
-        ],
-        note: "Data handling, consent, and pricing are reviewed with your compliance lead and counsel before any live program.",
-      },
-    },
-    queues: {
-      eyebrow: "What we take",
-      heading: "The work your front desk can’t get back to.",
-      body: "You keep the team and software that make the first attempt. We take what’s left after it — the queue nobody is paid to finish.",
-      items: [
-        { title: "Diagnosed, unscheduled treatment", body: "Implants, full-arch, aligners, crowns — presented in the chair, never booked. Often 30–60% of everything you diagnose." },
-        { title: "Consults that went quiet", body: "The patient wanted to think about it, check financing, or call back after work. Then nobody called." },
-        { title: "Financing left open", body: "The payment-plan link was opened and never finished. The plan sits in the chart." },
-        { title: "Intake never completed", body: "Forms sent, half filled, appointment at risk. We finish the paperwork before the visit." },
-        { title: "Missed and after-hours calls", body: "The 6:40 pm voicemail from a patient ready to book. We call back that evening, in your name." },
-        { title: "Reschedules and no-shows", body: "A cancelled visit becomes a new job, not a lost one — we get it back on the schedule." },
+  key: "dental",
+  slug: "healthcare",
+  title: "Primary Logic for dental groups & DSOs | Confirmed treatment visits, paid per verified visit",
+  description:
+    "Primary Logic autonomously works diagnosed-but-unscheduled treatment until a confirmed visit is recorded in your PMS. Pay per confirmed treatment visit.",
+  hero: {
+    eyebrow: "For dental groups, DSOs, and elective healthcare",
+    heading: "Turn accepted treatment into confirmed visits.",
+    body:
+      "Primary Logic autonomously works the patients who said yes but never scheduled — in your PMS, within your rules — until the confirmed visit is recorded in your schedule.",
+    form: { button: "Design a pilot", placeholder: "Work email" },
+    brief: {
+      title: "The pilot, in one card",
+      rows: [
+        { label: "We take", value: "Diagnosed treatment that never got scheduled" },
+        { label: "You send", value: "An unscheduled-treatment export from your PMS" },
+        { label: "Verified in", value: "Your practice schedule — Dentrix, Eaglesoft, Open Dental" },
+        { label: "You pay", value: "A fixed fee per confirmed treatment visit" },
       ],
-    },
-    leak: {
-      eyebrow: "Where it breaks",
-      heading: "Treatment gets diagnosed. Then it waits.",
-      body: "Your team books what it can while the phones ring. The patient who wanted to think about it slips into a queue nobody owns.",
-      moments: [
-        {
-          title: "The consult ends without a booking",
-          breaks: "The patient says yes in the chair and leaves without a date. The plan sits in the practice-management system.",
-          weDo: "We pick it up from your report the same day, check consent, and offer two open times on the channel the patient answers.",
-        },
-        {
-          title: "The follow-up stops",
-          breaks: "Two calls, one voicemail, a note in the chart. Then the next patient walks in.",
-          weDo: "We keep going on the patient’s schedule — evenings, weekends, days later — and hand financing or clinical questions to the right person on your team.",
-        },
-        {
-          title: "The visit never happens",
-          breaks: "Booked but not confirmed. Intake never finished. No one is paid to notice the empty chair.",
-          weDo: "We confirm, send intake and directions, remind the day before, and reschedule the moment a visit falls through.",
-        },
-      ],
-      stats: [
-        { figure: "30–60%", label: "of diagnosed dental treatment is never scheduled", source: "Practice-management case-acceptance benchmarks" },
-        { figure: "~45% vs ~75%", label: "case acceptance at a typical practice vs. top performers", source: "Dental industry case-acceptance benchmarks" },
-        { figure: "10×", label: "more likely to reach someone within 5 minutes than after 30", source: "Lead Response Management study, MIT / InsideSales" },
-      ],
-    },
-    split: {
-      eyebrow: "The line we don’t cross",
-      heading: "Persistent on logistics. Strict about clinical judgment.",
-      body: "We pursue an administrative outcome — a kept visit. We do not practice medicine, change a treatment plan, or invent a fact that isn’t in the record.",
-      ours: {
-        title: "We handle",
-        tag: "In your name",
-        items: [
-          "Calls, texts, emails, and web chat with the patient, in your practice’s name and scripts",
-          "Offering open times, holding slots, and booking into your practice-management system",
-          "Confirmations, intake forms, directions, day-before reminders, and rescheduling",
-          "Routing financing questions to your coordinator with the patient’s context attached",
-          "A full record of every touch, written back where your team already looks",
-        ],
-      },
-      yours: {
-        title: "Your team keeps",
-        tag: "Always",
-        items: [
-          "Anything about the treatment itself — symptoms, alternatives, changes to the plan",
-          "Financing approvals and pricing decisions",
-          "A patient in distress, or one whose identity we can’t confirm",
-          "Policy exceptions and anything outside the rules you approved before launch",
-        ],
-      },
-      note: "BAA before PHI: security review, a signed BAA, minimum-necessary data, and access logging come before the first patient record.",
-    },
-    endings: {
-      eyebrow: "How a case ends",
-      heading: "Every patient we take ends in a known state.",
-      body: "Nothing is left in a queue. Each job closes one of these ways, with its history attached — and only one of them is billed.",
-      items: [
-        { label: "Kept visit", body: "Marked arrived or completed in your schedule.", billable: true },
-        { label: "Booked, not kept", body: "On the calendar, then missed. We reschedule; nothing is billed until it’s kept." },
-        { label: "Declined", body: "The patient said no. We record it and stop." },
-        { label: "Opted out", body: "A stop on any channel ends outreach on every channel." },
-        { label: "Unreachable", body: "The agreed contact sequence ran out." },
-        { label: "Handed to your team", body: "A clinical, financing, or identity question your team owns." },
-        { label: "Ineligible or withdrawn", body: "Outside the frame, blocked, or pulled by the practice." },
-      ],
-      note: "Your schedule report — not our call log — decides which ending each case reached.",
-    },
-    pricing: {
-      eyebrow: "Pricing",
-      heading: "Per kept visit. Nothing else.",
-      body: "A fixed fee per kept treatment visit, plus the direct cost of calls and messages. Because we only take patients after your first attempt, every visit we bill is one you were otherwise losing.",
-      billable: { title: "Kept treatment visit", body: "An eligible patient from your own queue, marked arrived, checked in, or completed in your practice schedule inside the agreed window." },
-      free: {
-        title: "$0",
-        items: ["Consult booked but not kept", "Patient declined or opted out", "Unreachable after the agreed sequence", "Handed to your team, ineligible, or withdrawn"],
-      },
-      note: "The fee per visit is fixed before launch, based on what a kept visit is worth to you. Priced per visit on your own patients — never per referred patient. Healthcare pricing and contract structure are reviewed with counsel before any live program.",
-    },
-    faq: {
-      eyebrow: "Straight answers",
-      heading: "Before you share a queue.",
-      items: [
-        { q: "Is this a replacement for our front desk or our scheduling AI?", a: "No. Keep the people and tools that make the first attempt. We take the treatment they couldn’t get back to, and we’re paid only when a visit is kept." },
-        { q: "Do we need a deep EHR or PMS integration?", a: "No. A pilot starts from a copy of the report you already run — an export, a scheduled report, or a forwarded inbox. Verification uses your own schedule report. Progress and the result are written back where your team already looks." },
-        { q: "Who talks to our patients?", a: "Primary Logic does — by phone, text, email, and web chat, in your practice’s name, with your scripts, under the consent your patients already gave you. Every conversation is on the record." },
-        { q: "What about patient data?", a: "Security review and a signed BAA come before any PHI. Access is limited to the approved workflow, minimum-necessary, and logged." },
-        { q: "Who handles clinical questions?", a: "Your designated staff. We handle scheduling and logistics; anything clinical, a distressed patient, or an identity we can’t confirm goes to your team with full context." },
-        { q: "Is paying per visit a referral fee?", a: "No. We’re paid to convert your own diagnosed patients — a service on your queue, priced per visit kept. We never pay or get paid per patient steered between providers." },
-      ],
-    },
-    pilot: {
-      eyebrow: "The pilot",
-      heading: "Start with the treatment your team can’t get back to.",
-      body: "Diagnosed, unscheduled treatment from the last 90 days, worked beside your current process. No migration, no exclusivity, no seat purchase.",
-      steps: [
-        { title: "Define the frame", body: "Which treatment types, what we may say and promise, when we hand off, and what counts as a kept visit in your report." },
-        { title: "Send the report", body: "A copy of the unscheduled-treatment report — export, scheduled report, or forwarded inbox. Your systems stay in place." },
-        { title: "Run beside your team", body: "We own follow-through on the pilot slice; your front desk keeps working exactly as it does today." },
-        { title: "Reconcile kept visits", body: "Your schedule report against our case history, inside the agreed window. Only matches are billed." },
-      ],
-      close: "If the visits aren’t kept, the invoice isn’t there either.",
-      form: { button: "Start a pilot", placeholder: "Work email" },
     },
   },
-
-  // ───────────────────────────────────────────────────────────────── Legal
-  {
-    key: "legal",
-    slug: "legal",
-    title: "Primary Logic for law firms | Signed retainers, paid per case",
-    description:
-      "Primary Logic answers after-hours and overflow calls, gathers the facts your intake team would, and stays on every qualified claimant until the retainer is signed in your case system. Priced per signed retainer, never a share of fees.",
-    nav: laneNav,
-    hero: {
-      eyebrow: "For personal-injury and mass-tort firms",
-      heading: "Injured people call. Half never reach a lawyer.",
-      body:
-        "Primary Logic answers the after-hours and overflow calls, gathers the facts your intake team would, and stays on every qualified claimant — by phone, text, and email — until the retainer is signed in your case system. Legal judgment stays with your attorneys.",
-      form: { button: "Start a pilot", placeholder: "Work email" },
-      brief: {
-        title: "The pilot, in one card",
-        rows: [
-          { label: "Best fit", value: "PI firms with after-hours or overflow volume; mass-tort dockets that need thousands of signatures" },
-          { label: "We take", value: "Missed and after-hours calls, unsigned retainers, and last quarter’s qualified claimants" },
-          { label: "You send", value: "Call overflow, a copy of the unsigned-retainer list, or your aged-lead export" },
-          { label: "Verified in", value: "Your case management system — the signed retainer, timestamped" },
-          { label: "You pay", value: "A flat fee per signed retainer. Never a share of fees. $0 if it doesn’t sign." },
-        ],
-        note: "Fee structure and intake boundaries are reviewed with your firm’s counsel before any live program.",
-      },
-    },
-    queues: {
-      eyebrow: "What we take",
-      heading: "The intake your team can’t cover.",
-      body: "Your intake team handles the day. We take what happens outside it, and everything that stalls between qualified and signed.",
-      items: [
-        { title: "After-hours and weekend calls", body: "The 11 pm call from the ER waiting room. We answer, gather the facts you specify, and run your conflict check." },
-        { title: "Overflow during the day", body: "When every intake seat is busy, the next call rolls to us instead of voicemail." },
-        { title: "Retainers sent, never signed", body: "Opened, not signed. A fee question nobody answered. We chase the signature on the claimant’s schedule." },
-        { title: "Web forms and chat leads", body: "A form at 2 am gets a call in minutes, not a callback the next afternoon." },
-        { title: "Aged, qualified leads", body: "Last quarter’s unsigned claimants, re-entered with your script and a clean window for attribution." },
-        { title: "Mass-tort signing", body: "Thousands of claimants who need documents explained, questions routed, and agreements signed on a deadline." },
+  problem: {
+    eyebrow: "Stop losing revenue",
+    heading: "The patient said yes. Then nothing.",
+    body:
+      "Implants, full-arch, aligners, fertility, medspa — the plan is accepted and the fee is quoted. Then the patient walks out without a date, and the plan ages in the PMS.",
+    moments: [
+      { title: "Leaves without a date", body: "The plan is presented, the fee is quoted, and the patient leaves to “think about it.” Nobody calls back." },
+      { title: "The financing question waits", body: "“Do you offer payment plans?” arrives at 6:40 pm. By morning the front desk has a full waiting room." },
+      { title: "Nobody notices the loss", body: "The plan ages in the PMS. Two touches, then a newer patient — and no line item for what never happened." },
+    ],
+    stats: [
+      { figure: "30–60%", label: "of diagnosed dental treatment is never scheduled", source: "Practice-management case-acceptance benchmarks" },
+      { figure: "~45%", label: "average case acceptance, versus ~75% at top-performing practices", source: "Industry case-acceptance benchmarks" },
+      { figure: "20–35%", label: "of calls to dental practices go unanswered", source: "Dental call-tracking industry benchmarks" },
+    ],
+  },
+  how: {
+    eyebrow: "How it works",
+    heading: "From treatment plan to confirmed visit, owned.",
+    body:
+      "Primary Logic autonomously takes each unscheduled plan and works it — patient, financing options, scheduling, intake, reminders — until the visit is confirmed. Nothing routes back to your front desk.",
+    principles: [
+      { title: "Answers at the right moment", body: "The 6:40 pm payment-plan text gets a reply in minutes, from the plans on file." },
+      { title: "Never drops the follow-up", body: "Text, call, and email on the patient’s schedule, for days or weeks, remembering every touch." },
+      { title: "Resolves it end to end", body: "Books the visit, sends intake, and reschedules if it moves — from your approved availability." },
+      { title: "Finishes in your schedule", body: "Booked and marked confirmed in your PMS. That is when it counts." },
+    ],
+    example: {
+      title: "One job, across channels",
+      person: "Luis · dental implant consult",
+      memory: ["Prefers SMS", "Evenings", "Downtown office"],
+      nodes: [
+        { channel: "SMS", label: "Two times offered", when: "Day 1 · 9:40 am" },
+        { channel: "SMS", label: "Picks Thursday", when: "6:12 pm" },
+        { channel: "SMS", label: "Financing options sent", when: "6:14 pm" },
+        { channel: "SMS", label: "Reminder + intake", when: "Day 2 · 9:00 am" },
+        { channel: "Outcome", label: "Visit confirmed", when: "7:48 pm" },
       ],
-    },
-    leak: {
-      eyebrow: "Where it breaks",
-      heading: "A missed call isn’t a lead problem. It’s an unfinished case.",
-      body: "Accidents happen at night. Retainers get opened and forgotten. A claimant says “send it again” and the queue records a note instead of a next move.",
-      moments: [
-        {
-          title: "The after-hours call",
-          breaks: "It rings through to voicemail. By morning the claimant has called two other firms.",
-          weDo: "We answer, capture the approved facts, run the conflict check you define, and route anything that needs a lawyer.",
-        },
-        {
-          title: "The retainer in limbo",
-          breaks: "Sent, opened, unsigned. A fee question nobody answered, or an evening reader with a daytime reminder.",
-          weDo: "We watch the signature, send the agreed reminder at the agreed time, and pick the case back up when the claimant replies days later.",
-        },
-        {
-          title: "The aged lead",
-          breaks: "Last quarter’s qualified claimants, still unsigned, still in the CRM, still yours if someone finished the job.",
-          weDo: "We re-enter them with your script, one at a time, and stop the moment they decline or opt out.",
-        },
-      ],
-      stats: [
-        { figure: "40%", label: "of law firms answered a prospective client’s call", source: "Clio Legal Trends Report, 2024 secret-shopper study" },
-        { figure: "20%", label: "of missed calls got a return call", source: "Clio Legal Trends Report, 2024 secret-shopper study" },
-      ],
-    },
-    split: {
-      eyebrow: "The line we don’t cross",
-      heading: "Persistent on logistics. Strict about judgment.",
-      body: "We gather facts and move paperwork. Case merits, representation decisions, and any legal question go to your attorney — by rule, before launch.",
-      ours: {
-        title: "We handle",
-        tag: "In your firm’s name",
-        items: [
-          "Answering after-hours and overflow calls as your firm’s service provider",
-          "Gathering the intake facts you specify and running the conflict check you define",
-          "Sending the retainer, watching the signature, and following up on the claimant’s schedule",
-          "Relaying an attorney’s answer in the attorney’s exact words",
-          "Writing every call, text, and email back to your case system",
-        ],
-      },
-      yours: {
-        title: "Your attorneys keep",
-        tag: "Always",
-        items: [
-          "Whether to take the case, and every question about its merits",
-          "Fee explanations beyond the approved script — “the attorney will discuss that”",
-          "Any claimant who is distressed, confused, or asking for legal advice",
-          "Anything outside the intake frame agreed before launch",
-        ],
-      },
-    },
-    endings: {
-      eyebrow: "How a case ends",
-      heading: "Every claimant we take ends in a known state.",
-      body: "Nothing is left in a queue. Each job closes one of these ways, with its history attached — and only one of them is billed.",
-      items: [
-        { label: "Signed retainer", body: "The signed agreement lands in your case management system.", billable: true },
-        { label: "Declined", body: "The claimant chose another firm or chose not to proceed." },
-        { label: "Not qualified", body: "Failed your intake criteria or the conflict check." },
-        { label: "Opted out", body: "A stop on any channel ends outreach on every channel." },
-        { label: "Unreachable", body: "The agreed contact sequence ran out." },
-        { label: "Handed to your attorney", body: "A merits, representation, or advice question your firm owns." },
-      ],
-      note: "Your case system — not our call log — decides which ending each case reached.",
-    },
-    pricing: {
-      eyebrow: "Pricing",
-      heading: "Per signed retainer. Never a share of fees.",
-      body: "A flat fee per qualified, signed retainer, plus the direct cost of calls and messages. Firms already pay per signed case; this is the same shape, without paying for cases that don’t sign.",
-      billable: { title: "Signed retainer", body: "A qualified claimant from your own queue whose signed agreement is recorded in your case management system inside the agreed window." },
-      free: {
-        title: "$0",
-        items: ["Declined or chose another firm", "Not qualified or conflicted out", "Unreachable or opted out", "Handed to your attorney"],
-      },
-      note: "A fixed service fee per signed retainer — never a percentage of a contingency fee, in line with the rules on fee sharing. The fee is set before launch with your firm’s counsel.",
-    },
-    faq: {
-      eyebrow: "Straight answers",
-      heading: "Before you route a call.",
-      items: [
-        { q: "Is this fee sharing?", a: "No. A flat service fee per signed retainer, never a percentage of a contingency fee — the same way firms already pay intake and lead vendors." },
-        { q: "Will it give legal advice?", a: "No. Any question about the case, its merits, or representation gets “the attorney will discuss that” and a hand-off with context. Your attorney makes the representation decision." },
-        { q: "We have an answering service and an intake team. Why this?", a: "Keep them. An answering service takes a message; we take the job — from first contact through the signed retainer — and we’re paid only when it signs. Nothing cannibalizes the intake team sitting twenty feet from the partner." },
-        { q: "Does it work with our case management system?", a: "Yes. Filevine, Lead Docket, Litify, CASEpeer, and similar systems already route leads to outside vendors. A pilot starts by pointing overflow or a list at us; the signed retainer in your system is what we bill against." },
-        { q: "How fast can a mass-tort docket move?", a: "As fast as claimants answer. We work thousands of files in parallel on the claimant’s channel and schedule, route every legal question to your team, and report signatures against your docket daily." },
-      ],
-    },
-    pilot: {
-      eyebrow: "The pilot",
-      heading: "Start with the calls your team can’t cover.",
-      body: "After-hours, overflow, or last quarter’s unsigned claimants. Your daytime team and current systems stay exactly as they are — and last quarter’s missed-call log is your control group.",
-      steps: [
-        { title: "Define the intake frame", body: "The facts we gather, the conflict check, when we escalate, and the signature event that counts." },
-        { title: "Route the overflow", body: "After-hours calls, aged leads, or unsigned retainers — a copy of the queue, not a migration." },
-        { title: "Run beside your intake team", body: "We own follow-through on the pilot slice; your team keeps working exactly as it does today." },
-        { title: "Reconcile signed cases", body: "Your signed-case log against our case history, inside the agreed window. Only matches are billed." },
-      ],
-      close: "If it doesn’t sign, there’s no invoice.",
-      form: { button: "Start a pilot", placeholder: "Work email" },
     },
   },
-
-  // ─────────────────────────────────────────────────────────────── Lending
+  authority: {
+    eyebrow: "Operating authority",
+    heading: "Autonomous, within your rules.",
+    body:
+      "Before launch, we define the outcome, what it may say and do, the approved knowledge, the prohibited actions, and the system of record. It answers only from what your practice has already recorded.",
+    tenets: [
+      {
+        title: "Bounded",
+        body: "Acts only on approved knowledge and consent. Priced on your own patients — never per referred patient.",
+        tags: [
+          { label: "HIPAA", detail: "Signed BAA, minimum-necessary PHI access" },
+          { label: "TCPA & consent", detail: "Consent on file; quiet hours, opt-outs enforced" },
+          { label: "Licensed-activity rules", detail: "No clinical advice; no treatment-plan changes" },
+        ],
+      },
+      {
+        title: "Auditable",
+        body: "Every message, action, and PMS write sits on one patient record, readable any time.",
+        tags: [
+          { label: "Full audit trail", detail: "Calls, texts, emails, and PMS writes, timestamped" },
+          { label: "Access logging", detail: "Who saw which patient record, and when" },
+          { label: "Compliance review", detail: "Any case, readable by your team, any time" },
+        ],
+      },
+      {
+        title: "Accountable",
+        body: "Work outside its authority closes uncompleted, with its history. Only confirmed visits are billed.",
+        tags: [
+          { label: "System of record", detail: "Your PMS schedule decides completion" },
+          { label: "Closed, not improvised", detail: "A clinical question ends the case, with a record" },
+          { label: "Never billed", detail: "No confirmed visit in the PMS, no fee" },
+        ],
+      },
+    ],
+  },
+  pricing: {
+    eyebrow: "Outcome-based pricing",
+    heading: "Only pay for confirmed visits.",
+    body: "Before launch, we agree on the billable event, the system that verifies it, and the fixed fee.",
+    steps: [
+      { key: "Define", body: "The billable event: a treatment visit booked and marked confirmed in your PMS." },
+      { key: "Verify", body: "Your practice schedule records the confirmation — Dentrix, Eaglesoft, or Open Dental." },
+      { key: "Invoice", body: "Confirmed visits × fixed fee.", emphasized: true },
+    ],
+    trust: "Your system is the source of truth.",
+    cta: { label: "Design a pilot", href: "#pilot" },
+  },
+  onboarding: {
+    eyebrow: "Getting started",
+    heading: "Live in about two weeks. Nothing to install.",
+    body:
+      "Your PMS already knows how to export a report. That is all we need to start. Progress and the confirmed visit are written back where your team already looks.",
+    steps: [
+      { title: "Send us the queue", body: "A PMS unscheduled-treatment export — treatment plan, provider, quoted fee, and contact consent.", meta: "About an hour" },
+      { title: "Approve the rules", body: "What we may say and do, what we must never do, consent and quiet hours, and the billable event.", meta: "Two weeks" },
+      { title: "Go live beside your team", body: "We work the unscheduled plans; your front desk keeps the patients in front of it. Compare on your own dashboard.", meta: "Day 1" },
+    ],
+  },
+  pilot: {
+    heading: "Recapture the treatment you’re losing.",
+    body: "Give Primary Logic one unscheduled-treatment queue and one confirmed-visit event. It runs the work in your PMS; you pay only when the visit is confirmed.",
+    form: { button: "Design a pilot", placeholder: "Work email" },
+  },
+},
+  // ── Legal
   {
-    key: "lending",
-    slug: "lending",
-    title: "Primary Logic for lenders | Funded loans, paid per funding",
-    description:
-      "Primary Logic works applications that stalled mid-file — missing documents, unreturned calls, unsigned disclosures — by phone, text, and email until the loan funds in your LOS. Priced per funded loan.",
-    nav: laneNav,
-    hero: {
-      eyebrow: "For credit unions, fintech lenders, and home-improvement finance",
-      heading: "Turn stalled applications into funded loans.",
-      body:
-        "Primary Logic works the applications that stalled mid-file — missing pay stubs, unreturned calls, unsigned disclosures — by phone, text, and email, on the borrower’s schedule, until the loan funds in your LOS. Rates and advice stay with your licensed team.",
-      form: { button: "Start a pilot", placeholder: "Work email" },
-      brief: {
-        title: "The pilot, in one card",
-        rows: [
-          { label: "Best fit", value: "HELOC, home-improvement, personal-loan, and auto-refi programs" },
-          { label: "We take", value: "Stalled applications, payoff-triggered recapture lists, and low-priority or aged leads" },
-          { label: "You send", value: "A scheduled export or CSV from your LOS or CRM" },
-          { label: "Verified in", value: "Your loan origination system — the funding record" },
-          { label: "You pay", value: "A fixed fee per funded loan. $0 for files that don’t fund." },
-        ],
-        note: "Outreach rules, the licensed hand-off, and the billable event are reviewed with your compliance team before any live program.",
-      },
-    },
-    queues: {
-      eyebrow: "What we take",
-      heading: "The files your loan officers can’t keep chasing.",
-      body: "Your team sources the demand and closes what it can. We take the applications that stall between steps — and the leads nobody has time to work.",
-      items: [
-        { title: "Abandoned applications", body: "Started, then stopped at income, identity, asset, or disclosure steps. We chase the exact missing item, on the borrower’s schedule." },
-        { title: "Promises without a next move", body: "“I can send both on Friday.” The CRM gets a note. We call Friday, at the time they said." },
-        { title: "After-hours and web leads", body: "A 9 pm application gets a two-minute response, not a next-morning callback." },
-        { title: "Payoff-triggered recapture", body: "A past customer enters your approved outreach list. We work it consistently while your team works live production." },
-        { title: "Low-priority and aged leads", body: "The bottom of the queue — leads no human team can be paid to work — worked one at a time until they fund or end." },
-        { title: "Third-party coordination", body: "Documents, e-notaries, and portal steps that stall a clear-to-close. We keep the file moving between calls." },
+  key: "legal",
+  slug: "legal",
+  title: "Primary Logic for law firms | Signed retainers, paid per verified retainer",
+  description:
+    "Primary Logic works after-hours calls, unsigned retainers, and aged leads within your intake rules until a signed retainer is recorded in your case system.",
+  hero: {
+    eyebrow: "For personal-injury and mass-tort firms",
+    heading: "Turn unsigned intake into signed retainers.",
+    body:
+      "Primary Logic autonomously works the claimants your team can’t keep chasing — phone, text, and email, within your rules — until the signed retainer is recorded in your case system.",
+    form: { button: "Design a pilot", placeholder: "Work email" },
+    brief: {
+      title: "The pilot, in one card",
+      rows: [
+        { label: "We take", value: "After-hours calls, unsigned retainers, aged qualified leads" },
+        { label: "You send", value: "A copy of the queue from Filevine, Lead Docket, or Litify" },
+        { label: "Verified in", value: "Your case management system — signed retainer on the matter" },
+        { label: "You pay", value: "A flat fee per signed retainer, never a share of fees" },
       ],
-    },
-    leak: {
-      eyebrow: "Where it breaks",
-      heading: "Applications don’t get rejected. They stall.",
-      body: "The borrower started. Your team sourced the opportunity. The file didn’t die from a clean decline — it stalled between documents, callbacks, and portals nobody had time to keep owning.",
-      moments: [
-        {
-          title: "The documents never arrive",
-          breaks: "Two pay stubs on a work computer. A reminder sent at 10 am to someone who’s free after 6.",
-          weDo: "We send the secure upload link, ask when they’re free, and stay on the line at 6:05 pm while the stubs go up.",
-        },
-        {
-          title: "The callback never happens",
-          breaks: "The borrower asks for an evening call. The note goes in the CRM. The evening comes and goes.",
-          weDo: "We call at the promised time, every time — and route the rate question to your loan officer with the file attached.",
-        },
-        {
-          title: "The file ages out",
-          breaks: "Conditions expire, the rate lock lapses, and a funded loan becomes a withdrawn application.",
-          weDo: "We confirm closing time and what to bring, chase the last condition, and watch the funding report until the loan funds.",
-        },
-      ],
-      stats: [
-        { figure: "10×", label: "more likely to reach a lead within 5 minutes than after 30", source: "Lead Response Management study, MIT / InsideSales" },
-        { figure: "45 days", label: "a typical origination, with dozens of decision points where a file can stall", source: "Industry origination timelines; illustrative" },
-      ],
-    },
-    split: {
-      eyebrow: "The line we don’t cross",
-      heading: "We advance the file. Your licensed team owns the advice.",
-      body: "We market, gather facts, and chase documents. The moment a borrower asks about rate, terms, or suitability, a licensed human takes over — that hand-off is built into the rules before launch.",
-      ours: {
-        title: "We handle",
-        tag: "In your name",
-        items: [
-          "Speed-to-lead on new applications, including nights and weekends",
-          "Chasing the specific missing documents and disclosures, by phone, text, and email",
-          "Calling back at the exact time the borrower asked for",
-          "Coordinating portal steps and third parties so the file keeps moving between calls",
-          "Writing progress and the result back into your CRM or LOS",
-        ],
-      },
-      yours: {
-        title: "Your licensed team keeps",
-        tag: "Always",
-        items: [
-          "Every question about rate, terms, eligibility, or suitability — the quoting moment",
-          "Credit decisions and conditions",
-          "Any borrower who is distressed or asking for financial advice",
-          "Anything outside the frame agreed before launch",
-        ],
-      },
-      note: "Consent is a gate: every borrower carries a contact-permission basis, quiet hours and frequency limits are checked at send time, and a stop on any channel ends outreach everywhere — and survives re-import.",
-    },
-    endings: {
-      eyebrow: "How a case ends",
-      heading: "Every file we take ends in a known state.",
-      body: "Nothing is left in a queue. Each job closes one of these ways, with its history attached — and only one of them is billed.",
-      items: [
-        { label: "Funded", body: "The funding record appears in your LOS.", billable: true },
-        { label: "Complete, not funded", body: "Application finished; underwriting or the borrower ended it. Not billed unless separately agreed." },
-        { label: "Withdrawn or declined", body: "The borrower stopped, or credit said no." },
-        { label: "Opted out", body: "A stop on any channel ends outreach on every channel." },
-        { label: "Unreachable", body: "The agreed contact sequence ran out." },
-        { label: "Handed to your loan officer", body: "A rate, terms, or advice question your licensed team owns." },
-      ],
-      note: "Your funding report — not our call log — decides which ending each file reached.",
-    },
-    pricing: {
-      eyebrow: "Pricing",
-      heading: "Per funded loan. Nothing for stalled files.",
-      body: "A fixed fee per funded loan, plus the direct cost of calls and messages. Because we take files after your team’s first attempt, every funding we bill is one that was headed for withdrawal.",
-      billable: { title: "Funded loan", body: "An eligible application from your own pipeline that funds in your LOS inside the agreed attribution window." },
-      free: {
-        title: "$0",
-        items: ["Contact attempts, replies, or appointments", "A file that stays incomplete, declines, or withdraws", "Unreachable, opted out, or handed to your loan officer", "A completed application — unless separately agreed as an intermediate outcome"],
-      },
-      note: "The fee per funded loan is fixed before launch. Per-funding pricing is used for HELOC, home-improvement, personal, and auto-refi programs; anywhere a product touches a residential mortgage, the licensed-MLO hand-off and fee structure are reviewed with counsel first.",
-    },
-    faq: {
-      eyebrow: "Straight answers",
-      heading: "Before you send a file.",
-      items: [
-        { q: "Can it quote rates?", a: "No. Rates, terms, and suitability go to your licensed loan officer with the file attached. Where a program is mortgage-adjacent, that warm hand-off is written into the rules from day one." },
-        { q: "Is paying per funded loan allowed?", a: "For HELOC, home-improvement, personal, and auto-refi programs, per-funding service fees are the norm. Anywhere a product touches a residential mortgage, we structure fees with your counsel before launch." },
-        { q: "Do we need an LOS integration?", a: "No. A pilot starts from the scheduled export or CSV you already run. We reconcile against your funding report; nothing has to be written into the LOS for the pilot to work." },
-        { q: "How do we know it’s working?", a: "The way you already test: a split on your own funnel, read on your own dashboard. Contact rate and application-started rate show up in days; funded loans follow." },
-        { q: "What about consent and opt-outs?", a: "Every borrower carries a contact-permission basis or we don’t reach out. Quiet hours and frequency limits are enforced at send time. A stop on any channel ends outreach on every channel and survives re-import." },
-      ],
-    },
-    pilot: {
-      eyebrow: "The pilot",
-      heading: "Give us a slice of the queue. Keep your process running.",
-      body: "Applications open more than 14 days with missing items or no borrower response, or an approved recapture list. No replacement project, no exclusivity, no software rollout.",
-      steps: [
-        { title: "Define the finish line", body: "Eligible files, contact basis, the funding event that counts, the attribution window, and the fee." },
-        { title: "Send a copy", body: "A scheduled export or CSV from your LOS or CRM. Your source systems stay in place." },
-        { title: "Run beside your team", body: "We own follow-through on the pilot slice; your loan officers keep working exactly as they do today." },
-        { title: "Reconcile in the LOS", body: "Your funding report against our case history. Only matched funded loans are billed." },
-      ],
-      close: "If the funded loans aren’t there, the invoice isn’t there either.",
-      form: { button: "Start a pilot", placeholder: "Work email" },
     },
   },
+  problem: {
+    eyebrow: "Stop losing revenue",
+    heading: "The claimant qualified. Nobody finished the signing.",
+    body:
+      "Injured people call after hours and dial the next firm when nobody answers. The ones who get through often go quiet before signature — not because they changed their mind, but because nobody’s job is to finish it.",
+    moments: [
+      { title: "The call comes after hours", body: "The 9 pm call from the ER waiting room rings out. By morning they’ve signed with the firm that answered." },
+      { title: "Retainer opened, never signed", body: "The agreement went out, got opened, and stalled on one fee question. Two reminders, then a newer lead." },
+      { title: "Aged leads go untouched", body: "Qualified claimants from last quarter sit in Lead Docket with no next step and no owner." },
+    ],
+    stats: [
+      { figure: "40%", label: "of law firms answered a prospective client’s call", source: "Clio Legal Trends Report, 2024 secret-shopper study" },
+      { figure: "20%", label: "of missed calls got a return call", source: "Clio Legal Trends Report, 2024 secret-shopper study" },
+      { figure: "~48%", label: "of firms were unreachable by phone", source: "Clio Legal Trends Report, 2024 secret-shopper study" },
+    ],
+  },
+  how: {
+    eyebrow: "How it works",
+    heading: "Intake follow-through, owned until it’s signed.",
+    body:
+      "Primary Logic autonomously picks up the claimant your team can’t get to and works the signature through — in your firm’s name, within your intake rules — with nothing routed back to your intake desk.",
+    principles: [
+      { title: "Answers the after-hours call", body: "Picks up at 9 pm from the ER waiting room, gathers the intake facts, checks conflicts and consent." },
+      { title: "Never drops the signature chase", body: "Retainer sent, reminder text, “saw you opened it” call — on the claimant’s schedule, for weeks." },
+      { title: "Explains the fee, never advises", body: "Relays your approved fee summary, word for word. A merits question closes the job uncompleted." },
+      { title: "Signed in your case system", body: "Signature verified with e-sign, filed to the matter in Filevine or Litify — that’s when it counts." },
+    ],
+    example: {
+      title: "One job, across channels",
+      person: "Cameron · injury-case retainer",
+      memory: ["Prefers SMS", "Evenings", "Fee summary sent"],
+      nodes: [
+        { channel: "Phone", label: "Fee question answered", when: "Day 1 · 10:05 am" },
+        { channel: "Email", label: "Fee summary + sign link", when: "12:30 pm" },
+        { channel: "SMS", label: "Evening reminder", when: "Day 2 · 7:15 pm" },
+        { channel: "System", label: "Signature verified", when: "7:32 pm" },
+        { channel: "Outcome", label: "Signed retainer recorded", when: "7:34 pm" },
+      ],
+    },
+  },
+  authority: {
+    eyebrow: "Operating authority",
+    heading: "Autonomous, within your firm’s rules.",
+    body:
+      "Before launch, the firm and its counsel define the outcome, the operating authority, the approved fee and process language, the prohibited actions, and the system of record.",
+    tenets: [
+      {
+        title: "Bounded",
+        body: "Acts only on the firm’s approved intake, fee, and process language, permissions, and consent. Nothing is improvised.",
+        tags: [
+          { label: "No legal advice (UPL)", detail: "No merits, strategy, or value opinions — by rule" },
+          { label: "No fee sharing", detail: "Flat fee per retainer, never a % of contingency" },
+          { label: "TCPA & consent", detail: "Consent on file; quiet hours, opt-outs enforced" },
+        ],
+      },
+      {
+        title: "Auditable",
+        body: "Every call, text, email, and case-system write sits on one matter record, readable by the firm any time.",
+        tags: [
+          { label: "Full audit trail", detail: "Calls, texts, emails, and writes, timestamped" },
+          { label: "Access logging", detail: "Who saw which matter, and when" },
+          { label: "Compliance review", detail: "Any matter, readable by counsel, any time" },
+        ],
+      },
+      {
+        title: "Accountable",
+        body: "Work outside its authority closes uncompleted, with its history. Only signed retainers are billed.",
+        tags: [
+          { label: "System of record", detail: "Your case management system decides completion" },
+          { label: "Closed, not improvised", detail: "A merits question ends the job with a record" },
+          { label: "Never billed", detail: "No signed retainer on file, no fee" },
+        ],
+      },
+    ],
+  },
+  pricing: {
+    eyebrow: "Outcome-based pricing",
+    heading: "Only pay for signed retainers.",
+    body: "Before launch, the firm and its counsel agree the billable event, the case system that verifies it, and the flat fee.",
+    steps: [
+      { key: "Define", body: "The billable event: a signed retainer from your own queue, recorded in your case system." },
+      { key: "Verify", body: "Filevine, Lead Docket, Litify, or CASEpeer records the signed retainer on the matter." },
+      { key: "Invoice", body: "Signed retainers × flat fee.", emphasized: true },
+    ],
+    trust: "Your system is the source of truth.",
+    cta: { label: "Design a pilot", href: "#pilot" },
+  },
+  onboarding: {
+    eyebrow: "Getting started",
+    heading: "Live in about two weeks. Nothing to install.",
+    body:
+      "Your case system already knows how to send leads to a vendor. Progress and the signed retainer are written back where your intake team already looks.",
+    steps: [
+      { title: "Send us a copy of the queue", body: "Route after-hours or overflow to us, or export the unsigned-retainer and aged-lead lists from your case system.", meta: "About an hour" },
+      { title: "Approve the rules", body: "The intake script, the approved fee summary, conflict and consent rules, what we must never say, and the billable event.", meta: "Two weeks" },
+      { title: "Go live beside your team", body: "We work the after-hours, overflow, and aged slice; your intake team keeps the rest. Compare on your own dashboard.", meta: "Day 1" },
+    ],
+  },
+  pilot: {
+    heading: "Recapture the retainers you’re losing.",
+    body:
+      "Give Primary Logic one overlooked queue — after-hours, overflow, or aged leads — one operating policy, and one case-system event. You pay only when the signed retainer is recorded.",
+    form: { button: "Design a pilot", placeholder: "Work email" },
+  },
+},
+  // ── Lending
+  {
+  key: "lending",
+  slug: "lending",
+  title: "Primary Logic for lenders | Funded loans, verified in your LOS",
+  description:
+    "Primary Logic autonomously works stalled applications, promised callbacks, and aged leads — within your rules — until a funded loan is recorded in your LOS.",
+  hero: {
+    eyebrow: "For credit unions, fintech lenders, and home-improvement finance",
+    heading: "Turn stalled applications into funded loans.",
+    body:
+      "Primary Logic autonomously works the applications your loan officers can’t keep chasing — inside your LOS and CRM, within your rules — until the funded loan is recorded.",
+    form: { button: "Design a pilot", placeholder: "Work email" },
+    brief: {
+      title: "The pilot, in one card",
+      rows: [
+        { label: "We take", value: "Stalled applications, promised callbacks, aged leads" },
+        { label: "You send", value: "A scheduled export from your LOS or CRM" },
+        { label: "Verified in", value: "The funding record in your LOS" },
+        { label: "You pay", value: "A fixed fee per funded loan. Nothing otherwise." },
+      ],
+    },
+  },
+  problem: {
+    eyebrow: "Stop losing revenue",
+    heading: "The application came in. The file went quiet.",
+    body:
+      "Borrowers apply for HELOCs, home-improvement, personal, and auto-refi loans — then stall on a document, a callback, or a portal step. Your loan officers work the files in front of them; the rest age.",
+    moments: [
+      { title: "The documents never arrive", body: "Two pay stubs on a work computer. A 10 am reminder to someone who’s free after 6. The file ages." },
+      { title: "The callback never happens", body: "“Call me after 6.” The note goes in the CRM. The evening comes and goes, and so does the borrower." },
+      { title: "The web lead waits overnight", body: "A 9 pm application gets a next-morning callback. By then the borrower has heard from someone else." },
+    ],
+    stats: [
+      { figure: "10×", label: "more likely to reach a lead within 5 minutes than after 30", source: "Lead Response Management study, MIT / InsideSales" },
+      { figure: "45 days", label: "a typical origination, with dozens of points where a file can stall", source: "Industry origination timelines; illustrative" },
+    ],
+  },
+  how: {
+    eyebrow: "How it works",
+    heading: "Every stalled file, worked until it funds.",
+    body:
+      "Primary Logic picks up the file your team can’t get to and completes it autonomously — in your name, in your LOS, within the rules you set. Nothing is routed back to your loan officers.",
+    principles: [
+      { title: "Answers when the borrower can", body: "Two minutes after the 9 pm application; the 6:05 pm call because that’s when they said." },
+      { title: "Never drops the follow-up", body: "Missing items chased by phone, text, and email, on their schedule, for the life of the file." },
+      { title: "Reads the file, end to end", body: "Answers only from what’s recorded — approved rate, disclosure, next step. Nothing routed back." },
+      { title: "Finishes in your LOS", body: "Documents marked received, closing set, funding recorded — that’s when it counts." },
+    ],
+    example: {
+      title: "One file, across channels",
+      person: "Dana · stalled home-equity loan",
+      memory: ["After 6 pm", "Prefers phone", "Closing Thursday"],
+      nodes: [
+        { channel: "Email", label: "Secure upload link sent", when: "Day 1 · 9:15 am" },
+        { channel: "Phone", label: "Stays on for the upload", when: "6:05 pm" },
+        { channel: "Email", label: "Rate + disclosure sent", when: "6:14 pm" },
+        { channel: "Phone", label: "Clear to close, time set", when: "Day 8 · 11:20 am" },
+        { channel: "Outcome", label: "Loan funded", when: "Day 10 · 5:45 pm" },
+      ],
+    },
+  },
+  authority: {
+    eyebrow: "Operating authority",
+    heading: "Autonomous, within your rules.",
+    body:
+      "Before launch we define what it may do, what it may read to a borrower, and what it must never say. Anything outside that authority closes uncompleted, with its history — never improvised, never billed.",
+    tenets: [
+      {
+        title: "Bounded",
+        body: "Reads only what is already recorded on the borrower’s file. It never quotes, negotiates, or advises.",
+        tags: [
+          { label: "SAFE Act boundary", detail: "Reads the approved rate on file; never quotes" },
+          { label: "TCPA & consent", detail: "Consent on file; quiet hours, stops enforced" },
+          { label: "Programs outside RESPA", detail: "HELOC, home-improvement, personal, auto-refi" },
+        ],
+      },
+      {
+        title: "Auditable",
+        body: "Every call, text, email, and LOS write sits on one file record, readable any time.",
+        tags: [
+          { label: "Full audit trail", detail: "Calls, texts, emails, and LOS writes, timestamped" },
+          { label: "Source and timestamp", detail: "Every rate read carries where it came from" },
+          { label: "Compliance review", detail: "Any file, readable by your team, any time" },
+        ],
+      },
+      {
+        title: "Accountable",
+        body: "Suitability and credit decisions are outside its authority. Those files close with a record; only funded loans are billed.",
+        tags: [
+          { label: "System of record", detail: "Your LOS decides when a loan is funded" },
+          { label: "Closed, not improvised", detail: "Advice or credit questions end with a record" },
+          { label: "Never billed", detail: "No funded loan, no fee" },
+        ],
+      },
+    ],
+  },
+  pricing: {
+    eyebrow: "Outcome-based pricing",
+    heading: "Only pay for funded loans.",
+    body: "Before launch, we agree on the billable event — a funded loan — the LOS report that verifies it, and the fixed fee.",
+    steps: [
+      { key: "Define", body: "The billable event is a funded loan — an eligible file from the agreed queue." },
+      { key: "Verify", body: "Your LOS records the funding. Its report — not our call log — is the source." },
+      { key: "Invoice", body: "Funded loans × fixed fee.", emphasized: true },
+    ],
+    trust: "Your system is the source of truth.",
+    cta: { label: "Design a pilot", href: "#pilot" },
+  },
+  onboarding: {
+    eyebrow: "Getting started",
+    heading: "Live in about two weeks. Nothing to install.",
+    body:
+      "Your LOS or CRM already knows how to send files to a vendor. That’s all we need; progress and the funding are written back where your team already looks.",
+    steps: [
+      { title: "Send us the queue", body: "A scheduled LOS or CRM export: files open 14+ days with missing items, or an approved recapture list.", meta: "About an hour" },
+      { title: "Approve the rules", body: "What it may read from the file, what it must never say, consent and quiet hours, and the funding event that bills.", meta: "Two weeks" },
+      { title: "Go live beside your team", body: "It works its slice of the queue; your loan officers keep theirs. Compare on your own dashboard.", meta: "Day 1" },
+    ],
+  },
+  pilot: {
+    heading: "Fund the loans you’re losing.",
+    body: "Give Primary Logic one stalled queue, one set of rules, and one funding report. It works the files inside your LOS; you pay only when a loan funds.",
+    form: { button: "Design a pilot", placeholder: "Work email" },
+  },
+},
 ];
 
-export function getLane(slug: LaneContent["slug"]): LaneContent {
+export function getLane(slug: LaneSlug): LaneContent {
   return lanes.find((l) => l.slug === slug)!;
 }

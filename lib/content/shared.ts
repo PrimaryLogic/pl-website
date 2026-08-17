@@ -20,7 +20,7 @@ export type NavContent = {
 export const homeNav: NavContent = {
   wordmark: WORDMARK,
   links: [],
-  cta: { label: "Start a pilot", href: "/#pilot" },
+  cta: { label: "Design a pilot", href: "/#pilot" },
 };
 
 export const healthcareNav: NavContent = {

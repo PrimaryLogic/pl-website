@@ -71,8 +71,8 @@ export const verticals: VerticalStory[] = [
     key: "dental",
     tab: "Healthcare",
     audience: "Dental groups and DSOs",
-    outcome: "Kept treatment visit",
-    outcomeShort: "kept visit",
+    outcome: "Confirmed treatment visit",
+    outcomeShort: "confirmed visit",
     verifiedIn: "your practice schedule",
     queue: "diagnosed treatment that never got scheduled",
     headline: { lead: "Patients who said yes to treatment", accent: "and never came back." },
@@ -80,7 +80,7 @@ export const verticals: VerticalStory[] = [
     channels: ["Phone", "SMS", "Email", "Web chat"],
     systems: ["EHR", "PMS"],
     exampleTitle: "Get Luis’s dental implant consult booked and confirmed.",
-    exampleBody: "Primary Logic coordinates the patient, your front desk, and financing until the visit is confirmed.",
+    exampleBody: "Primary Logic works the patient, scheduling, and financing questions until the visit is confirmed.",
     person: "Luis",
     personLabel: "a dental patient",
     span: "Day 1 to Day 2",
@@ -107,12 +107,11 @@ export const verticals: VerticalStory[] = [
         signal: "Luis replies after work",
         memory: "Luis answers in the evening.",
         actions: [
-          { kind: "us", actor: "Primary Logic", channel: "", text: "Holds Thursday 2:00, routes the financing question" },
+          { kind: "us", actor: "Primary Logic", channel: "", text: "Holds Thursday 2:00, answers financing from your approved plans" },
           { kind: "person", actor: "Patient", channel: "SMS", text: "", transcript: [
             { who: "person", text: "Thursday works. Do you offer payment plans?" },
-            { who: "agent", text: "We do — our coordinator will send the options. Holding Thursday at 2:00 for you." },
+            { who: "agent", text: "We do — I’ll text you the two plans the office offers, no credit check to see them. Holding Thursday at 2:00 for you." },
           ] },
-          { kind: "team", actor: "Coordinator", channel: "Hand-off", text: "Sends the financing options" },
           { kind: "system", actor: "PMS", channel: "Workflow", text: "Books Thursday 2:00 pm" },
         ],
       },
@@ -161,7 +160,7 @@ export const verticals: VerticalStory[] = [
     channels: ["Phone", "SMS", "Email"],
     systems: ["CMS", "E-sign"],
     exampleTitle: "Get Cameron’s injury-case retainer signed.",
-    exampleBody: "Primary Logic coordinates the claimant, your attorney, and e-sign until the retainer is signed.",
+    exampleBody: "Primary Logic works the claimant, the fee questions, and e-sign until the retainer is signed.",
     person: "Cameron",
     personLabel: "an injury claimant",
     span: "Day 1 to Day 2",
@@ -178,20 +177,20 @@ export const verticals: VerticalStory[] = [
           { kind: "person", actor: "Claimant", channel: "Phone", text: "", transcript: [
             { who: "agent", text: "Hi Cameron — I’ve resent the agreement. Anything holding you up?" },
             { who: "person", text: "Just a question about how the fee works." },
+            { who: "agent", text: "It’s a contingency fee — you pay nothing unless the case resolves in your favor. I’ll send the firm’s one-page summary with the agreement." },
           ] },
-          { kind: "team", actor: "Intake attorney", channel: "Hand-off", text: "Answers the fee question" },
         ],
       },
       {
         when: "Day 1",
         time: "12:30 pm",
         system: "CMS",
-        signal: "Attorney’s answer received",
-        memory: "The attorney’s exact wording is on file.",
+        signal: "Fee explained, agreement re-sent",
+        memory: "The firm’s approved fee summary is on file.",
         actions: [
-          { kind: "us", actor: "Primary Logic", channel: "", text: "Sends the answer in the attorney’s words" },
+          { kind: "us", actor: "Primary Logic", channel: "", text: "Sends the approved fee summary with a fresh signature link" },
           { kind: "person", actor: "Claimant", channel: "Email", text: "", transcript: [
-            { who: "agent", text: "Here’s the fee answer from Attorney Ruiz, in her words — and a fresh link to sign." },
+            { who: "agent", text: "Here’s the firm’s fee summary and a fresh link to sign — takes about a minute." },
             { who: "person", text: "Thanks, that clears it up. I’ll look tonight." },
           ] },
           { kind: "system", actor: "E-sign", channel: "Workflow", text: "Issues a fresh signature link" },
@@ -218,7 +217,7 @@ export const verticals: VerticalStory[] = [
         signal: "Signature complete",
         memory: "Cameron prefers evening SMS; the fee wording is saved for the next claimant.",
         actions: [
-          { kind: "us", actor: "Primary Logic", channel: "", text: "Verifies the signature, notifies the attorney" },
+          { kind: "us", actor: "Primary Logic", channel: "", text: "Verifies the signature and files it to the matter" },
           { kind: "system", actor: "CMS", channel: "Workflow", text: "Records the signed retainer" },
         ],
         outcome: { system: "CMS", label: "Signed retainer" },
@@ -238,7 +237,7 @@ export const verticals: VerticalStory[] = [
     channels: ["Phone", "Email"],
     systems: ["CRM", "LOS"],
     exampleTitle: "Get Dana’s stalled home-equity loan funded.",
-    exampleBody: "Primary Logic coordinates the borrower, documents, and your loan officer until the loan funds.",
+    exampleBody: "Primary Logic works the borrower and the documents, reading only what’s on the file, until the loan funds.",
     person: "Dana",
     personLabel: "a stalled borrower",
     span: "Day 1 to Day 10",
@@ -269,8 +268,8 @@ export const verticals: VerticalStory[] = [
           { kind: "person", actor: "Borrower", channel: "Phone", text: "", transcript: [
             { who: "agent", text: "I’ll stay on while you upload — the two most recent stubs." },
             { who: "person", text: "Done. What rate am I looking at?" },
+            { who: "agent", text: "I can read you the approved rate and disclosure already on your file — sending them to your email now, exactly as recorded." },
           ] },
-          { kind: "team", actor: "Loan officer", channel: "Hand-off", text: "Answers the rate question" },
           { kind: "system", actor: "LOS", channel: "Workflow", text: "Marks the documents received" },
         ],
       },
@@ -308,22 +307,22 @@ export const verticals: VerticalStory[] = [
 export const hero = {
   heading: "Turn missed demand into completed outcomes.",
   body:
-    "Primary Logic works the after-hours, overflow, and aged leads your team can’t get to — staying with the work until it’s done, across days or months.",
-  primaryCta: { label: "Start a pilot", href: "#pilot" },
+    "Primary Logic autonomously works the leads, applications, and bookings your team cannot get to — in your existing systems, within your rules, until the revenue is won.",
+  primaryCta: { label: "Design a pilot", href: "#pilot" },
   secondaryCta: { label: "See how it works", href: "#how" },
-  form: { button: "Start a pilot", placeholder: "Work email" },
+  form: { button: "Design a pilot", placeholder: "Work email" },
   caseLabel: "Example",
 };
 
 export const leak = {
-  eyebrow: "The problem",
-  heading: "You already paid for the demand. Nobody’s paid to finish it.",
+  eyebrow: "Stop losing revenue",
+  heading: "Most lost revenue isn’t lost. It’s unfinished.",
   body:
-    "Your team works the best opportunities first — that’s the right call. The rest waits: after-hours inquiries, overflow, aged leads, and the jobs that need weeks of persistence. That’s where paid-for revenue quietly dies.",
+    "Patients say yes, claimants call, borrowers apply — then a lot of them go quiet. Not because they changed their mind. Because nobody’s job is to finish the follow-through.",
   moments: [
-    { title: "The inquiry arrives", body: "After hours, or while everyone’s busy. It waits until morning — or forever." },
-    { title: "Follow-up stops", body: "Two attempts, then nothing, the moment it gets hard." },
-    { title: "Revenue stalls", body: "No one owns the final outcome, so nobody notices when it never happens." },
+    { title: "It arrives at the wrong moment", body: "The 6:40 pm call, the 11 pm application, “let me think about it.” Everyone’s busy, so it waits." },
+    { title: "Follow-up stops after two tries", body: "One call, one voicemail, a note in the system. Then something newer comes in." },
+    { title: "Nobody notices it never finished", body: "No confirmed visit, no signed retainer, no funded loan — and no line item for the loss." },
   ],
   stats: [
     { figure: "30–60%", label: "of diagnosed dental treatment is never scheduled", source: "Practice-management case-acceptance benchmarks" },
@@ -334,22 +333,34 @@ export const leak = {
 
 export const how = {
   eyebrow: "How it works",
-  heading: "We take the job, and we don’t put it down.",
+  heading: "Customer coordination, owned until the revenue is won.",
   body:
-    "One owner, one next move. We call, text, and email in your name. Anything that needs a license or a judgment call goes to your team. We stop only when the result shows up in your system.",
+    "Primary Logic picks up the lead, application, or booking your team can’t get to and completes it — in your name, in your systems, within the rules you set — until the outcome is recorded.",
   steps: [
-    { title: "Something happens", body: "A new lead, a reply, a document arriving, a status change — or nothing at all after a promised time. Any of these puts the job back in motion." },
-    { title: "We decide the next move", body: "One action, chosen from the rules you approved: what we may say, when we may reach out, and what goes to your team." },
-    { title: "We do it, at the right time", body: "The call at the time they asked for. The reminder the day before. Every touch on the record." },
-    { title: "We keep going until it’s done", body: "Whatever comes back decides the next step. A job ends only one of four ways: done, declined, unreachable, or handed to you." },
+    { title: "Answers at the right moment", body: "Minutes after the 11 pm form; the 6:05 pm callback because that’s when they said." },
+    { title: "Never drops the follow-up", body: "Call, text, and email on their schedule, for days or weeks, remembering every touch." },
+    { title: "Resolves it end to end", body: "Answers from your approved policies and pricing — nothing routed back to your team." },
+    { title: "Finishes in your system", body: "Confirmed in your schedule, CMS, or LOS — that’s when it counts." },
   ],
+  visual: {
+    title: "One job, across channels",
+    person: "Luis · dental implant consult",
+    memory: ["Prefers SMS", "Evenings", "Downtown office"],
+    nodes: [
+      { channel: "SMS", label: "Two times offered", when: "Day 1 · 9:40 am" },
+      { channel: "SMS", label: "Picks Thursday", when: "6:12 pm" },
+      { channel: "SMS", label: "Financing options sent", when: "6:14 pm" },
+      { channel: "SMS", label: "Reminder + intake", when: "Day 2 · 9:00 am" },
+      { channel: "Outcome", label: "Visit confirmed", when: "7:48 pm" },
+    ],
+  },
   contrast: {
     heading: "Not a chatbot. Not an AI receptionist.",
     columns: { a: "An assistant", b: "Primary Logic" },
     rows: [
       { a: "Handles one conversation, then hands off", b: "Owns the job for days or weeks, across phone, text, and email" },
       { a: "Waits for someone to ask", b: "Acts when something changes — or when nothing does" },
-      { a: "Measured on activity", b: "Measured on outcomes: visits kept, retainers signed, loans funded" },
+      { a: "Measured on activity", b: "Measured on outcomes: visits confirmed, retainers signed, loans funded" },
       { a: "Priced per seat or per minute", b: "Priced per verified outcome" },
     ],
   },
@@ -384,38 +395,51 @@ export const setup = {
 };
 
 export const pricing = {
-  eyebrow: "Pricing",
-  heading: "Budget it like ad spend, not software.",
-  body:
-    "You pay a fixed fee per completed outcome, plus the direct cost of calls and messages. Every dollar is tied to a completed outcome, so the budget only grows when revenue does.",
-  compare: {
-    columns: ["", "Seat software", "Primary Logic"],
-    rows: [
-      ["You pay for", "Seats × months", "Completed outcomes"],
-      ["You pay when", "Up front", "After your system confirms it"],
-      ["Unfinished work costs", "You still pay", "$0"],
-      ["Budget grows with", "Headcount", "Results"],
-    ],
-  },
-  billable: {
-    title: "Billable",
-    body: "One thing: a completion your own system confirms — a kept visit, a signed retainer, a funded loan.",
-  },
-  free: {
-    title: "$0",
-    body: "Declined. Never reached. Handed to your team. Stuck on your end. All $0.",
-  },
-  note: "The fee per outcome is fixed before launch, based on what a completion is worth to you. Your system decides what’s billable — not our dashboard.",
+  eyebrow: "Outcome-based pricing",
+  heading: "Only pay for verified outcomes.",
+  body: "Before launch, we agree on the billable event, the system that verifies it, and the fixed fee.",
+  steps: [
+    { key: "Define", body: "Choose the billable event — a confirmed visit, a signed retainer, a funded loan." },
+    { key: "Verify", body: "Your system records completion — schedule, case system, or LOS." },
+    { key: "Invoice", body: "Verified outcomes × fixed fee.", emphasized: true },
+  ],
+  trust: "Your system is the source of truth.",
+  cta: { label: "Design a pilot", href: "#pilot" },
 };
 
 export const controls = {
-  eyebrow: "Guardrails",
-  heading: "We do the follow-through. Your team makes the judgment calls.",
-  items: [
-    { title: "Anything that needs a license goes to your team", body: "Rates, legal advice, clinical questions. The line is set before we start." },
-    { title: "We only promise what you approve", body: "These appointment slots, this document list, this reschedule policy — nothing else." },
-    { title: "Your name, your consent", body: "We call and email as your service provider, under the consent your customers already gave you." },
-    { title: "Everything’s on the record", body: "Every call, text, email, and hand-off. Read any of it, any time." },
+  eyebrow: "Operating authority",
+  heading: "Autonomous, within your rules.",
+  body:
+    "Before launch, we define the outcome, the operating authority, the approved knowledge, the prohibited actions, and the system of record.",
+  principles: [
+    {
+      title: "Bounded",
+      body: "Acts only on approved knowledge, permissions, policies, and consent. Nothing is improvised.",
+      tags: [
+        { label: "HIPAA", detail: "Signed BAA, minimum-necessary PHI access" },
+        { label: "TCPA & consent", detail: "Consent on file; quiet hours and opt-outs enforced" },
+        { label: "Licensed-activity rules", detail: "No clinical, legal, or financial advice" },
+      ],
+    },
+    {
+      title: "Auditable",
+      body: "Every message, action, and system write sits on one record, readable any time.",
+      tags: [
+        { label: "Full audit trail", detail: "Calls, texts, emails, and writes, timestamped" },
+        { label: "Access logging", detail: "Who saw what, and when" },
+        { label: "Compliance review", detail: "Any case, readable by your team, any time" },
+      ],
+    },
+    {
+      title: "Accountable",
+      body: "Work outside its authority closes uncompleted, with its history. Only verified outcomes are billed.",
+      tags: [
+        { label: "System of record", detail: "Your schedule, CMS, or LOS decides completion" },
+        { label: "Closed, not improvised", detail: "Out-of-authority cases end with a record" },
+        { label: "Never billed", detail: "No verified outcome, no fee" },
+      ],
+    },
   ],
 };
 
@@ -423,7 +447,7 @@ export const lanes = {
   eyebrow: "Where we run",
   heading: "Same approach, three industries.",
   cards: [
-    { key: "dental" as VerticalKey, title: "Dental groups & DSOs", outcome: "Kept treatment visit", body: "Patients who were diagnosed but never scheduled, worked through to the visit itself.", href: "/healthcare", action: "See dental" },
+    { key: "dental" as VerticalKey, title: "Dental groups & DSOs", outcome: "Confirmed treatment visit", body: "Patients who were diagnosed but never scheduled, worked through to a booked, confirmed visit.", href: "/healthcare", action: "See dental" },
     { key: "legal" as VerticalKey, title: "Personal injury & mass tort", outcome: "Signed retainer", body: "After-hours and overflow claimants, worked from first contact to signature. Legal judgment stays with the lawyer.", href: "/legal", action: "See legal" },
     { key: "lending" as VerticalKey, title: "Consumer lending", outcome: "Funded loan", body: "Home-equity, home-improvement, personal, and auto-refi files, chased to funding. Quoting stays with your licensed officers.", href: "/lending", action: "See lending" },
   ],
@@ -431,14 +455,14 @@ export const lanes = {
 
 export const pilot = {
   eyebrow: "The pilot",
-  heading: "Give us the demand no one is working.",
+  heading: "Recapture the revenue you’re losing.",
   body:
-    "Start with the queue your team already wrote off — after-hours, overflow, aged, stalled. It takes nothing from your team, and any revenue we recover is revenue you weren’t getting.",
+    "Give Primary Logic one overlooked queue, one operating policy, and one verifiable outcome. It runs the workflow inside your systems; you pay only when that outcome is recorded.",
   steps: [
     { title: "Pick one queue", body: "One you already measure and already lose. Your current process keeps running." },
     { title: "We learn how you work", body: "About two weeks: we listen to your calls, learn your scripts and rules, and agree on what goes to your team." },
     { title: "Run it side by side", body: "We work part of the queue, you keep the rest. Compare on your own dashboard." },
     { title: "Pay per completion", body: "Only outcomes your system confirms are billed. If nothing completes, the pilot cost you nothing." },
   ],
-  form: { button: "Start a pilot", placeholder: "Work email" },
+  form: { button: "Design a pilot", placeholder: "Work email" },
 };

@@ -42,13 +42,13 @@ export const metadata: Metadata = {
     siteName: "Primary Logic",
     title: "Revenue follow-through, paid per result",
     description:
-      "We work the demand your team can’t get to until it turns into a kept visit, a signed retainer, or a funded loan. You pay per completed outcome.",
+      "We work the demand your team can’t get to until it turns into a confirmed visit, a signed retainer, or a funded loan. You pay per completed outcome.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Revenue follow-through, paid per result",
     description:
-      "We work the demand your team can’t get to until it turns into a kept visit, a signed retainer, or a funded loan. You pay per completed outcome.",
+      "We work the demand your team can’t get to until it turns into a confirmed visit, a signed retainer, or a funded loan. You pay per completed outcome.",
   },
 };
 
