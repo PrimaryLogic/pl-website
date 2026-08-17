@@ -44,15 +44,12 @@ export default function CaseTimeline({
   id,
   labelledBy,
   tabs,
-  hideLabel,
 }: {
   story: VerticalStory;
   id?: string;
   labelledBy?: string;
   /** Optional switcher rendered inside the panel header. */
   tabs?: ReactNode;
-  /** Hide the audience label (lane pages already say it in the hero). */
-  hideLabel?: boolean;
 }) {
   const [shown, setShown] = useState(0);
   const total = story.steps.length;
@@ -77,8 +74,7 @@ export default function CaseTimeline({
       {tabs ? <div className="pl-case__tabs">{tabs}</div> : null}
       <div className="pl-case__head">
         <div>
-          {hideLabel ? null : <p className="pl-case__label">{story.forLabel}</p>}
-          <p className="pl-case__goal"><span className="pl-case__goal-label">Goal:</span> {story.exampleTitle}</p>
+          <p className="pl-case__goal">{story.exampleTitle}</p>
           <p className="pl-case__sub">{story.exampleBody}</p>
         </div>
       </div>

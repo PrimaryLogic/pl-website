@@ -4,6 +4,7 @@ import { useId, useState } from "react";
 import { hero, verticals, type VerticalKey } from "@/lib/content/positioning";
 import { track } from "@/lib/analytics";
 import CaseTimeline from "./CaseTimeline";
+
 import EmailCapture from "../EmailCapture";
 
 /**
@@ -26,28 +27,35 @@ export default function CaseSwitcher() {
       </div>
 
       <div className="pl-case-wrap">
-        <div className="pl-case__tabs">
-          <div className="pl-tabs pl-tabs--bar" role="tablist" aria-label="Choose an example">
-            {verticals.map((v) => (
-              <button
-                key={v.key}
-                id={`${tabsId}-${v.key}`}
-                role="tab"
-                type="button"
-                aria-selected={v.key === active}
-                aria-controls={`${tabsId}-panel`}
-                className="pl-tab"
-                onClick={() => {
-                  setActive(v.key);
-                  track("hero_vertical_selected", { vertical: v.key });
-                }}
-              >
-                {v.tab}
-              </button>
-            ))}
-          </div>
-        </div>
-        <CaseTimeline key={story.key} story={story} id={`${tabsId}-panel`} labelledBy={`${tabsId}-${story.key}`} />
+        <CaseTimeline
+          key={story.key}
+          story={story}
+          id={`${tabsId}-panel`}
+          labelledBy={`${tabsId}-${story.key}`}
+          tabs={
+            <div className="pl-tabs pl-tabs--bar pl-tabs--square" role="tablist" aria-label="Choose an example">
+              {verticals.map((v) => {
+                return (
+                  <button
+                    key={v.key}
+                    id={`${tabsId}-${v.key}`}
+                    role="tab"
+                    type="button"
+                    aria-selected={v.key === active}
+                    aria-controls={`${tabsId}-panel`}
+                    className="pl-tab"
+                    onClick={() => {
+                      setActive(v.key);
+                      track("hero_vertical_selected", { vertical: v.key });
+                    }}
+                  >
+                    {v.tab}
+                  </button>
+                );
+              })}
+            </div>
+          }
+        />
       </div>
     </div>
   );

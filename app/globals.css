@@ -2695,3 +2695,22 @@ summary::-webkit-details-marker {
 @media (max-width: 800px) { .pl-faq { grid-template-columns: 1fr; gap: 0; } }
 
 .pl-pilot__close { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; color: var(--pl-green-deep); font-size: 14.5px; font-weight: 500; }
+
+
+/* Squared switcher, no icons. */
+.pl-tabs--square { padding: 4px; background: #eef0f3; border-radius: 10px; gap: 2px; }
+.pl-tabs--square .pl-tab { min-height: 34px; padding: 0 16px; border-radius: 7px; font-size: 14px; font-weight: 500; color: var(--pl-body); }
+.pl-tabs--square .pl-tab[aria-selected="true"] { background: #fff; color: var(--pl-green-ink); box-shadow: 0 1px 2px rgba(17,20,24,0.08), 0 0 0 1px rgba(17,20,24,0.05); }
+
+/* Squared switcher sits top-right; keep tabs bar unchanged otherwise. */
+.pl-case--wide .pl-case__tabs { position: absolute; top: 22px; right: 26px; margin: 0; }
+@media (max-width: 1000px) { .pl-case--wide .pl-case__tabs { position: static; margin: 0 0 14px; } }
+/* More air above the storyboard band. */
+.pl-hero__stack { gap: 88px; }
+.pl-case-wrap::before { top: -40px; }
+@media (max-width: 1000px) { .pl-hero__stack { gap: 56px; } .pl-case-wrap::before { top: -28px; } }
+/* Band: equal shaded space above and below the panel. */
+.pl-hero__stack { gap: 112px; }
+.pl-case-wrap { padding-bottom: 64px; }
+.pl-case-wrap::before { top: -64px; }
+@media (max-width: 1000px) { .pl-hero__stack { gap: 72px; } .pl-case-wrap { padding-bottom: 40px; } .pl-case-wrap::before { top: -40px; } }
