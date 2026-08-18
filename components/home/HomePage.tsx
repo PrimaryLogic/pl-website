@@ -23,6 +23,7 @@ import EmailCapture from "../EmailCapture";
 import SiteFooter from "../SiteFooter";
 import SiteNav from "../SiteNav";
 import CaseSwitcher from "./CaseSwitcher";
+import RecoveryVisual from "./RecoveryVisual";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://primarylogic.com";
 
@@ -93,15 +94,7 @@ export default function HomePage() {
                   );
                 })}
               </ol>
-              <dl className="pl-stats">
-                {leak.stats.map((s) => (
-                  <div key={s.figure} className="pl-stat">
-                    <dd>{s.figure}</dd>
-                    <dt>{s.label}</dt>
-                    <p className="pl-stat__source">{s.source}</p>
-                  </div>
-                ))}
-              </dl>
+              <RecoveryVisual />
             </div>
           </div>
         </section>

@@ -28,7 +28,7 @@ const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://primarylogi
 export const metadata: Metadata = {
   metadataBase: siteUrl,
   title: {
-    default: "Primary Logic | Revenue follow-through, paid per result",
+    default: "Primary Logic | Recover lost revenue",
     template: "%s | Primary Logic",
   },
   description:
@@ -40,13 +40,13 @@ export const metadata: Metadata = {
     type: "website",
     url: "/",
     siteName: "Primary Logic",
-    title: "Revenue follow-through, paid per result",
+    title: "Autonomous revenue follow-through, paid per verified outcome",
     description:
       "We work the demand your team can’t get to until it turns into a confirmed visit, a signed retainer, or a funded loan. You pay per completed outcome.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Revenue follow-through, paid per result",
+    title: "Autonomous revenue follow-through, paid per verified outcome",
     description:
       "We work the demand your team can’t get to until it turns into a confirmed visit, a signed retainer, or a funded loan. You pay per completed outcome.",
   },
