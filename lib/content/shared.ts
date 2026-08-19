@@ -23,17 +23,6 @@ export const homeNav: NavContent = {
   cta: { label: "Design a pilot", href: "/#pilot" },
 };
 
-export const healthcareNav: NavContent = {
-  wordmark: WORDMARK,
-  links: [
-    { label: "All lanes", href: "/" },
-    { label: "Treatment tail", href: "#challenge" },
-    { label: "Pilot", href: "#pilot" },
-    { label: "Boundary & billing", href: "#economics" },
-  ],
-  cta: { label: "Discuss a pilot", href: "#contact" },
-};
-
 export const footer = {
   entity: WORDMARK,
   links: [
