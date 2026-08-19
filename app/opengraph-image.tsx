@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Primary Logic | Turn missed demand into completed outcomes.";
+export const alt = "Primary Logic | Unfinished work is unrealized revenue.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -38,15 +38,15 @@ export default async function OpenGraphImage() {
       </div>
       <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
         <div style={{ fontFamily: display ? "Display" : "sans-serif", fontSize: 46, lineHeight: 1.06, whiteSpace: "nowrap", fontWeight: 600, letterSpacing: "-0.03em" }}>
-          Turn missed demand into completed outcomes.
+          Unfinished work is unrealized revenue.
         </div>
-        <div style={{ marginTop: 22, fontSize: 22, lineHeight: 1.45, whiteSpace: "nowrap", color: "#4a554e" }}>
-          AI employees that own the leads your team can’t get to, until the revenue is won.
+        <div style={{ marginTop: 22, fontSize: 24, lineHeight: 1.45, whiteSpace: "nowrap", color: "#4a554e" }}>
+          Autonomously handle the leads your team can’t get to, until the revenue is won.
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 18, borderTop: "2px solid #101a15", fontSize: 18, color: "#4a554e" }}>
-        <div>PER COMPLETED OUTCOME</div>
-        <div>FINISHES THE JOB, ACROSS DAYS OR WEEKS</div>
+        <div>AUTONOMOUS, WITHIN YOUR RULES</div>
+        <div>PAY ONLY FOR VERIFIED OUTCOMES</div>
       </div>
     </div>,
     { ...size, fonts: fonts.length ? fonts : undefined },

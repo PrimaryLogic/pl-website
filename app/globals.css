@@ -3137,3 +3137,6 @@ html, body { background: #fff; }
 .pl-recover__before, .pl-recover__after { font-size: 12px; padding: 3px 9px; }
 .pl-recover__foot { margin-top: 6px; padding-top: 10px; }
 @media (max-width: 1000px) { .pl-recover { display: none; } }
+.pl-hero__center .pl-hero__body { max-width: 1060px; }
+.pl-hero__center .pl-hero__body { max-width: 760px; }
+.pl-hero__center .pl-hero__body { max-width: 880px; text-wrap: balance; }
