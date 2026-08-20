@@ -1723,3 +1723,198 @@ html, body { background: #fff; }
   .pl-case__tabs { justify-content: flex-start; }
   .pl-select__menu { right: auto; left: 0; }
 }
+
+/* Lane pages: economics section (copy + points left, options card + math right) */
+.pl-econ { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 56px; align-items: start; }
+.pl-econ__copy .pl-section-head { margin-bottom: 28px; }
+.pl-econ__points { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+.pl-econ__points li { display: grid; grid-template-columns: 36px 1fr; gap: 16px; align-items: start; }
+.pl-econ__num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 9px;
+  border: 1px solid rgba(20,32,27,0.14); background: #fff;
+  font-family: var(--font-mono, ui-monospace, monospace); font-size: 13px; font-weight: 600; color: var(--pl-ink, #14201b);
+}
+.pl-econ__points h3 { margin: 6px 0 4px; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+.pl-econ__points p { margin: 0; font-size: 15px; line-height: 1.55; color: rgba(20,32,27,0.68); }
+
+.pl-econ__side { display: grid; gap: 14px; }
+.pl-options { border: 1px solid rgba(20,32,27,0.12); border-radius: 14px; background: #fff; overflow: hidden; }
+.pl-options__title { margin: 0; padding: 14px 18px 12px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(20,32,27,0.55); border-bottom: 1px solid rgba(20,32,27,0.08); }
+.pl-options__rows { list-style: none; margin: 0; padding: 6px 8px; display: grid; gap: 2px; }
+.pl-options__row { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr) auto; gap: 14px; align-items: center; padding: 11px 10px; border-radius: 9px; }
+.pl-options__label { font-size: 14.5px; font-weight: 600; }
+.pl-options__basis { font-size: 13.5px; color: rgba(20,32,27,0.62); }
+.pl-options__tag { justify-self: end; white-space: nowrap; font-size: 11.5px; font-weight: 600; padding: 4px 8px; border-radius: 999px; background: #f1f2ef; color: rgba(20,32,27,0.6); }
+.pl-options__tag.is-outcome { background: #e4f3ea; color: var(--pl-green-ink, #0e5d3a); }
+.pl-options__row.is-ours { background: #f3f8f4; box-shadow: inset 0 0 0 1px rgba(14,93,58,0.18); }
+.pl-options__row.is-ours .pl-options__label { color: var(--pl-green-ink, #0e5d3a); }
+.pl-options__foot { border-top: 1px solid rgba(20,32,27,0.08); padding: 14px 18px 16px; background: #fbfbfa; }
+.pl-options__terms { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 6px; }
+.pl-options__terms li { display: grid; grid-template-columns: 64px 1fr; gap: 10px; font-size: 13.5px; line-height: 1.45; color: rgba(20,32,27,0.72); }
+.pl-options__terms strong { font-weight: 600; color: var(--pl-ink, #14201b); }
+.pl-options__terms li.is-emph span { font-family: var(--font-mono, ui-monospace, monospace); font-size: 12.5px; color: var(--pl-green-ink, #0e5d3a); }
+.pl-options__trust { display: flex; align-items: center; gap: 6px; margin: 0; font-size: 13.5px; font-weight: 600; color: var(--pl-green-ink, #0e5d3a); }
+.pl-math { border: 1px solid rgba(20,32,27,0.1); border-radius: 12px; padding: 14px 18px; background: #fff; }
+.pl-math__label { margin: 0 0 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(20,32,27,0.55); display: flex; justify-content: space-between; }
+.pl-math__label span { font-weight: 500; letter-spacing: 0.02em; text-transform: none; color: rgba(20,32,27,0.45); }
+.pl-math__formula { margin: 0 0 6px; font-family: var(--font-mono, ui-monospace, monospace); font-size: 13.5px; color: var(--pl-ink, #14201b); }
+.pl-math__note { margin: 0; font-size: 13.5px; color: rgba(20,32,27,0.62); }
+@media (max-width: 1000px) {
+  .pl-econ { grid-template-columns: 1fr; gap: 28px; }
+}
+@media (max-width: 560px) {
+  .pl-options__row { grid-template-columns: 1fr auto; grid-template-areas: "label tag" "basis basis"; row-gap: 2px; }
+  .pl-options__label { grid-area: label; }
+  .pl-options__tag { grid-area: tag; }
+  .pl-options__basis { grid-area: basis; }
+}
+
+/* Lane pages — mobile polish */
+@media (max-width: 640px) {
+  .pl-section { padding: 56px 0; }
+  .pl-section-head { margin-bottom: 26px; }
+  .pl-how__visual { padding: 16px 16px 14px; }
+  .pl-how__visual-head { flex-direction: column; align-items: flex-start; gap: 4px; padding-bottom: 12px; }
+  .pl-chain__node { grid-template-columns: 34px 1fr; grid-template-areas: "icon label" "icon when"; column-gap: 12px; row-gap: 1px; padding: 8px 0; }
+  .pl-chain__node::before { left: 16px; top: 34px; bottom: -8px; }
+  .pl-chain__icon { grid-area: icon; width: 34px; height: 34px; border-radius: 10px; }
+  .pl-chain__icon svg { width: 16px; height: 16px; }
+  .pl-chain__label { grid-area: label; font-size: 14.5px; }
+  .pl-chain__when { grid-area: when; font-size: 11px; }
+  .pl-how__memory { gap: 5px; }
+  .pl-how__chip { font-size: 11.5px; padding: 2px 8px; }
+  .pl-econ__points { gap: 16px; }
+  .pl-econ__points li { grid-template-columns: 30px 1fr; gap: 12px; }
+  .pl-econ__num { width: 30px; height: 30px; font-size: 12px; }
+  .pl-econ__points h3 { margin-top: 3px; font-size: 16px; }
+  .pl-econ__points p { font-size: 14.5px; }
+  .pl-options__title, .pl-math__label { padding-left: 14px; padding-right: 14px; }
+  .pl-options__rows { padding: 4px 6px; }
+  .pl-options__row { padding: 10px 8px; }
+  .pl-options__foot { padding: 12px 14px 14px; }
+  .pl-options__terms li { grid-template-columns: 56px 1fr; font-size: 13px; }
+  .pl-math { padding: 12px 14px; }
+  .pl-math__label { padding: 0; }
+  .pl-math__formula { font-size: 12.5px; }
+  .pl-brief { padding: 18px 16px 6px; }
+}
+
+/* Economics — condensed */
+.pl-econ { gap: 48px; }
+.pl-econ__copy .pl-section-head { margin-bottom: 22px; }
+.pl-econ__points { gap: 14px; }
+.pl-econ__points li { grid-template-columns: 30px 1fr; gap: 14px; }
+.pl-econ__num { width: 30px; height: 30px; border-radius: 8px; font-size: 12px; }
+.pl-econ__points h3 { margin: 4px 0 2px; font-size: 16px; }
+.pl-econ__points p { font-size: 14.5px; line-height: 1.5; }
+.pl-options__title { padding: 12px 16px 10px; }
+.pl-options__rows { padding: 4px 6px; }
+.pl-options__row { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto; gap: 12px; padding: 9px 10px; }
+.pl-options__label { font-size: 14px; }
+.pl-options__basis { font-size: 13px; }
+.pl-options__tag { font-size: 11px; padding: 3px 8px; }
+.pl-options__foot { padding: 12px 16px 13px; }
+.pl-options__terms { margin: 0 0 10px; gap: 6px; }
+.pl-options__term { display: grid; grid-template-columns: 64px 1fr; gap: 10px; align-items: baseline; }
+.pl-options__term dt { font-size: 13px; font-weight: 600; color: var(--pl-ink, #14201b); }
+.pl-options__term dd { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.pl-options__term code { font-family: var(--font-mono, ui-monospace, monospace); font-size: 12.5px; color: var(--pl-ink, #14201b); }
+.pl-options__term:last-child code { color: var(--pl-green-ink, #0e5d3a); }
+.pl-options__term dd span { font-size: 12.5px; color: rgba(20,32,27,0.55); }
+.pl-options__trust { font-size: 13px; }
+.pl-options__trust em { margin-left: auto; font-style: normal; font-weight: 500; font-size: 11.5px; color: rgba(20,32,27,0.45); }
+@media (max-width: 640px) {
+  .pl-options__term { grid-template-columns: 56px 1fr; }
+  .pl-options__term dd { flex-direction: column; gap: 1px; }
+}
+
+/* Economics — balance the card with the copy column */
+@media (min-width: 1001px) {
+  .pl-econ { align-items: stretch; }
+  .pl-econ__side { display: flex; }
+  .pl-options { display: flex; flex-direction: column; width: 100%; }
+  .pl-options__rows { flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; gap: 4px; padding: 10px 10px; }
+}
+.pl-options__title { padding: 16px 20px 14px; font-size: 12.5px; }
+.pl-options__row { padding: 14px 14px; gap: 16px; border-radius: 10px; }
+.pl-options__label { font-size: 15.5px; }
+.pl-options__basis { font-size: 14.5px; }
+.pl-options__tag { font-size: 12px; padding: 4px 10px; }
+.pl-options__foot { padding: 18px 20px 18px; }
+.pl-options__terms { gap: 10px; margin-bottom: 14px; }
+.pl-options__term { grid-template-columns: 76px 1fr; }
+.pl-options__term dt { font-size: 14.5px; }
+.pl-options__term code { font-size: 14px; }
+.pl-options__term dd span { font-size: 13.5px; }
+.pl-options__trust { font-size: 14.5px; }
+.pl-options__trust em { font-size: 12px; }
+.pl-econ__points { gap: 20px; }
+.pl-econ__points h3 { font-size: 17px; }
+.pl-econ__points p { font-size: 15px; }
+.pl-options__terms { margin-bottom: 0; }
+
+
+/* Economics: section head above, points + card side by side beneath */
+.pl-econ { align-items: center; }
+.pl-econ__points { gap: 24px; }
+
+/* Economics: balance the two columns against each other */
+#economics .pl-section-head { margin-bottom: 40px; }
+.pl-econ { align-items: stretch; gap: 72px; }
+.pl-econ__copy { display: flex; flex-direction: column; justify-content: center; }
+.pl-econ__points { justify-content: space-between; height: 100%; padding: 10px 0; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px; }
+.pl-econ__points li { grid-template-columns: 34px 1fr; gap: 16px; }
+.pl-econ__num { width: 34px; height: 34px; font-size: 13px; }
+.pl-econ__points h3 { font-size: 17.5px; margin: 5px 0 4px; }
+.pl-econ__points p { font-size: 15px; line-height: 1.55; color: rgba(20,32,27,0.66); }
+@media (max-width: 1000px) {
+  .pl-econ { gap: 32px; }
+  .pl-econ__points { padding: 0; gap: 20px; height: auto; }
+}
+.pl-econ__points { padding: 4px 0; gap: 22px; }
+.pl-options__rows { padding-bottom: 10px; }
+
+/* Economics: one combined list — each option with how it charges */
+.pl-ways { list-style: none; margin: 0 auto; padding: 0; max-width: 880px; display: grid; gap: 10px; }
+.pl-ways__row {
+  display: grid; grid-template-columns: 220px 1fr auto; align-items: center; gap: 20px;
+  padding: 18px 22px; border-radius: 14px;
+  background: #fff; border: 1px solid rgba(20,32,27,0.1);
+}
+.pl-ways__label { font-size: 15.5px; font-weight: 600; color: var(--pl-ink); }
+.pl-ways__detail { font-size: 14.5px; line-height: 1.5; color: rgba(20,32,27,0.66); }
+.pl-ways__tag { justify-self: end; white-space: nowrap; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: #f1f2ef; color: rgba(20,32,27,0.6); }
+.pl-ways__row.is-ours { background: #f3f8f4; border-color: rgba(14,93,58,0.25); }
+.pl-ways__row.is-ours .pl-ways__label { color: var(--pl-green-ink); }
+.pl-ways__row.is-ours .pl-ways__detail { color: rgba(20,32,27,0.75); }
+.pl-ways__tag.is-outcome { background: #e4f3ea; color: var(--pl-green-ink); }
+@media (max-width: 800px) {
+  .pl-ways__row { grid-template-columns: 1fr auto; grid-template-areas: "label tag" "detail detail"; row-gap: 6px; padding: 15px 16px; }
+  .pl-ways__label { grid-area: label; }
+  .pl-ways__tag { grid-area: tag; }
+  .pl-ways__detail { grid-area: detail; }
+}
+.pl-ways { margin: 0; max-width: 940px; gap: 8px; }
+.pl-ways__row { grid-template-columns: 232px 1fr auto; padding: 16px 20px; border-radius: 12px; }
+
+/* Economics: four cards, ours last */
+.pl-ways { max-width: none; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.pl-ways__card {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+  padding: 20px 20px 22px; border-radius: 14px;
+  background: #fff; border: 1px solid rgba(20,32,27,0.1);
+}
+.pl-ways__card .pl-ways__label { margin: 2px 0 0; font-size: 16.5px; font-weight: 600; letter-spacing: -0.01em; color: var(--pl-ink); }
+.pl-ways__card .pl-ways__detail { margin: 0; font-size: 14px; line-height: 1.55; color: rgba(20,32,27,0.64); }
+.pl-ways__card .pl-ways__tag { justify-self: start; }
+.pl-ways__card.is-ours { background: #f3f8f4; border-color: rgba(14,93,58,0.28); }
+.pl-ways__card.is-ours .pl-ways__label { color: var(--pl-green-ink); }
+.pl-ways__card.is-ours .pl-ways__detail { color: rgba(20,32,27,0.75); }
+@media (max-width: 1000px) {
+  .pl-ways { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .pl-ways { grid-template-columns: 1fr; gap: 10px; }
+  .pl-ways__card { padding: 16px 16px 18px; }
+}

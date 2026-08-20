@@ -2,9 +2,8 @@
  * Copy for the three lane pages (/healthcare, /legal, /lending).
  *
  * Each lane page mirrors the homepage's sections and voice for a single buyer:
- * hero + pilot brief, the problem in their queue, how the work runs (with a
- * compact one-job example), operating authority, outcome-based pricing,
- * onboarding, and a closing CTA.
+ * hero + pilot brief, then a case-study arc: the problem in their queue, the
+ * solution (with a compact one-job example), the economics, and a closing CTA.
  *
  * Positioning: Primary Logic completes the workflow autonomously inside the
  * customer's systems and rules. No staff hand-offs; anything outside its
@@ -52,11 +51,12 @@ export type LaneContent = {
       nodes: Array<{ channel: "SMS" | "Phone" | "Email" | "System" | "Outcome"; label: string; when: string }>;
     };
   };
-  authority: {
+  economics: {
     eyebrow: string;
     heading: string;
     body: string;
-    tenets: Array<{ title: string; body: string; tags: Array<{ label: string; detail: string }> }>;
+    /** One row per way to work the queue; each explains how it charges. The last row is ours. */
+    rows: Array<{ label: string; detail: string; ours?: boolean }>;
   };
   pricing: {
     eyebrow: string;
@@ -65,12 +65,6 @@ export type LaneContent = {
     steps: Array<{ key: string; body: string; emphasized?: boolean }>;
     trust: string;
     cta: { label: string; href: string };
-  };
-  onboarding: {
-    eyebrow: string;
-    heading: string;
-    body: string;
-    steps: Array<{ title: string; body: string; meta: string }>;
   };
   pilot: {
     heading: string;
@@ -126,7 +120,7 @@ export const lanes: LaneContent[] = [
     ],
   },
   how: {
-    eyebrow: "How it works",
+    eyebrow: "The solution",
     heading: "From treatment plan to confirmed visit, owned.",
     body:
       "Primary Logic autonomously takes each unscheduled plan and works it — patient, financing options, scheduling, intake, reminders — until the visit is confirmed. Nothing routes back to your front desk.",
@@ -149,39 +143,15 @@ export const lanes: LaneContent[] = [
       ],
     },
   },
-  authority: {
-    eyebrow: "Operating authority",
-    heading: "Autonomous, within your rules.",
-    body:
-      "Before launch, we define the outcome, what it may say and do, the approved knowledge, the prohibited actions, and the system of record. It answers only from what your practice has already recorded.",
-    tenets: [
-      {
-        title: "Bounded",
-        body: "Acts only on approved knowledge and consent. Priced on your own patients — never per referred patient.",
-        tags: [
-          { label: "HIPAA", detail: "Signed BAA, minimum-necessary PHI access" },
-          { label: "TCPA & consent", detail: "Consent on file; quiet hours, opt-outs enforced" },
-          { label: "Licensed-activity rules", detail: "No clinical advice; no treatment-plan changes" },
-        ],
-      },
-      {
-        title: "Auditable",
-        body: "Every message, action, and PMS write sits on one patient record, readable any time.",
-        tags: [
-          { label: "Full audit trail", detail: "Calls, texts, emails, and PMS writes, timestamped" },
-          { label: "Access logging", detail: "Who saw which patient record, and when" },
-          { label: "Compliance review", detail: "Any case, readable by your team, any time" },
-        ],
-      },
-      {
-        title: "Accountable",
-        body: "Work outside its authority closes uncompleted, with its history. Only confirmed visits are billed.",
-        tags: [
-          { label: "System of record", detail: "Your PMS schedule decides completion" },
-          { label: "Closed, not improvised", detail: "A clinical question ends the case, with a record" },
-          { label: "Never billed", detail: "No confirmed visit in the PMS, no fee" },
-        ],
-      },
+  economics: {
+    eyebrow: "The economics",
+    heading: "The revenue is already quoted. You pay only when it’s confirmed.",
+    body: "Every unscheduled plan in your PMS already has a provider, a fee, and a yes. Recapturing it costs a fixed fee per confirmed visit — nothing else.",
+    rows: [
+      { label: "New-patient advertising", detail: "Per click or lead. Cost rises with scale, and none of them have sat in your chair." },
+      { label: "More front-desk staff", detail: "Salary and training, whether or not a single plan gets scheduled." },
+      { label: "Outsourced call center", detail: "Per hour or seat, working a script instead of your PMS." },
+      { label: "Primary Logic", detail: "A fixed fee per visit confirmed in your schedule. Nothing otherwise.", ours: true },
     ],
   },
   pricing: {
@@ -195,17 +165,6 @@ export const lanes: LaneContent[] = [
     ],
     trust: "Your system is the source of truth.",
     cta: { label: "Design a pilot", href: "#pilot" },
-  },
-  onboarding: {
-    eyebrow: "Getting started",
-    heading: "Live in about two weeks. Nothing to install.",
-    body:
-      "Your PMS already knows how to export a report. That is all we need to start. Progress and the confirmed visit are written back where your team already looks.",
-    steps: [
-      { title: "Send us the queue", body: "A PMS unscheduled-treatment export — treatment plan, provider, quoted fee, and contact consent.", meta: "About an hour" },
-      { title: "Approve the rules", body: "What we may say and do, what we must never do, consent and quiet hours, and the billable event.", meta: "Two weeks" },
-      { title: "Go live beside your team", body: "We work the unscheduled plans; your front desk keeps the patients in front of it. Compare on your own dashboard.", meta: "Day 1" },
-    ],
   },
   pilot: {
     heading: "Recapture the treatment you’re losing.",
@@ -253,7 +212,7 @@ export const lanes: LaneContent[] = [
     ],
   },
   how: {
-    eyebrow: "How it works",
+    eyebrow: "The solution",
     heading: "Intake follow-through, owned until it’s signed.",
     body:
       "Primary Logic autonomously picks up the claimant your team can’t get to and works the signature through — in your firm’s name, within your intake rules — with nothing routed back to your intake desk.",
@@ -276,39 +235,15 @@ export const lanes: LaneContent[] = [
       ],
     },
   },
-  authority: {
-    eyebrow: "Operating authority",
-    heading: "Autonomous, within your firm’s rules.",
-    body:
-      "Before launch, the firm and its counsel define the outcome, the operating authority, the approved fee and process language, the prohibited actions, and the system of record.",
-    tenets: [
-      {
-        title: "Bounded",
-        body: "Acts only on the firm’s approved intake, fee, and process language, permissions, and consent. Nothing is improvised.",
-        tags: [
-          { label: "No legal advice (UPL)", detail: "No merits, strategy, or value opinions — by rule" },
-          { label: "No fee sharing", detail: "Flat fee per retainer, never a % of contingency" },
-          { label: "TCPA & consent", detail: "Consent on file; quiet hours, opt-outs enforced" },
-        ],
-      },
-      {
-        title: "Auditable",
-        body: "Every call, text, email, and case-system write sits on one matter record, readable by the firm any time.",
-        tags: [
-          { label: "Full audit trail", detail: "Calls, texts, emails, and writes, timestamped" },
-          { label: "Access logging", detail: "Who saw which matter, and when" },
-          { label: "Compliance review", detail: "Any matter, readable by counsel, any time" },
-        ],
-      },
-      {
-        title: "Accountable",
-        body: "Work outside its authority closes uncompleted, with its history. Only signed retainers are billed.",
-        tags: [
-          { label: "System of record", detail: "Your case management system decides completion" },
-          { label: "Closed, not improvised", detail: "A merits question ends the job with a record" },
-          { label: "Never billed", detail: "No signed retainer on file, no fee" },
-        ],
-      },
+  economics: {
+    eyebrow: "The economics",
+    heading: "The claimant already called. You pay only when they sign.",
+    body: "Every unsigned retainer in your case system is a qualified claimant you already paid to reach. Finishing it costs a flat fee per signed retainer — never a share of the fee.",
+    rows: [
+      { label: "Purchased leads", detail: "Per lead, signed or not — and the price per lead keeps rising." },
+      { label: "After-hours answering service", detail: "Per call or minute. It takes the message; the signature is still your team’s job." },
+      { label: "More intake staff", detail: "Salary and training, whether or not a single retainer gets signed." },
+      { label: "Primary Logic", detail: "A flat fee per retainer signed in your case system. Never a percentage.", ours: true },
     ],
   },
   pricing: {
@@ -322,17 +257,6 @@ export const lanes: LaneContent[] = [
     ],
     trust: "Your system is the source of truth.",
     cta: { label: "Design a pilot", href: "#pilot" },
-  },
-  onboarding: {
-    eyebrow: "Getting started",
-    heading: "Live in about two weeks. Nothing to install.",
-    body:
-      "Your case system already knows how to send leads to a vendor. Progress and the signed retainer are written back where your intake team already looks.",
-    steps: [
-      { title: "Send us a copy of the queue", body: "Route after-hours or overflow to us, or export the unsigned-retainer and aged-lead lists from your case system.", meta: "About an hour" },
-      { title: "Approve the rules", body: "The intake script, the approved fee summary, conflict and consent rules, what we must never say, and the billable event.", meta: "Two weeks" },
-      { title: "Go live beside your team", body: "We work the after-hours, overflow, and aged slice; your intake team keeps the rest. Compare on your own dashboard.", meta: "Day 1" },
-    ],
   },
   pilot: {
     heading: "Recapture the retainers you’re losing.",
@@ -380,7 +304,7 @@ export const lanes: LaneContent[] = [
     ],
   },
   how: {
-    eyebrow: "How it works",
+    eyebrow: "The solution",
     heading: "Every stalled file, worked until it funds.",
     body:
       "Primary Logic picks up the file your team can’t get to and completes it autonomously — in your name, in your LOS, within the rules you set. Nothing is routed back to your loan officers.",
@@ -403,39 +327,15 @@ export const lanes: LaneContent[] = [
       ],
     },
   },
-  authority: {
-    eyebrow: "Operating authority",
-    heading: "Autonomous, within your rules.",
-    body:
-      "Before launch we define what it may do, what it may read to a borrower, and what it must never say. Anything outside that authority closes uncompleted, with its history — never improvised, never billed.",
-    tenets: [
-      {
-        title: "Bounded",
-        body: "Reads only what is already recorded on the borrower’s file. It never quotes, negotiates, or advises.",
-        tags: [
-          { label: "SAFE Act boundary", detail: "Reads the approved rate on file; never quotes" },
-          { label: "TCPA & consent", detail: "Consent on file; quiet hours, stops enforced" },
-          { label: "Programs outside RESPA", detail: "HELOC, home-improvement, personal, auto-refi" },
-        ],
-      },
-      {
-        title: "Auditable",
-        body: "Every call, text, email, and LOS write sits on one file record, readable any time.",
-        tags: [
-          { label: "Full audit trail", detail: "Calls, texts, emails, and LOS writes, timestamped" },
-          { label: "Source and timestamp", detail: "Every rate read carries where it came from" },
-          { label: "Compliance review", detail: "Any file, readable by your team, any time" },
-        ],
-      },
-      {
-        title: "Accountable",
-        body: "Suitability and credit decisions are outside its authority. Those files close with a record; only funded loans are billed.",
-        tags: [
-          { label: "System of record", detail: "Your LOS decides when a loan is funded" },
-          { label: "Closed, not improvised", detail: "Advice or credit questions end with a record" },
-          { label: "Never billed", detail: "No funded loan, no fee" },
-        ],
-      },
+  economics: {
+    eyebrow: "The economics",
+    heading: "The file is already in your LOS. You pay only when it funds.",
+    body: "Every stalled application is a borrower you already paid to acquire. Getting it funded costs a fixed fee per funded loan — nothing else.",
+    rows: [
+      { label: "Purchased leads", detail: "Per lead, funded or not — a new stranger for every file that stalls." },
+      { label: "More processing staff", detail: "Salary and training, whether or not the files fund." },
+      { label: "Outsourced call center", detail: "Per hour or seat, working a script instead of your LOS." },
+      { label: "Primary Logic", detail: "A fixed fee per loan funded in your LOS. Nothing otherwise.", ours: true },
     ],
   },
   pricing: {
@@ -449,17 +349,6 @@ export const lanes: LaneContent[] = [
     ],
     trust: "Your system is the source of truth.",
     cta: { label: "Design a pilot", href: "#pilot" },
-  },
-  onboarding: {
-    eyebrow: "Getting started",
-    heading: "Live in about two weeks. Nothing to install.",
-    body:
-      "Your LOS or CRM already knows how to send files to a vendor. That’s all we need; progress and the funding are written back where your team already looks.",
-    steps: [
-      { title: "Send us the queue", body: "A scheduled LOS or CRM export: files open 14+ days with missing items, or an approved recapture list.", meta: "About an hour" },
-      { title: "Approve the rules", body: "What it may read from the file, what it must never say, consent and quiet hours, and the funding event that bills.", meta: "Two weeks" },
-      { title: "Go live beside your team", body: "It works its slice of the queue; your loan officers keep theirs. Compare on your own dashboard.", meta: "Day 1" },
-    ],
   },
   pilot: {
     heading: "Fund the loans you’re losing.",

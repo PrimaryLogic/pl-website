@@ -8,11 +8,8 @@ import {
   EnvelopeSimple,
   EyeSlash,
   Lightning,
-  ListChecks,
   Phone,
   PhoneSlash,
-  SealCheck,
-  ShieldCheck,
   Sparkle,
 } from "@phosphor-icons/react/dist/ssr";
 import AnalyticsBridge from "./AnalyticsBridge";
@@ -24,7 +21,6 @@ import { getLane, laneNav, type LaneContent } from "@/lib/content/lanes";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://primarylogic.com";
 const momentIcons = [Clock, PhoneSlash, EyeSlash];
 const principleIcons = [Lightning, ArrowsClockwise, Compass, CheckCircle];
-const tenetIcons = [ShieldCheck, ListChecks, SealCheck];
 
 function SectionHead({ eyebrow, heading, body }: { eyebrow: string; heading: string; body?: string }) {
   return (
@@ -48,8 +44,8 @@ function nodeIcon(channel: string) {
 
 /**
  * One lane page, built on the same sections and system as the homepage but
- * written for a single buyer: the problem in their queue, how the work runs,
- * the operating authority, pricing, onboarding, and the closing CTA.
+ * written for a single buyer as a short case study: the problem in their
+ * queue, the solution, the economics, and the closing CTA.
  */
 export default function LanePage({ slug }: { slug: LaneContent["slug"] }) {
   const lane = getLane(slug);
@@ -175,69 +171,19 @@ export default function LanePage({ slug }: { slug: LaneContent["slug"] }) {
           </div>
         </section>
 
-        {/* Operating authority */}
-        <section id="authority" className="pl-section pl-section--tint">
+        {/* Economics */}
+        <section id="economics" className="pl-section pl-section--tint">
           <div className="pl-container">
-            <SectionHead eyebrow={lane.authority.eyebrow} heading={lane.authority.heading} body={lane.authority.body} />
-            <ol className="pl-tenets">
-              {lane.authority.tenets.map((pr, i) => {
-                const Ico = tenetIcons[i % tenetIcons.length];
-                return (
-                  <li key={pr.title} className="pl-tenet">
-                    <div className="pl-tenet__head">
-                      <span className="pl-tenet__icon"><Ico aria-hidden="true" size={18} weight="fill" /></span>
-                      <h3>{pr.title}</h3>
-                    </div>
-                    <p className="pl-tenet__body">{pr.body}</p>
-                    <ul className="pl-tenet__tags">
-                      {pr.tags.map((t) => (
-                        <li key={t.label}><strong>{t.label}</strong><span>{t.detail}</span></li>
-                      ))}
-                    </ul>
-                  </li>
-                );
-              })}
-            </ol>
-          </div>
-        </section>
-
-        {/* Pricing */}
-        <section id="pricing" className="pl-section">
-          <div className="pl-container">
-            <SectionHead eyebrow={lane.pricing.eyebrow} heading={lane.pricing.heading} body={lane.pricing.body} />
-            <div className="pl-terms-card">
-              <ol className="pl-terms-card__steps">
-                {lane.pricing.steps.map((st, i) => (
-                  <li key={st.key} className={`pl-terms-card__step${st.emphasized ? " is-emph" : ""}`}>
-                    <h3><span className="pl-terms-card__num">{i + 1}</span>{st.key}</h3>
-                    <p>{st.body}</p>
-                  </li>
-                ))}
-              </ol>
-              <div className="pl-terms-card__foot">
-                <p className="pl-terms-card__trust"><CheckCircle aria-hidden="true" size={18} weight="fill" /> {lane.pricing.trust}</p>
-                <a href={lane.pricing.cta.href} className="pl-button pl-button--primary" data-analytics="pricing-cta">{lane.pricing.cta.label}</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Onboarding */}
-        <section id="onboarding" className="pl-section pl-section--tint">
-          <div className="pl-container">
-            <SectionHead eyebrow={lane.onboarding.eyebrow} heading={lane.onboarding.heading} body={lane.onboarding.body} />
-            <ol className="pl-onboard">
-              {lane.onboarding.steps.map((s, i) => (
-                <li key={s.title} className="pl-onboard__step">
-                  <div className="pl-onboard__top">
-                    <span className="pl-onboard__num">{i + 1}</span>
-                    <span className="pl-onboard__meta">{s.meta}</span>
-                  </div>
-                  <h3>{s.title}</h3>
-                  <p>{s.body}</p>
+            <SectionHead eyebrow={lane.economics.eyebrow} heading={lane.economics.heading} body={lane.economics.body} />
+            <ul className="pl-ways">
+              {lane.economics.rows.map((r) => (
+                <li key={r.label} className={`pl-ways__card${r.ours ? " is-ours" : ""}`}>
+                  <span className={`pl-ways__tag${r.ours ? " is-outcome" : ""}`}>{r.ours ? "Paid on outcome" : "Paid regardless"}</span>
+                  <h3 className="pl-ways__label">{r.label}</h3>
+                  <p className="pl-ways__detail">{r.detail}</p>
                 </li>
               ))}
-            </ol>
+            </ul>
           </div>
         </section>
 
