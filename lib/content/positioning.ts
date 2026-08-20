@@ -11,11 +11,11 @@
 
 export type VerticalKey = "dental" | "legal" | "lending";
 
-export type ActorKind = "us" | "person" | "team" | "system";
+export type ActorKind = "us" | "person" | "system";
 
 export type CaseAction = {
   /** Who acts. "us" = Primary Logic, "person" = the patient/claimant/borrower,
-   *  "team" = the customer's staff (hand-offs), "system" = the customer's software. */
+   *  "system" = the customer's software. */
   kind: ActorKind;
   /** Pill text, e.g. "Primary Logic", "Luis", "Front desk", "PMS". */
   actor: string;
