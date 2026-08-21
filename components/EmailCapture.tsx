@@ -1,11 +1,9 @@
 "use client";
 
-import { useRef, useState, type FormEvent } from "react";
+import { useRef, type FormEvent } from "react";
 import { ArrowRight } from "@phosphor-icons/react/dist/csr/ArrowRight";
-import { CONTACT_EMAIL } from "@/lib/content";
+import { PILOT_EMAIL, PILOT_SUBJECT } from "@/lib/content/shared";
 import { track } from "@/lib/analytics";
-
-type Status = "idle" | "submitting" | "success" | "error";
 
 export default function EmailCapture({
   id,
@@ -26,46 +24,25 @@ export default function EmailCapture({
   helperText?: string;
   lane?: string;
 }) {
-  const [status, setStatus] = useState<Status>("idle");
-  const [message, setMessage] = useState("");
   const started = useRef(false);
   const emailId = `${id ?? "demo"}-email`;
   const orgId = `${id ?? "demo"}-organization`;
   const compact = variant !== "full";
   const landing = variant === "landing";
 
-  async function submit(event: FormEvent<HTMLFormElement>) {
+  function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    setStatus("submitting");
-    setMessage("Sending your request…");
-    track("demo_form_submitted", { placement: id ?? "demo", lane });
+    const formData = new FormData(event.currentTarget);
+    const email = String(formData.get("email") ?? "").trim();
+    const organization = String(formData.get("organization") ?? "").trim();
+    const body = [
+      email && `Work email: ${email}`,
+      organization && `Organization: ${organization}`,
+    ].filter(Boolean).join("\n");
+    const mailto = `mailto:${PILOT_EMAIL}?subject=${encodeURIComponent(PILOT_SUBJECT)}${body ? `&body=${encodeURIComponent(body)}` : ""}`;
 
-    try {
-      const response = await fetch("/api/demo-request", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: formData.get("email"),
-          organization: formData.get("organization"),
-          website: formData.get("website"),
-          source: id ?? "homepage",
-          lane,
-        }),
-      });
-      const result = (await response.json()) as { ok?: boolean; message?: string };
-      if (!response.ok || !result.ok) throw new Error(result.message || "Request could not be delivered.");
-
-      form.reset();
-      setStatus("success");
-      setMessage("Request received. We’ll be in touch within one business day.");
-      track("demo_form_succeeded", { placement: id ?? "demo", lane });
-    } catch (error) {
-      setStatus("error");
-      setMessage(error instanceof Error ? error.message : "Request could not be delivered.");
-      track("demo_form_failed", { placement: id ?? "demo", lane });
-    }
+    track("demo_mailto_opened", { placement: id ?? "demo", lane });
+    window.location.href = mailto;
   }
 
   return (
@@ -111,15 +88,10 @@ export default function EmailCapture({
         {compact && (
           <button
             type="submit"
-            disabled={status === "submitting"}
-            className={`min-h-[50px] shrink-0 bg-accent px-6 text-[13px] font-semibold whitespace-nowrap text-white transition-colors hover:bg-accent-deep disabled:cursor-wait disabled:opacity-65 sm:min-w-[150px] sm:px-6 sm:text-[14px] ${landing ? "inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full" : ""}`}
+            className={`min-h-[50px] shrink-0 bg-accent px-6 text-[13px] font-semibold whitespace-nowrap text-white transition-colors hover:bg-accent-deep sm:min-w-[150px] sm:px-6 sm:text-[14px] ${landing ? "inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full" : ""}`}
           >
-            {status === "submitting" ? "Sending…" : (
-              <>
-                <span>{buttonLabel}</span>
-                {landing && <ArrowRight aria-hidden="true" size={16} weight="bold" />}
-              </>
-            )}
+            <span>{buttonLabel}</span>
+            {landing && <ArrowRight aria-hidden="true" size={16} weight="bold" />}
           </button>
         )}
       </div>
@@ -132,29 +104,15 @@ export default function EmailCapture({
       {!compact && <div className="mt-2">
         <button
           type="submit"
-          disabled={status === "submitting"}
-          className="inline-flex min-h-10 w-full items-center justify-center rounded-[5px] bg-accent px-5 py-2 text-[14px] font-semibold text-white transition-colors hover:bg-accent-deep disabled:cursor-wait disabled:opacity-65"
+          className="inline-flex min-h-10 w-full items-center justify-center rounded-[5px] bg-accent px-5 py-2 text-[14px] font-semibold text-white transition-colors hover:bg-accent-deep"
         >
-          {status === "submitting" ? "Sending…" : buttonLabel}
+          {buttonLabel}
         </button>
       </div>}
 
-      {helperText && !message ? (
+      {helperText ? (
         <p className="mt-2 pl-1 text-[11px] leading-[1.5] text-mute">{helperText}</p>
       ) : null}
-
-      <div className={`${message ? "mt-3" : ""} min-h-0 text-[13px] leading-[1.55]`} role="status" aria-live="polite">
-        {message && (
-          <p className={status === "error" ? "text-loss" : status === "success" ? "font-medium text-accent-deep" : "text-body"}>
-            {message}{" "}
-            {status === "error" && (
-              <a className="font-medium underline underline-offset-2" href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Primary Logic inquiry")}`}>
-                Email us directly.
-              </a>
-            )}
-          </p>
-        )}
-      </div>
     </form>
   );
 }

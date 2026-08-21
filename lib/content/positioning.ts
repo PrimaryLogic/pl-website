@@ -9,6 +9,8 @@
  * third-party and cited inline. Every example is labeled as an example.
  */
 
+import { PILOT_MAILTO } from "./shared";
+
 export type VerticalKey = "dental" | "legal" | "lending";
 
 export type ActorKind = "us" | "person" | "system";
@@ -309,7 +311,7 @@ export const hero = {
   heading: "Unfinished work is unrealized revenue.",
   body:
     "Primary Logic autonomously handles the leads, bookings, and balances your team can’t get to — in your existing systems, within your rules, until the revenue is won.",
-  primaryCta: { label: "Design a pilot", href: "#pilot" },
+  primaryCta: { label: "Design a pilot", href: PILOT_MAILTO },
   secondaryCta: { label: "See how it works", href: "#how" },
   form: { button: "Design a pilot", placeholder: "Work email" },
   caseLabel: "Example",
@@ -405,7 +407,7 @@ export const pricing = {
     { key: "Invoice", body: "Verified outcomes × fixed fee.", emphasized: true },
   ],
   trust: "Your system is the source of truth.",
-  cta: { label: "Design a pilot", href: "#pilot" },
+  cta: { label: "Design a pilot", href: PILOT_MAILTO },
 };
 
 export const controls = {

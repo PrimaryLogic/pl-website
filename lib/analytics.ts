@@ -4,6 +4,7 @@ export type AnalyticsEvent =
   | "hero_vertical_selected"
   | "calculator_changed"
   | "demo_form_started"
+  | "demo_mailto_opened"
   | "demo_form_submitted"
   | "demo_form_succeeded"
   | "demo_form_failed";

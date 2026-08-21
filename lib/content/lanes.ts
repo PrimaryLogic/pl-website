@@ -15,7 +15,7 @@
  */
 
 import type { NavContent } from "./shared";
-import { WORDMARK } from "./shared";
+import { PILOT_MAILTO, WORDMARK } from "./shared";
 
 export type LaneKey = "dental" | "legal" | "lending";
 export type LaneSlug = "healthcare" | "legal" | "lending";
@@ -76,7 +76,7 @@ export type LaneContent = {
 export const laneNav: NavContent = {
   wordmark: WORDMARK,
   links: [],
-  cta: { label: "Design a pilot", href: "#pilot" },
+  cta: { label: "Design a pilot", href: PILOT_MAILTO },
 };
 
 export const lanes: LaneContent[] = [
@@ -164,7 +164,7 @@ export const lanes: LaneContent[] = [
       { key: "Invoice", body: "Confirmed visits × fixed fee.", emphasized: true },
     ],
     trust: "Your system is the source of truth.",
-    cta: { label: "Design a pilot", href: "#pilot" },
+    cta: { label: "Design a pilot", href: PILOT_MAILTO },
   },
   pilot: {
     heading: "Recapture the treatment you’re losing.",
@@ -256,7 +256,7 @@ export const lanes: LaneContent[] = [
       { key: "Invoice", body: "Signed retainers × flat fee.", emphasized: true },
     ],
     trust: "Your system is the source of truth.",
-    cta: { label: "Design a pilot", href: "#pilot" },
+    cta: { label: "Design a pilot", href: PILOT_MAILTO },
   },
   pilot: {
     heading: "Recapture the retainers you’re losing.",
@@ -348,7 +348,7 @@ export const lanes: LaneContent[] = [
       { key: "Invoice", body: "Funded loans × fixed fee.", emphasized: true },
     ],
     trust: "Your system is the source of truth.",
-    cta: { label: "Design a pilot", href: "#pilot" },
+    cta: { label: "Design a pilot", href: PILOT_MAILTO },
   },
   pilot: {
     heading: "Fund the loans you’re losing.",

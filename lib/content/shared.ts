@@ -7,6 +7,9 @@
  */
 
 export const CONTACT_EMAIL = "hello@primarylogic.com";
+export const PILOT_EMAIL = "mayank@primarylogic.com";
+export const PILOT_SUBJECT = "Revenue Aligned Agents!";
+export const PILOT_MAILTO = `mailto:${PILOT_EMAIL}?subject=${encodeURIComponent(PILOT_SUBJECT)}`;
 
 export const WORDMARK = "Primary Logic";
 
@@ -20,7 +23,7 @@ export type NavContent = {
 export const homeNav: NavContent = {
   wordmark: WORDMARK,
   links: [],
-  cta: { label: "Design a pilot", href: "/#pilot" },
+  cta: { label: "Design a pilot", href: PILOT_MAILTO },
 };
 
 export const footer = {
