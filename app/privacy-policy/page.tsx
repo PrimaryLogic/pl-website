@@ -1,13 +1,13 @@
 import StubPage from "@/components/StubPage";
 import { CONTACT_EMAIL } from "@/lib/content";
 
-export const metadata = { title: "Website Privacy Notice", robots: { index: false, follow: false } };
+export const metadata = { title: "Privacy Policy", robots: { index: false, follow: false } };
 
 export default function PrivacyPolicy() {
   return (
-    <StubPage title="Website Privacy Notice">
+    <StubPage title="Privacy Policy">
       <div className="space-y-7">
-        <p>Effective August 13, 2026</p>
+        <p>Effective August 21, 2026</p>
 
         <section>
           <h2 className="text-[18px] font-semibold text-ink">Scope</h2>
@@ -27,6 +27,19 @@ export default function PrivacyPolicy() {
           <h2 className="text-[18px] font-semibold text-ink">How we use information</h2>
           <p className="mt-2">
             We use website information to respond to inquiries, operate and secure the website, prevent abuse, and meet legal obligations. We retain it only as long as reasonably necessary for those purposes.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-[18px] font-semibold text-ink">Text messaging</h2>
+          <p className="mt-2">
+            Primary Logic may send transactional account notifications by SMS on behalf of a participating provider when a recipient has affirmatively consented during that provider&apos;s appointment scheduling or confirmation process. Consent to SMS is not a condition of receiving care. Messages may include account-balance updates, payment-link availability, payment-plan updates, and responses to payment-related questions; they do not include clinical details.
+          </p>
+          <p className="mt-2">
+            Message frequency varies with appointment and account activity, with up to four automated account notifications per appointment and additional replies only when a recipient responds. Message and data rates may apply. Recipients may reply STOP to cancel at any time and HELP for assistance.
+          </p>
+          <p className="mt-2">
+            We do not sell, share, rent, or provide mobile phone numbers or SMS consent and opt-in data to third parties or affiliates for marketing or promotional purposes.
           </p>
         </section>
 

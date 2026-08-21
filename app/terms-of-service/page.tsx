@@ -7,20 +7,29 @@ export default function TermsOfService() {
   return (
     <StubPage title="Terms of Service">
       <div className="space-y-7">
-        <section className="rounded-[8px] border border-rule bg-white p-5 sm:p-7">
-          <p className="label text-accent">Pre-launch notice</p>
-          <h2 className="display mt-4 text-[24px] text-ink sm:text-[28px]">
-            Public website terms are under legal review.
-          </h2>
-          <p className="mt-4">
-            Until reviewed terms are published, this website is informational only. Do not rely on it as an offer, service commitment, or customer agreement.
+        <p>Effective August 21, 2026</p>
+
+        <section>
+          <h2 className="text-[18px] font-semibold text-ink">Website use</h2>
+          <p className="mt-2">
+            This website is informational. It does not create a service commitment, clinical relationship, or customer agreement. Any pilot or paid work is governed by the written agreement signed with that customer, including its scope, security requirements, pricing, and outcome definition.
           </p>
         </section>
 
         <section>
-          <h2 className="text-[18px] font-semibold text-ink">What governs a pilot</h2>
+          <h2 className="text-[18px] font-semibold text-ink">SMS account notifications</h2>
           <p className="mt-2">
-            Any pilot or paid work is governed by the written agreement signed with that customer, including its scope, security requirements, pricing, and outcome definition. This page does not add to or replace that agreement.
+            Primary Logic may send transactional SMS account notifications on behalf of a participating provider to recipients who affirmatively consent during that provider&apos;s appointment scheduling or confirmation process. Consent is not a condition of receiving care. Messages may include account-balance updates, payment-link availability, payment-plan updates, and responses to payment-related questions. Message frequency varies with appointment and account activity, with up to four automated account notifications per appointment; message and data rates may apply.
+          </p>
+          <p className="mt-2">
+            Reply STOP to cancel SMS messages at any time. Reply HELP for assistance, or contact us at <a className="font-medium text-accent-deep underline underline-offset-2" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. We do not sell, share, rent, or provide mobile phone numbers or SMS consent and opt-in data to third parties or affiliates for marketing or promotional purposes.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-[18px] font-semibold text-ink">Changes</h2>
+          <p className="mt-2">
+            We may update these terms to reflect changes to the website or messaging program. The effective date above identifies the current version.
           </p>
         </section>
 
