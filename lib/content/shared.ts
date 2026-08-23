@@ -9,7 +9,14 @@
 export const CONTACT_EMAIL = "hello@primarylogic.com";
 export const PILOT_EMAIL = "mayank@primarylogic.com";
 export const PILOT_SUBJECT = "Revenue Aligned Agents!";
-export const PILOT_MAILTO = `mailto:${PILOT_EMAIL}?subject=${encodeURIComponent(PILOT_SUBJECT)}`;
+export const PILOT_BODY = `Company:
+
+Estimated Unrealized Revenue:
+
+Type of Unfinished Work:
+
+Systems Involved:`;
+export const PILOT_MAILTO = `mailto:${PILOT_EMAIL}?subject=${encodeURIComponent(PILOT_SUBJECT)}&body=${encodeURIComponent(PILOT_BODY)}`;
 
 export const WORDMARK = "Primary Logic";
 

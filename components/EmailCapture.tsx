@@ -2,7 +2,7 @@
 
 import { useRef, type FormEvent } from "react";
 import { ArrowRight } from "@phosphor-icons/react/dist/csr/ArrowRight";
-import { PILOT_EMAIL, PILOT_SUBJECT } from "@/lib/content/shared";
+import { PILOT_MAILTO } from "@/lib/content/shared";
 import { track } from "@/lib/analytics";
 
 export default function EmailCapture({
@@ -32,23 +32,16 @@ export default function EmailCapture({
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const email = String(formData.get("email") ?? "").trim();
-    const organization = String(formData.get("organization") ?? "").trim();
-    const body = [
-      email && `Work email: ${email}`,
-      organization && `Organization: ${organization}`,
-    ].filter(Boolean).join("\n");
-    const mailto = `mailto:${PILOT_EMAIL}?subject=${encodeURIComponent(PILOT_SUBJECT)}${body ? `&body=${encodeURIComponent(body)}` : ""}`;
 
     track("demo_mailto_opened", { placement: id ?? "demo", lane });
-    window.location.href = mailto;
+    window.location.href = PILOT_MAILTO;
   }
 
   return (
     <form
       id={id}
       className={compact ? (landing ? "w-full max-w-[520px]" : "max-w-[460px]") : "w-full"}
+      noValidate
       onSubmit={submit}
       onFocus={() => {
         if (started.current) return;
@@ -64,7 +57,6 @@ export default function EmailCapture({
             name="email"
             type="email"
             autoComplete="email"
-            required
             placeholder={emailPlaceholder}
             className={compact
               ? "min-h-[50px] w-full border-0 bg-white px-5 text-[14px] text-ink placeholder:text-mute focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent"
