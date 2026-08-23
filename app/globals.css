@@ -1083,6 +1083,26 @@ html, body { background: #fff; }
 @media (max-width: 1000px) { .pl-tenet__body { min-height: 0; } .pl-tenet__tags li { min-height: 0; } .pl-tenet__tags li span { white-space: normal; } }
 .pl-tenet__tags { margin-top: 18px; }
 .pl-tenet__body { min-height: calc(3 * 1.55em); }
+@media (max-width: 640px) {
+  .pl-tenets {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: 16px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    margin-inline: -16px;
+    padding: 0 16px 8px;
+    scrollbar-width: none;
+  }
+  .pl-tenets::-webkit-scrollbar { display: none; }
+  .pl-tenet {
+    flex: 0 0 min(84vw, 360px);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+}
 
 /* Lane pages: rhythm and polish. */
 .pl-section--tint.pl-pilot { background: var(--pl-band); }
