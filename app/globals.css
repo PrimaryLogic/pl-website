@@ -1349,3 +1349,109 @@ html, body { background: #fff; }
   .pl-ways { grid-template-columns: 1fr; gap: 10px; }
   .pl-ways__card { padding: 16px 16px 18px; }
 }
+
+/* Product guides: small characters, questions worth opening. */
+.pl-guided-heading { display: contents; }
+.pl-section > .pl-container { position: relative; }
+.pl-guide { --guide-tint: #edf5e7; flex: 0 0 310px; width: 310px; max-width: 100%; text-align: left; }
+.pl-guide--bubbles { --guide-tint: #edf5fc; }
+.pl-guide--lilac { --guide-tint: #f2eef9; }
+.pl-guide--cocoa { --guide-tint: #faf0e4; }
+.pl-guide--peach { --guide-tint: #fff0e9; }
+.pl-guide__trigger { display: flex; align-items: center; list-style: none; cursor: pointer; border-radius: 18px; padding: 6px 6px 6px 0; }
+.pl-guide__trigger::marker { content: ""; }
+.pl-guide__avatar { flex: 0 0 106px; width: 106px; height: 106px; object-fit: contain; transform: rotate(-7deg); transition: transform 200ms ease; }
+.pl-guide__trigger:hover .pl-guide__avatar, .pl-guide:has(:popover-open) .pl-guide__avatar { transform: rotate(3deg) translateY(-4px); }
+.pl-guide__prompt { display: flex; flex-direction: column; flex: 1; padding: 12px 14px; border: 1px solid rgba(20,32,27,.1); border-radius: 17px 17px 17px 4px; background: #fff; }
+.pl-guide__name { font-size: 10px; color: #59655e; line-height: 1.4; }
+.pl-guide__question { margin-top: 5px; font-size: 14px; font-weight: 600; line-height: 1.35; color: var(--pl-ink); }
+.pl-guide__hint { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 9px; font-size: 11px; color: var(--pl-green-deep); }
+.pl-guide__plus { display: grid; place-items: center; width: 19px; height: 19px; border-radius: 50%; background: var(--guide-tint); font-size: 17px; line-height: 1; transition: transform 180ms ease; }
+.pl-guide__opened { display: none; }
+.pl-guide:has(:popover-open) .pl-guide__closed { display: none; }
+.pl-guide:has(:popover-open) .pl-guide__opened { display: inline; }
+.pl-guide:has(:popover-open) .pl-guide__plus { transform: rotate(45deg); }
+.pl-guide:has(:popover-open) .pl-guide__prompt { background: var(--guide-tint); }
+.pl-guide__answer {
+  --guide-tint: #edf5e7;
+  position: fixed; z-index: 1000; inset: auto; margin: 0;
+  width: min(370px, calc(100vw - 28px)); max-height: calc(100dvh - 28px);
+  overflow-y: auto; overscroll-behavior: contain;
+  padding: 18px 24px 24px; border-radius: 26px 26px 8px 26px;
+  background: var(--guide-tint); color: var(--pl-ink);
+  border: 1px solid rgba(20,32,27,.12);
+  box-shadow: 0 24px 64px -16px rgba(20,32,27,.3), 0 4px 12px rgba(20,32,27,.08);
+  font-family: var(--font-body);
+}
+.pl-guide__answer.pl-guide--bubbles { --guide-tint: #edf5fc; }
+.pl-guide__answer.pl-guide--lilac { --guide-tint: #f2eef9; }
+.pl-guide__answer.pl-guide--cocoa { --guide-tint: #faf0e4; }
+.pl-guide__answer.pl-guide--peach { --guide-tint: #fff0e9; }
+.pl-guide__answer:popover-open { animation: pl-guide-arrive 180ms ease-out; }
+.pl-guide__answer::backdrop { background: transparent; }
+.pl-guide__trigger { width: 100%; border: 0; background: transparent; text-align: left; font: inherit; color: inherit; }
+.pl-guide__greeting { display: flex; align-items: center; gap: 6px; margin: -6px -10px 12px; }
+.pl-guide__greeting img { width: 68px; height: 68px; transform: rotate(-9deg); }
+.pl-guide__greeting span { flex: 1; font-size: 12px; font-weight: 500; color: var(--pl-body); }
+.pl-guide__dismiss { display: grid; place-items: center; padding: 0; line-height: 1; flex: 0 0 36px; height: 36px; align-self: flex-start; border: 1px solid rgba(20,32,27,.12); border-radius: 50%; background: #ffffffa6; font-size: 23px; cursor: pointer; }
+.pl-guide__dismiss:hover { background: #fff; }
+@keyframes pl-guide-arrive { from { opacity: 0; transform: translateY(6px) scale(.97); } to { opacity: 1; transform: none; } }
+.pl-guide__answer h3 { font-size: 19px; line-height: 1.25; }
+.pl-guide__answer p { margin-top: 12px; color: var(--pl-body); font-size: 14px; line-height: 1.6; }
+.pl-guide__answer .pl-guide__example { padding: 12px 0; border-top: 1px solid rgba(20,32,27,.12); border-bottom: 1px solid rgba(20,32,27,.12); }
+.pl-guide__answer .pl-guide__note { font-size: 12px; font-weight: 600; }
+/* Characters perch over the existing page; neither wrappers nor triggers take space. */
+.pl-guide-welcome, .pl-guide-welcome--pilot { display: contents; }
+.pl-guide {
+  --guide-angle: -13deg;
+  position: absolute; z-index: 40; width: 104px; height: 104px;
+  right: 12px; top: -64px; text-align: left;
+}
+.pl-hero__center { position: relative; }
+.pl-guide.pl-guide--sprout { --guide-angle: 15deg; top: auto; bottom: 2px; right: 10%; }
+.pl-guide.pl-guide--bubbles { --guide-angle: -16deg; right: 3%; top: 68px; }
+.pl-guide.pl-guide--lilac { --guide-angle: 19deg; right: 8%; top: 36px; }
+.pl-guide.pl-guide--cocoa { --guide-angle: -10deg; right: 4%; top: 12px; }
+.pl-guide.pl-guide--peach { --guide-angle: 17deg; left: 5%; right: auto; top: 90px; }
+.pl-case-wrap > .pl-guide-welcome { position: static; z-index: auto; }
+.pl-guide__trigger { position: relative; display: block; width: 104px; height: 104px; padding: 0; border-radius: 50%; }
+.pl-guide__avatar { width: 104px; height: 104px; transform: rotate(var(--guide-angle)); filter: drop-shadow(0 7px 4px rgba(20,32,27,.1)); }
+.pl-guide__trigger:hover .pl-guide__avatar, .pl-guide__trigger:focus-visible .pl-guide__avatar { transform: rotate(calc(var(--guide-angle) * -0.4)) translateY(-7px); }
+.pl-guide__badge { position: absolute; right: 7px; bottom: 10px; display: grid; place-items: center; width: 23px; height: 23px; background: white; border: 1px solid var(--pl-line); border-radius: 50% 50% 50% 3px; font-size: 13px; font-weight: 600; box-shadow: 0 3px 8px #14201b12; transform: rotate(8deg); }
+.pl-guide__prompt { position: absolute; right: 88px; top: 0; width: 210px; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(5px) rotate(-3deg); transition: opacity 140ms, transform 140ms, visibility 140ms; box-shadow: 0 8px 24px #14201b12; }
+.pl-guide__trigger:hover .pl-guide__prompt, .pl-guide__trigger:focus-visible .pl-guide__prompt { opacity: 1; visibility: visible; transform: translateY(0) rotate(-3deg); }
+.pl-guide--peach .pl-guide__prompt { right: auto; left: 88px; }
+.pl-guide:has(:popover-open) .pl-guide__prompt { visibility: hidden; opacity: 0; }
+@media (max-width: 1100px) and (min-width: 801px) {
+  .pl-guide.pl-guide--sprout, .pl-guide--sprout .pl-guide__trigger, .pl-guide--sprout .pl-guide__avatar { width: 72px; height: 72px; }
+  .pl-guide.pl-guide--bubbles { top: -80px; right: 7%; }
+  .pl-guide.pl-guide--lilac { top: -86px; right: 18%; }
+  .pl-guide.pl-guide--cocoa { top: -82px; right: 4%; }
+  .pl-guide.pl-guide--peach { top: -84px; left: 8%; }
+}
+@media (max-width: 800px) {
+  .pl-guide { width: 72px; height: 72px; }
+  .pl-guide__trigger, .pl-guide__avatar { width: 72px; height: 72px; }
+  .pl-guide.pl-guide--sprout { right: 8px; top: auto; bottom: -72px; }
+  .pl-guide.pl-guide--bubbles { right: 10px; top: -64px; }
+  .pl-guide.pl-guide--lilac { left: auto; right: 23%; top: -72px; }
+  .pl-guide.pl-guide--cocoa { right: 16%; top: -65px; }
+  .pl-guide.pl-guide--peach { left: 10%; right: auto; top: -72px; }
+  .pl-guide__badge { right: 1px; bottom: 3px; width: 20px; height: 20px; font-size: 11px; }
+  .pl-guide__prompt { right: 62px; width: 200px; }
+  .pl-guide--peach .pl-guide__prompt { left: 62px; right: auto; }
+}
+@media (hover: none) { .pl-guide__prompt { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .pl-guide__avatar, .pl-guide__trigger:hover .pl-guide__avatar, .pl-guide__trigger:focus-visible .pl-guide__avatar { transform: rotate(var(--guide-angle)); transition: none; }
+}
+
+/* Sunny occupies the clear space beside the unfinished-work introduction. */
+.pl-guide--sunny, .pl-guide__answer.pl-guide--sunny { --guide-tint: #fff8db; }
+.pl-guide.pl-guide--sunny { --guide-angle: -12deg; right: 7%; top: 52px; }
+@media (max-width: 1100px) and (min-width: 801px) {
+  .pl-guide.pl-guide--sunny { right: 12%; top: -82px; }
+}
+@media (max-width: 800px) {
+  .pl-guide.pl-guide--sunny { right: 12%; top: -70px; }
+}

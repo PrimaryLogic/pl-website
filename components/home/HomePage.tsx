@@ -24,6 +24,7 @@ import SiteFooter from "../SiteFooter";
 import SiteNav from "../SiteNav";
 import CaseSwitcher from "./CaseSwitcher";
 import RecoveryVisual from "./RecoveryVisual";
+import AgentGuide from "./AgentGuide";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://primarylogic.com";
 
@@ -78,6 +79,7 @@ export default function HomePage() {
         {/* 2 · The leak */}
         <section id="problem" className="pl-section">
           <div className="pl-container">
+            <AgentGuide agent="sunny" />
             <SectionHead eyebrow={leak.eyebrow} heading={leak.heading} body={leak.body} />
             <div className="pl-leak">
               <ol className="pl-leak__moments">
@@ -102,7 +104,10 @@ export default function HomePage() {
         {/* 3 · How it works — principles strip */}
         <section id="how" className="pl-section pl-section--tint">
           <div className="pl-container">
-            <SectionHead eyebrow={how.eyebrow} heading={how.heading} body={how.body} />
+            <div className="pl-guided-heading">
+              <SectionHead eyebrow={how.eyebrow} heading={how.heading} body={how.body} />
+              <AgentGuide agent="bubbles" />
+            </div>
             <ul className="pl-principles">
               {how.steps.map((st, i) => {
                 const Ico = howIcons[i % howIcons.length];
@@ -123,7 +128,10 @@ export default function HomePage() {
         {/* 5 · Operating authority */}
         <section id="authority" className="pl-section">
           <div className="pl-container">
-            <SectionHead eyebrow={controls.eyebrow} heading={controls.heading} body={controls.body} />
+            <div className="pl-guided-heading">
+              <SectionHead eyebrow={controls.eyebrow} heading={controls.heading} body={controls.body} />
+              <AgentGuide agent="lilac" />
+            </div>
             <ol className="pl-tenets">
               {controls.principles.map((pr, i) => {
                 const Ico = tenetIcons[i % tenetIcons.length];
@@ -149,7 +157,10 @@ export default function HomePage() {
         {/* 6 · Pricing */}
         <section id="pricing" className="pl-section pl-section--tint">
           <div className="pl-container">
-            <SectionHead eyebrow={pricing.eyebrow} heading={pricing.heading} body={pricing.body} />
+            <div className="pl-guided-heading">
+              <SectionHead eyebrow={pricing.eyebrow} heading={pricing.heading} body={pricing.body} />
+              <AgentGuide agent="cocoa" />
+            </div>
             <div className="pl-terms-card">
               <ol className="pl-terms-card__steps">
                 {pricing.steps.map((st, i) => (
@@ -170,6 +181,7 @@ export default function HomePage() {
         {/* 9 · Pilot */}
         <section id="pilot" className="pl-section pl-pilot pl-pilot--center">
           <div className="pl-container">
+            <div className="pl-guide-welcome pl-guide-welcome--pilot"><AgentGuide agent="peach" /></div>
             <div className="pl-pilot__copy">
               <h2>{pilot.heading}</h2>
               <p className="pl-pilot__body">{pilot.body}</p>

@@ -6,6 +6,7 @@ import { Check } from "@phosphor-icons/react/dist/csr/Check";
 import { hero, verticals, type VerticalKey } from "@/lib/content/positioning";
 import { track } from "@/lib/analytics";
 import CaseTimeline from "./CaseTimeline";
+import AgentGuide from "./AgentGuide";
 
 import EmailCapture from "../EmailCapture";
 
@@ -39,6 +40,7 @@ export default function CaseSwitcher() {
   return (
     <div className="pl-hero__stack">
       <div className="pl-hero__center">
+        <div className="pl-guide-welcome"><AgentGuide agent="sprout" /></div>
         <h1 className="pl-hero__title">{hero.heading}</h1>
         <p className="pl-hero__body">{hero.body}</p>
         <div className="pl-hero__form">
