@@ -12,11 +12,11 @@ import AgentGuide from "./AgentGuide";
 
 import EmailCapture from "../EmailCapture";
 
-const demoSlugs: Record<VerticalKey, string> = { dental: "dermatology", legal: "legal", lending: "lending", "home-health": "home-health" };
+const demoSlugs: Record<VerticalKey, string> = { dental: "dermatology", legal: "legal", lending: "lending", "home-health": "home-care" };
 // Keep the other stories available for later, but out of the customer demo.
 const availableDemos = [
   ...verticals.filter(({ key }) => key === "dental"),
-  { ...verticals[0], key: "home-health" as const, tab: "Home Health" },
+  { ...verticals[0], key: "home-health" as const, tab: "Home Care" },
 ];
 function selectDemo(key: VerticalKey) {
   const url = new URL(window.location.href);
@@ -36,7 +36,9 @@ export default function CaseSwitcher() {
 
 function LinkedCaseSwitcher() {
   const params = useSearchParams();
-  const active = availableDemos.find(({ key }) => demoSlugs[key] === params.get("demo"))?.key ?? "dental";
+  const requestedDemo = params.get("demo");
+  const demo = requestedDemo === "home-health" ? "home-care" : requestedDemo;
+  const active = availableDemos.find(({ key }) => demoSlugs[key] === demo)?.key ?? "dental";
   return <CaseSwitcherContent active={active} />;
 }
 
