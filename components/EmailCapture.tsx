@@ -30,6 +30,20 @@ export default function EmailCapture({
   const compact = variant !== "full";
   const landing = variant === "landing";
 
+  if (landing) {
+    return (
+      <a
+        id={id}
+        href={PILOT_MAILTO}
+        className="pl-button pl-button--primary"
+        onClick={() => track("demo_mailto_opened", { placement: id ?? "demo", lane })}
+      >
+        {buttonLabel}
+        <ArrowRight aria-hidden="true" size={18} weight="bold" />
+      </a>
+    );
+  }
+
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
