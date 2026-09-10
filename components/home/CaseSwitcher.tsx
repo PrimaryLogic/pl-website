@@ -36,8 +36,7 @@ export default function CaseSwitcher() {
 
 function LinkedCaseSwitcher() {
   const params = useSearchParams();
-  const requestedDemo = params.get("demo");
-  const demo = requestedDemo === "home-health" ? "home-care" : requestedDemo;
+  const demo = params.get("demo");
   const active = availableDemos.find(({ key }) => demoSlugs[key] === demo)?.key ?? "dental";
   return <CaseSwitcherContent active={active} />;
 }
