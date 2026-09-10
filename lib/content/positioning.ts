@@ -11,7 +11,7 @@
 
 import { PILOT_MAILTO } from "./shared";
 
-export type VerticalKey = "dental" | "legal" | "lending";
+export type VerticalKey = "dental" | "legal" | "lending" | "home-health";
 
 export type ActorKind = "us" | "person" | "system";
 
@@ -71,7 +71,7 @@ export type VerticalStory = {
 export const verticals: VerticalStory[] = [
   {
     key: "dental",
-    tab: "Healthcare",
+    tab: "Dermatology",
     audience: "Physician practices and specialty groups",
     outcome: "Paid patient balance",
     outcomeShort: "paid balance",

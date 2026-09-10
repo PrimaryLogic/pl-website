@@ -13,7 +13,7 @@ const guides = {
   sprout: {
     name: "Sprout", question: "What happens after hello?", title: "One job. All the way through.",
     body: "Primary Logic picks up an unfinished job, talks with the person, and takes the next step in your existing systems. The conversation is only part of the work.",
-    example: "In the healthcare example, explaining Maya’s balance is the start. Confirming both payments in the ledger is the finish.",
+    example: "In the dermatology example, explaining Maya’s balance is the start. Confirming both payments in the ledger is the finish.",
     note: "Follow the example below to see each step.",
   },
   bubbles: {
@@ -77,7 +77,7 @@ export default function AgentGuide({ agent }: { agent: keyof typeof guides }) {
         <Image className="pl-guide__avatar" src={`/avatars/${agent}.png`} alt="" width={112} height={112} sizes="112px" />
         <span className="pl-guide__badge" aria-hidden="true">?</span>
         <span className="pl-guide__prompt">
-          <span className="pl-guide__name">{guide.name} <span aria-hidden="true">·</span> Your product guide</span>
+          <span className="pl-guide__name">{guide.name}</span>
           <span className="pl-guide__question">{guide.question}</span>
           <span className="pl-guide__hint"><span className="pl-guide__closed">Click to explore</span><span className="pl-guide__opened">Click to close</span><span className="pl-guide__plus" aria-hidden="true">+</span></span>
         </span>
