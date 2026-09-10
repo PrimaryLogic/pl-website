@@ -13,15 +13,31 @@ export default function DemoViewport({ children }: { children: ReactNode }) {
     const fit = () => {
       const desktop = window.matchMedia("(min-width: 701px)").matches;
       const width = container.clientWidth;
-      player.style.width = desktop ? `${width}px` : "100%";
       const nav = document.querySelector(".pl-nav");
       const top = (nav?.getBoundingClientRect().height ?? 68) + 16;
       container.style.scrollMarginTop = `${top}px`;
       const available = Math.max(240, window.innerHeight - top - 16);
-      const scale = desktop ? Math.min(1, available / Math.max(1, player.offsetHeight)) : 1;
-      const next = String(Math.floor(scale * 1000) / 1000);
-      if (player.style.zoom !== next) {
-        player.style.zoom = next;
+      const previousZoom = player.style.zoom;
+      const previousWidth = player.style.width;
+      const applyScale = (scale: number) => {
+        player.style.zoom = String(scale);
+        // Compensate for zoom so the rendered player still spans its container.
+        player.style.width = desktop ? `${width / scale}px` : "100%";
+      };
+      applyScale(1);
+      if (desktop && player.offsetHeight > available) {
+        let lower = 0.1;
+        let upper = 1;
+        // Width changes can reflow text, so measure the fitted layout itself.
+        for (let attempt = 0; attempt < 10; attempt += 1) {
+          const scale = (lower + upper) / 2;
+          applyScale(scale);
+          if (player.offsetHeight * scale <= available) lower = scale;
+          else upper = scale;
+        }
+        applyScale(Math.floor(lower * 1000) / 1000);
+      }
+      if (player.style.zoom !== previousZoom || player.style.width !== previousWidth) {
         window.dispatchEvent(new Event("demo-fit"));
       }
     };
