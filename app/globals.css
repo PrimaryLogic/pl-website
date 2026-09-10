@@ -968,7 +968,9 @@ summary::-webkit-details-marker {
   content: "";
   position: absolute;
   top: -28px; bottom: 0;
-  left: 50%; width: 100vw; margin-left: -50vw;
+  left: 0; right: 0;
+  box-shadow: 0 0 0 100vmax var(--pl-band);
+  clip-path: inset(0 -100vmax);
   background: var(--pl-band);
   z-index: 0;
 }
@@ -1451,3 +1453,8 @@ html, body { background: #fff; }
   .pl-guide__badge { right: 0; bottom: 2px; width: 20px; height: 20px; font-size: 11px; }
   .pl-guide__prompt { display: none; }
 }
+
+/* Keep the whole desktop walkthrough in view without covering its content. */
+.demo-viewport { display: flex; justify-content: center; align-items: flex-start; width: 100%; min-width: 0; overflow-anchor: none; }
+.demo-viewport > .sw { flex: none; }
+.demo-viewport .sw-director { position: relative; bottom: auto; box-shadow: none; }

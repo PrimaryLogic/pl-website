@@ -9,6 +9,7 @@ import CaseTimeline from "./CaseTimeline";
 import RecoveryWalkthrough from "./RecoveryWalkthrough";
 import HomeHealthWalkthrough from "./HomeHealthWalkthrough";
 import AgentGuide from "./AgentGuide";
+import DemoViewport from "./DemoViewport";
 
 import EmailCapture from "../EmailCapture";
 
@@ -67,9 +68,11 @@ function CaseSwitcherContent({ active }: { active: VerticalKey }) {
     };
     window.addEventListener("scroll", onScroll, true);
     window.addEventListener("resize", dismiss);
+    window.addEventListener("demo-fit", dismiss);
     return () => {
       window.removeEventListener("scroll", onScroll, true);
       window.removeEventListener("resize", dismiss);
+      window.removeEventListener("demo-fit", dismiss);
     };
   }, [open]);
 
@@ -78,6 +81,8 @@ function CaseSwitcherContent({ active }: { active: VerticalKey }) {
     const menu = menuRef.current;
     if (!button || !menu) return;
     const rect = button.getBoundingClientRect();
+    const scale = rect.width / button.offsetWidth || 1;
+    menu.style.zoom = String(1 / scale);
     menu.style.left = `${Math.max(12, Math.min(rect.right - 208, window.innerWidth - 220))}px`;
     menu.style.top = `${rect.bottom + 8}px`;
     menu.showPopover();
@@ -118,7 +123,7 @@ function CaseSwitcherContent({ active }: { active: VerticalKey }) {
       </div>
 
       <div className="pl-case-wrap">
-        <Example
+        <DemoViewport key={story.key}><Example
           key={story.key}
           story={story}
           id={`${id}-panel`}
@@ -181,7 +186,7 @@ function CaseSwitcherContent({ active }: { active: VerticalKey }) {
               </div>
             </div>
           }
-        />
+        /></DemoViewport>
       </div>
     </div>
   );

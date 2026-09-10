@@ -85,7 +85,10 @@ export default function RecoveryWalkthrough({ tabs, id }: { tabs?: ReactNode; id
   const paid = index >= 15;
   const jump = (next: number) => { setIndex(next); setPlaying(false); setShowContext(false); };
   const focusStage = () => {
-    requestAnimationFrame(() => world.current?.scrollIntoView({ behavior: "instant", block: "start" }));
+    requestAnimationFrame(() => {
+      const target = window.matchMedia("(min-width: 701px)").matches ? root.current?.parentElement : world.current;
+      target?.scrollIntoView({ behavior: "instant", block: "start" });
+    });
   };
   const advance = () => { jump(finished ? 0 : index + 1); focusStage(); };
 
@@ -108,8 +111,18 @@ export default function RecoveryWalkthrough({ tabs, id }: { tabs?: ReactNode; id
     if (!stage || !target) return;
     if (!target.closest(".sw-target")) target.dataset.sproutTarget = "true";
     const position = () => {
-      const bounds = stage.getBoundingClientRect();
-      const rect = target.getBoundingClientRect();
+      const physicalBounds = stage.getBoundingClientRect();
+      const scale = physicalBounds.width / stage.offsetWidth || 1;
+      // Element rectangles include the player's fit scale; animation coordinates do not.
+      const unscale = (r: DOMRect) => ({
+        left: physicalBounds.left + (r.left - physicalBounds.left) / scale,
+        right: physicalBounds.left + (r.right - physicalBounds.left) / scale,
+        top: physicalBounds.top + (r.top - physicalBounds.top) / scale,
+        bottom: physicalBounds.top + (r.bottom - physicalBounds.top) / scale,
+        width: r.width / scale, height: r.height / scale,
+      });
+      const bounds = unscale(physicalBounds);
+      const rect = unscale(target.getBoundingClientRect());
       const mobile = window.matchMedia("(max-width: 700px)").matches;
       const size = mobile ? 56 : 76;
       let x = rect.left - bounds.left + Math.min(rect.width * .65, 160);
@@ -122,7 +135,7 @@ export default function RecoveryWalkthrough({ tabs, id }: { tabs?: ReactNode; id
       }
       const phone = stage.querySelector<HTMLElement>(".sw-phone");
       if (phone) {
-        const call = phone.getBoundingClientRect();
+        const call = unscale(phone.getBoundingClientRect());
         mascotX = mobile ? call.left - bounds.left + 8 : call.left - bounds.left - size - 14;
         mascotY = mobile ? call.top - bounds.top + 10 : call.top - bounds.top + 68;
         x = mascotX - 6;
@@ -143,7 +156,8 @@ export default function RecoveryWalkthrough({ tabs, id }: { tabs?: ReactNode; id
         if (!node.textContent?.trim() || node.parentElement?.closest(".sw-thought, .sw-sprout, .sw-context, .sw-sr")) continue;
         const range = document.createRange();
         range.selectNodeContents(node);
-        for (const r of range.getClientRects()) {
+        for (const physicalRect of range.getClientRects()) {
+          const r = unscale(physicalRect);
           if (r.width && r.height) occupied.push({ left: r.left - bounds.left - 5, right: r.right - bounds.left + 5, top: r.top - bounds.top - 5, bottom: r.bottom - bounds.top + 5 });
         }
       }
@@ -178,7 +192,8 @@ export default function RecoveryWalkthrough({ tabs, id }: { tabs?: ReactNode; id
     const bubble = stage.querySelector<HTMLElement>(".sw-thought");
     if (bubble) observer.observe(bubble);
     window.addEventListener("resize", position);
-    return () => { observer.disconnect(); window.removeEventListener("resize", position); delete target.dataset.sproutTarget; };
+    window.addEventListener("demo-fit", position);
+    return () => { observer.disconnect(); window.removeEventListener("resize", position); window.removeEventListener("demo-fit", position); delete target.dataset.sproutTarget; };
   }, [index]);
 
   return (
