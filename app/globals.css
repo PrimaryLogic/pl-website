@@ -1458,3 +1458,7 @@ html, body { background: #fff; }
 .demo-viewport { display: flex; justify-content: center; align-items: flex-start; width: 100%; min-width: 0; overflow-anchor: none; }
 .demo-viewport > .sw { flex: none; }
 .demo-viewport .sw-director { position: relative; bottom: auto; box-shadow: none; }
+
+/* Keep email focus within the rounded field instead of a green input rectangle. */
+.contact-join--landing input:focus-visible { outline: none; }
+.contact-join--landing:focus-within { border-color: #9ca3af; }
