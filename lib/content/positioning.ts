@@ -310,7 +310,7 @@ export const verticals: VerticalStory[] = [
 export const hero = {
   heading: "Unfinished work is unrealized revenue.",
   body:
-    "Primary Logic autonomously handles the leads, bookings, and balances your team can’t get to — in your existing systems, within your rules, until the revenue is won.",
+    "Primary Logic’s AI agents handle the jobs your revenue depends on, end to end – following through for days or weeks until the work is done.",
   primaryCta: { label: "Design a pilot", href: PILOT_MAILTO },
   secondaryCta: { label: "See how it works", href: "#how" },
   form: { button: "Design a pilot", placeholder: "Work email" },
@@ -321,11 +321,11 @@ export const leak = {
   eyebrow: "Stop losing revenue",
   heading: "Most lost revenue isn’t lost. It’s unfinished.",
   body:
-    "Patients say yes, claimants call, borrowers apply — then a lot of them go quiet. Not because they changed their mind. Because nobody’s job is to finish the follow-through.",
+    "A missing document. A question about a charge. A promised callback. Revenue depends on someone keeping track of what’s outstanding and following through until it’s resolved.",
   moments: [
-    { title: "It arrives at the wrong moment", body: "The 6:40 pm call, the 11 pm application, “let me think about it.” Everyone’s busy, so it waits." },
-    { title: "Follow-up stops after two tries", body: "One call, one voicemail, a note in the system. Then something newer comes in." },
-    { title: "Nobody notices it never finished", body: "No confirmed visit, no signed retainer, no funded loan — and no line item for the loss." },
+    { title: "It arrives at the wrong moment", body: "The 6:40 pm call. “I thought insurance covered this.” Everyone’s busy, so the question waits." },
+    { title: "Follow-up stops after two tries", body: "“I’ll send the bank statement tomorrow.” “Can I pay half now?” There’s a next step to remember and follow through on." },
+    { title: "Nobody notices it never finished", body: "The loan file is still missing a document. The appointment was discussed but never booked. The payment was promised but never posted." },
   ],
   stats: [
     { figure: "30–60%", label: "of diagnosed dental treatment is never scheduled", source: "Practice-management case-acceptance benchmarks" },
@@ -338,12 +338,12 @@ export const how = {
   eyebrow: "How it works",
   heading: "Customer coordination, owned until the revenue is won.",
   body:
-    "Primary Logic picks up the lead, application, or booking your team can’t get to and completes it — in your name, in your systems, within the rules you set — until the outcome is recorded.",
+    "Primary Logic handles the work from start to finish – through your existing systems and communication channels, within the rules you set, until the outcome is achieved.",
   steps: [
     { title: "Answers at the right moment", body: "Minutes after the 11 pm form; the 6:05 pm callback because that’s when they said." },
     { title: "Never drops the follow-up", body: "Call, text, and email on their schedule, for days or weeks, remembering every touch." },
     { title: "Resolves it end to end", body: "Answers from your approved policies and pricing — nothing routed back to your team." },
-    { title: "Finishes in your system", body: "Confirmed in your schedule, CMS, or LOS — that’s when it counts." },
+    { title: "Finishes in your system", body: "Handled and confirmed in your systems — that’s when it counts." },
   ],
   visual: {
     title: "One job, across channels",
@@ -414,7 +414,7 @@ export const controls = {
   eyebrow: "Operating authority",
   heading: "Autonomous, within your rules.",
   body:
-    "Before launch, we define the outcome, the operating authority, the approved knowledge, the prohibited actions, and the system of record.",
+    "Before launch, we agree on the outcome, the information and systems the agent can use, and the actions it can take.",
   principles: [
     {
       title: "Bounded",
@@ -436,9 +436,9 @@ export const controls = {
     },
     {
       title: "Accountable",
-      body: "Work outside its authority closes uncompleted, with its history. Only verified outcomes are billed.",
+      body: "Works within the agreed rules and records the result of every case. Only verified outcomes are billed.",
       tags: [
-        { label: "System of record", detail: "Your schedule, CMS, or LOS decides completion" },
+        { label: "System of record", detail: "Confirmed in your existing systems" },
         { label: "Closed, not improvised", detail: "Out-of-authority cases end with a record" },
         { label: "Never billed", detail: "No verified outcome, no fee" },
       ],
@@ -460,7 +460,7 @@ export const pilot = {
   eyebrow: "The pilot",
   heading: "Recapture the revenue you’re losing.",
   body:
-    "Give Primary Logic one overlooked queue, one operating policy, and one verifiable outcome. It runs the workflow inside your systems; you pay only when that outcome is recorded.",
+    "Give Primary Logic one job that takes persistent follow-through. We agree on the rules and what completion means, then handle it in your existing systems. You pay for verified outcomes.",
   steps: [
     { title: "Pick one queue", body: "One you already measure and already lose. Your current process keeps running." },
     { title: "We learn how you work", body: "About two weeks: we listen to your calls, learn your scripts and rules, and agree on what goes to your team." },

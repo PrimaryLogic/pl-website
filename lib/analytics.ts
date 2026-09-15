@@ -2,6 +2,7 @@ export type AnalyticsEvent =
   | "cta_click"
   | "detail_toggle"
   | "hero_vertical_selected"
+  | "demo_job_selected"
   | "calculator_changed"
   | "demo_form_started"
   | "demo_mailto_opened"

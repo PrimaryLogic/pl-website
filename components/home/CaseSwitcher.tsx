@@ -3,9 +3,8 @@
 import { useEffect, useId, useRef, useState, Suspense, type KeyboardEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
-import { hero, verticals, type VerticalKey } from "@/lib/content/positioning";
+import { hero } from "@/lib/content/positioning";
 import { track } from "@/lib/analytics";
-import CaseTimeline from "./CaseTimeline";
 import RecoveryWalkthrough from "./RecoveryWalkthrough";
 import HomeHealthWalkthrough from "./HomeHealthWalkthrough";
 import AgentGuide from "./AgentGuide";
@@ -13,42 +12,40 @@ import DemoViewport from "./DemoViewport";
 
 import EmailCapture from "../EmailCapture";
 
-const demoSlugs: Record<VerticalKey, string> = { dental: "dermatology", legal: "legal", lending: "lending", "home-health": "home-care" };
-// Keep the other stories available for later, but out of the customer demo.
 const availableDemos = [
-  ...verticals.filter(({ key }) => key === "dental"),
-  { ...verticals[0], key: "home-health" as const, tab: "Home Care" },
-];
-function selectDemo(key: VerticalKey) {
+  { key: "dermatology", label: "Dermatology" },
+  { key: "home-care", label: "Home Care" },
+] as const;
+type DemoKey = typeof availableDemos[number]["key"];
+function selectDemo(key: DemoKey) {
   const url = new URL(window.location.href);
-  url.searchParams.set("demo", demoSlugs[key]);
+  url.searchParams.set("demo", key);
   if (url.href !== window.location.href) {
     window.history.pushState(null, "", url);
   }
 }
 
 /**
- * Hero: one fixed headline and CTA, then an industry dropdown that replays one
- * illustrative case for the chosen industry.
+ * Hero: one fixed headline and CTA, then an industry demo dropdown.
  */
 export default function CaseSwitcher() {
-  return <Suspense fallback={<CaseSwitcherContent active="dental" />}><LinkedCaseSwitcher /></Suspense>;
+  return <Suspense fallback={<CaseSwitcherContent active="dermatology" />}><LinkedCaseSwitcher /></Suspense>;
 }
 
 function LinkedCaseSwitcher() {
   const params = useSearchParams();
   const demo = params.get("demo");
-  const active = availableDemos.find(({ key }) => demoSlugs[key] === demo)?.key ?? "dental";
+  const active = availableDemos.find(({ key }) => key === demo)?.key ?? "dermatology";
   return <CaseSwitcherContent active={active} />;
 }
 
-function CaseSwitcherContent({ active }: { active: VerticalKey }) {
+function CaseSwitcherContent({ active }: { active: DemoKey }) {
   const id = useId();
   const selectRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const restoreFocus = useRef(false);
-  const Example = active === "home-health" ? HomeHealthWalkthrough : active === "dental" ? RecoveryWalkthrough : CaseTimeline;
+  const Example = active === "dermatology" ? RecoveryWalkthrough : HomeHealthWalkthrough;
   const story = availableDemos.find((v) => v.key === active) ?? availableDemos[0];
 
   useEffect(() => {
@@ -83,7 +80,7 @@ function CaseSwitcherContent({ active }: { active: VerticalKey }) {
     const rect = button.getBoundingClientRect();
     const scale = rect.width / button.offsetWidth || 1;
     menu.style.zoom = String(1 / scale);
-    menu.style.left = `${Math.max(12, Math.min(rect.right - 208, window.innerWidth - 220))}px`;
+    menu.style.left = `${Math.max(12, Math.min(rect.right - Math.min(208, window.innerWidth - 24), window.innerWidth - Math.min(208, window.innerWidth - 24) - 12))}px`;
     menu.style.top = `${rect.bottom + 8}px`;
     menu.showPopover();
     menu.querySelector<HTMLButtonElement>('[aria-checked="true"]')?.focus({ preventScroll: true });
@@ -125,7 +122,6 @@ function CaseSwitcherContent({ active }: { active: VerticalKey }) {
       <div className="pl-case-wrap">
         <DemoViewport key={story.key}><Example
           key={story.key}
-          story={story}
           id={`${id}-panel`}
           tabs={
             <div className="pl-select">
@@ -133,10 +129,10 @@ function CaseSwitcherContent({ active }: { active: VerticalKey }) {
                 ref={selectRef}
                 type="button"
                 className="pl-select__trigger"
-                aria-label={`Choose an industry: ${story.tab}`}
+                aria-label={`Choose a demo: ${story.label}`}
                 aria-haspopup="menu"
                 aria-expanded={open}
-                aria-controls={`${id}-industries`}
+                aria-controls={`${id}-jobs`}
                 onClick={() => menuRef.current?.matches(":popover-open") ? menuRef.current.hidePopover() : openMenu()}
                 onKeyDown={(event) => {
                   if (event.key === "ArrowDown" || event.key === "ArrowUp") {
@@ -145,20 +141,19 @@ function CaseSwitcherContent({ active }: { active: VerticalKey }) {
                   }
                 }}
               >
-                {story.tab}
+                <span className="pl-select__copy"><span>{story.label}</span></span>
                 <CaretDown aria-hidden="true" size={15} weight="bold" />
               </button>
               <div
                 ref={menuRef}
-                id={`${id}-industries`}
+                id={`${id}-jobs`}
                 className="pl-select__menu"
                 popover="auto"
                 role="menu"
-                aria-label="Industry"
+                aria-label="Demo"
                 onToggle={(event) => setOpen(event.newState === "open")}
                 onKeyDown={menuKeyDown}
               >
-                <span className="pl-select__label">Explore an industry</span>
                 {availableDemos.map((vertical) => (
                   <button
                     key={vertical.key}
@@ -176,10 +171,10 @@ function CaseSwitcherContent({ active }: { active: VerticalKey }) {
                       }
                       restoreFocus.current = true;
                       selectDemo(vertical.key);
-                      track("hero_vertical_selected", { vertical: vertical.key });
+                      track("demo_job_selected", { job: vertical.key });
                     }}
                   >
-                    {vertical.tab}
+                    <span className="pl-select__copy"><span>{vertical.label}</span></span>
                     {active === vertical.key && <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="m3 8 3.2 3.2L13 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>}
                   </button>
                 ))}

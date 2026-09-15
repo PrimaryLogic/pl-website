@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import type { VerticalStory } from "@/lib/content/positioning";
 import "./RecoveryWalkthrough.css";
 
 const chapters = ["Find the work", "Understand it", "Talk to Maya", "Close the loop"];
@@ -45,7 +44,7 @@ const dialogue: Record<number, { name: string; words: string }> = {
 const context = [
   "The practice defines the eligible queue. Sprout checks the balance, account history, and source records before contacting anyone.",
   "This fictional statement shows $598 billed, a $412 adjustment, and $186 applied to deductible. Sprout explains the recorded reason; it does not decide coverage.",
-  "This conversation is simulated. Sprout uses approved terms, contact permission, and contact windows. Exceptions go to the team with their history.",
+  "This conversation is simulated. Sprout uses approved terms, contact permission, and contact windows. Sprout records the agreed plan and follows through until both payments are verified.",
   "Time advances in this example. A promise does not count as payment: both installments must post in the ledger. This illustrates a successful recovery, not a guaranteed outcome.",
 ];
 
@@ -69,7 +68,7 @@ function Typed({ text }: { text: string }) {
   return <><span className="sw-typed" aria-hidden="true"><span>{text.slice(0, length)}</span><span className="sw-untyped">{text.slice(length)}</span></span><span className="sw-reduced-text">{text}</span><span className="sw-sr">{text}</span></>;
 }
 
-export default function RecoveryWalkthrough({ tabs, id }: { tabs?: ReactNode; id?: string; story: VerticalStory }) {
+export default function RecoveryWalkthrough({ tabs, id }: { tabs?: ReactNode; id?: string }) {
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [showContext, setShowContext] = useState(false);

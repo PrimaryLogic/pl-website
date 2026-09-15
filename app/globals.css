@@ -1182,7 +1182,7 @@ html, body { background: #fff; }
 .pl-tenet__body { min-height: calc(3 * 1.55em); }
 .pl-tenet__tags { margin-top: auto; padding-top: 4px; }
 .pl-tenet__tags li { padding: 10px 0; min-height: 56px; }
-.pl-tenet__tags li span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pl-tenet__tags li span { white-space: normal; overflow-wrap: anywhere; }
 @media (max-width: 1000px) { .pl-tenet__body { min-height: 0; } .pl-tenet__tags li { min-height: 0; } .pl-tenet__tags li span { white-space: normal; } }
 .pl-tenet__tags { margin-top: 18px; }
 .pl-tenet__body { min-height: calc(3 * 1.55em); }
@@ -1230,8 +1230,8 @@ html, body { background: #fff; }
 .pl-recover__who { font-size: 12px; color: var(--pl-mute); }
 .pl-recover__state { position: relative; display: grid; }
 .pl-recover__before, .pl-recover__after { grid-area: 1 / 1; display: inline-flex; align-items: center; gap: 6px; justify-self: end; white-space: nowrap; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500; }
-.pl-recover__before { background: var(--pl-band); color: var(--pl-mute); border: 1px solid var(--pl-line); animation: pl-recover-before var(--cycle) infinite; animation-delay: calc(var(--i) * 1.4s); }
-.pl-recover__after { background: var(--pl-green-soft); color: var(--pl-green-deep); border: 1px solid rgba(14,107,71,0.18); animation: pl-recover-after var(--cycle) infinite; animation-delay: calc(var(--i) * 1.4s); }
+.pl-recover__before { background: var(--pl-band); color: var(--pl-mute); border: 1px solid var(--pl-line); animation: pl-recover-before var(--cycle) steps(1, end) infinite both; animation-delay: calc(var(--i) * 1.4s); }
+.pl-recover__after { background: var(--pl-green-soft); color: var(--pl-green-deep); border: 1px solid rgba(14,107,71,0.18); animation: pl-recover-after var(--cycle) steps(1, end) infinite both; animation-delay: calc(var(--i) * 1.4s); }
 .pl-recover__after svg { color: var(--pl-green); }
 @keyframes pl-recover-before { 0%, 12% { opacity: 1; transform: translateY(0); } 15%, 88% { opacity: 0; transform: translateY(-4px); } 91%, 100% { opacity: 1; transform: translateY(0); } }
 @keyframes pl-recover-after  { 0%, 12% { opacity: 0; transform: translateY(4px); } 15%, 88% { opacity: 1; transform: translateY(0); } 91%, 100% { opacity: 0; transform: translateY(4px); } }
@@ -1258,7 +1258,7 @@ html, body { background: #fff; }
 @media (max-width: 1000px) { .pl-recover { display: none; } }
 .pl-hero__center .pl-hero__body { max-width: 1060px; }
 .pl-hero__center .pl-hero__body { max-width: 760px; }
-.pl-hero__center .pl-hero__body { max-width: 880px; text-wrap: balance; }
+.pl-hero__center .pl-hero__body { width: 100%; max-width: 920px; text-wrap: wrap; }
 
 /* Industry picker: a compact trigger and a touch-friendly top-layer menu. */
 .pl-select { position: relative; display: inline-block; flex-shrink: 0; }
@@ -1462,3 +1462,16 @@ html, body { background: #fff; }
 /* Keep email focus within the rounded field instead of a green input rectangle. */
 .contact-join--landing input:focus-visible { outline: none; }
 .contact-join--landing:focus-within { border-color: #9ca3af; }
+
+/* Job selection keeps the task primary and the industry as context. */
+.pl-select--jobs .pl-select__trigger { width: 280px; white-space: normal; text-align: left; }
+.pl-select__copy { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.pl-select__copy small { font-size: 12px; font-weight: 400; color: var(--pl-mute); }
+.pl-select__eyebrow { font-size: 10px; font-weight: 500; color: var(--pl-mute); }
+.pl-select__menu--jobs { width: min(320px, calc(100vw - 24px)); }
+.pl-select__menu--jobs button { gap: 12px; }
+.pl-select__menu--jobs button > svg { flex-shrink: 0; }
+@media (max-width: 700px) {
+  .pl-select--jobs { width: 100%; }
+  .pl-select--jobs .pl-select__trigger { width: 100%; }
+}

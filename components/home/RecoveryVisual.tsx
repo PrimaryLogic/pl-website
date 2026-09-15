@@ -1,10 +1,10 @@
 import { CheckCircle, Clock } from "@phosphor-icons/react/dist/ssr";
 
 const rows = [
-  { job: "Implant consult", who: "Luis · quoted, never booked", before: "Unscheduled 30 days", after: "Visit confirmed" },
-  { job: "Aligner treatment", who: "Priya · financing question", before: "Payment plan unanswered", after: "Plan chosen, visit booked" },
-  { job: "New-patient exam", who: "Ana · web form at 11:04 pm", before: "No callback", after: "Visit confirmed" },
-  { job: "Full-arch consult", who: "Diane · intake half done", before: "Forms incomplete", after: "Intake complete, confirmed" },
+  { job: "Appointment booking", who: "Luis · needs an evening slot", before: "Time needed", after: "Appointment confirmed" },
+  { job: "Loan file completion", who: "Ana · missing bank statement", before: "Document outstanding", after: "File complete, submitted" },
+  { job: "Billing question", who: "Maya · doesn’t understand the charge", before: "Charge unclear", after: "Charge explained, bill paid" },
+  { job: "Payment follow-up", who: "Priya · second installment due", before: "Installment due", after: "Final payment received" },
 ];
 
 /**
@@ -16,7 +16,7 @@ export default function RecoveryVisual() {
   return (
     <div className="pl-recover" aria-label="Illustration: unfinished jobs becoming recorded outcomes">
       <div className="pl-recover__head">
-        <span className="pl-recover__title">Unscheduled → confirmed</span>
+        <span className="pl-recover__title">Unfinished → completed</span>
         <span className="pl-recover__label">Illustrative</span>
       </div>
       <ol className="pl-recover__list">
@@ -35,7 +35,7 @@ export default function RecoveryVisual() {
       </ol>
       <div className="pl-recover__foot">
         <span className="pl-recover__bar" aria-hidden="true"><i /></span>
-        <span className="pl-recover__note">Each visit confirmed in your schedule before it counts.</span>
+        <span className="pl-recover__note">Every outcome checked in your system before it counts.</span>
       </div>
     </div>
   );
