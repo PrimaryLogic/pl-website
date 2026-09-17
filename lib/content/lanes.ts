@@ -76,7 +76,7 @@ export type LaneContent = {
 export const laneNav: NavContent = {
   wordmark: WORDMARK,
   links: [],
-  cta: { label: "Design a pilot", href: PILOT_MAILTO },
+  cta: { label: "Hire Primary Logic", href: PILOT_MAILTO },
 };
 
 export const lanes: LaneContent[] = [
@@ -92,7 +92,7 @@ export const lanes: LaneContent[] = [
     heading: "Turn accepted treatment into confirmed visits.",
     body:
       "Primary Logic autonomously works the patients who said yes but never scheduled — in your PMS, within your rules — until the confirmed visit is recorded in your schedule.",
-    form: { button: "Design a pilot", placeholder: "Work email" },
+    form: { button: "Hire Primary Logic", placeholder: "Work email" },
     brief: {
       title: "The pilot, in one card",
       rows: [
@@ -164,12 +164,12 @@ export const lanes: LaneContent[] = [
       { key: "Invoice", body: "Confirmed visits × fixed fee.", emphasized: true },
     ],
     trust: "Your system is the source of truth.",
-    cta: { label: "Design a pilot", href: PILOT_MAILTO },
+    cta: { label: "Hire Primary Logic", href: PILOT_MAILTO },
   },
   pilot: {
     heading: "Recapture the treatment you’re losing.",
     body: "Give Primary Logic one unscheduled-treatment queue and one confirmed-visit event. It runs the work in your PMS; you pay only when the visit is confirmed.",
-    form: { button: "Design a pilot", placeholder: "Work email" },
+    form: { button: "Hire Primary Logic", placeholder: "Work email" },
   },
 },
   // ── Legal
@@ -184,7 +184,7 @@ export const lanes: LaneContent[] = [
     heading: "Turn unsigned intake into signed retainers.",
     body:
       "Primary Logic autonomously works the claimants your team can’t keep chasing — phone, text, and email, within your rules — until the signed retainer is recorded in your case system.",
-    form: { button: "Design a pilot", placeholder: "Work email" },
+    form: { button: "Hire Primary Logic", placeholder: "Work email" },
     brief: {
       title: "The pilot, in one card",
       rows: [
@@ -256,13 +256,13 @@ export const lanes: LaneContent[] = [
       { key: "Invoice", body: "Signed retainers × flat fee.", emphasized: true },
     ],
     trust: "Your system is the source of truth.",
-    cta: { label: "Design a pilot", href: PILOT_MAILTO },
+    cta: { label: "Hire Primary Logic", href: PILOT_MAILTO },
   },
   pilot: {
     heading: "Recapture the retainers you’re losing.",
     body:
       "Give Primary Logic one overlooked queue — after-hours, overflow, or aged leads — one operating policy, and one case-system event. You pay only when the signed retainer is recorded.",
-    form: { button: "Design a pilot", placeholder: "Work email" },
+    form: { button: "Hire Primary Logic", placeholder: "Work email" },
   },
 },
   // ── Lending
@@ -277,7 +277,7 @@ export const lanes: LaneContent[] = [
     heading: "Turn stalled applications into funded loans.",
     body:
       "Primary Logic autonomously works the applications your loan officers can’t keep chasing — inside your LOS and CRM, within your rules — until the funded loan is recorded.",
-    form: { button: "Design a pilot", placeholder: "Work email" },
+    form: { button: "Hire Primary Logic", placeholder: "Work email" },
     brief: {
       title: "The pilot, in one card",
       rows: [
@@ -348,12 +348,12 @@ export const lanes: LaneContent[] = [
       { key: "Invoice", body: "Funded loans × fixed fee.", emphasized: true },
     ],
     trust: "Your system is the source of truth.",
-    cta: { label: "Design a pilot", href: PILOT_MAILTO },
+    cta: { label: "Hire Primary Logic", href: PILOT_MAILTO },
   },
   pilot: {
     heading: "Fund the loans you’re losing.",
     body: "Give Primary Logic one stalled queue, one set of rules, and one funding report. It works the files inside your LOS; you pay only when a loan funds.",
-    form: { button: "Design a pilot", placeholder: "Work email" },
+    form: { button: "Hire Primary Logic", placeholder: "Work email" },
   },
 },
 ];

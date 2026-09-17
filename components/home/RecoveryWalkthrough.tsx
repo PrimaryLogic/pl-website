@@ -1,5 +1,7 @@
 "use client";
 
+import "./DemoChrome.css";
+
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import "./RecoveryWalkthrough.css";
@@ -7,7 +9,7 @@ import "./RecoveryWalkthrough.css";
 const chapters = ["Find the work", "Understand it", "Talk to Maya", "Close the loop"];
 const starts = [0, 3, 6, 14];
 const actions = [
-  { chapter: 0, title: "A balance that needs a little follow-through.", next: "Find Maya", screen: "queue", x: 72, y: 58, mx: 67, my: 61, duration: 3000, thought: "Let’s find the unfinished work." },
+  { chapter: 0, title: "Assigned: resolve Maya’s $186 balance, now 74 days outstanding.", next: "Find Maya", screen: "queue", x: 72, y: 58, mx: 67, my: 61, duration: 3000, thought: "Assigned: $186 → $0." },
   { chapter: 0, title: "Maya’s $186 balance has been waiting for 74 days.", next: "Open account", screen: "queue", x: 40, y: 48, mx: 48, my: 49, duration: 2700, thought: "This one needs a closer look." },
   { chapter: 0, title: "Three reminders. No reply. I’ll check the source record.", next: "Read statement", screen: "account", x: 36, y: 31, mx: 43, my: 34, duration: 3200, thought: "What’s behind the balance?" },
   { chapter: 1, title: "Opening Maya’s statement in ModMed.", next: "Check deductible", screen: "statement", x: 74, y: 32, mx: 69, my: 35, duration: 2400, thought: "Reading the statement…" },
@@ -22,8 +24,8 @@ const actions = [
   { chapter: 2, title: "Maya agrees. I’ll record the plan and schedule follow-up.", next: "Save the plan", screen: "call", x: 51, y: 60, mx: 12, my: 51, duration: 3500, thought: "We have a plan!" },
   { chapter: 2, title: "Plan saved in ModMed. Follow-up scheduled for the second payment.", next: "Check first payment", screen: "note", x: 73, y: 69, mx: 69, my: 66, duration: 3500, thought: "Writing it back to the record." },
   { chapter: 3, title: "Day 2. The first $93 has posted. $93 still to go.", next: "Check second payment", screen: "ledger", x: 72, y: 48, mx: 69, my: 49, duration: 3500, thought: "One down. Still following through." },
-  { chapter: 3, title: "Day 16. The second $93 has posted. Balance: zero.", next: "Close the recovery", screen: "ledger", x: 72, y: 58, mx: 69, my: 59, duration: 3500, thought: "Both payments verified." },
-  { chapter: 3, title: "$186 recovered. Receipt sent. Recovery recorded in ModMed.", next: "Start over", screen: "complete", x: 71, y: 60, mx: 68, my: 66, duration: 3500, thought: "Finished and verified!" },
+  { chapter: 3, title: "Two weeks later, on Day 16: the second $93 posts. ModMed balance: $0.", next: "Close the recovery", screen: "ledger", x: 72, y: 58, mx: 69, my: 59, duration: 3500, thought: "Both payments verified." },
+  { chapter: 3, title: "$0 balance verified in ModMed. Payment receipt sent by SMS.", next: "Start over", screen: "complete", x: 71, y: 60, mx: 68, my: 66, duration: 3500, thought: "Finished and verified!" },
 ] as const;
 const targets = [
   ".sw-filter > button", "button.sw-patientrow > span:first-child", ".sw-recordtabs button:nth-child(2)",
@@ -42,10 +44,10 @@ const dialogue: Record<number, { name: string; words: string }> = {
   12: { name: "Maya", words: "Yes, that works. Thank you for explaining it!" },
 };
 const context = [
-  "The practice defines the eligible queue. Sprout checks the balance, account history, and source records before contacting anyone.",
-  "This fictional statement shows $598 billed, a $412 adjustment, and $186 applied to deductible. Sprout explains the recorded reason; it does not decide coverage.",
-  "This conversation is simulated. Sprout uses approved terms, contact permission, and contact windows. Sprout records the agreed plan and follows through until both payments are verified.",
-  "Time advances in this example. A promise does not count as payment: both installments must post in the ledger. This illustrates a successful recovery, not a guaranteed outcome.",
+  "The practice assigns the eligible balance. Sprout checks ModMed and may use only the approved contact channels, window, and payment terms.",
+  "This fictional statement shows $598 billed, a $412 adjustment, and $186 applied to deductible. Sprout explains the recorded reason; it does not decide coverage or alter the balance.",
+  "This phone conversation is simulated. Sprout uses the approved two-payment option, records Maya’s agreement, and follows through until both payments post.",
+  "Time advances two weeks, from Day 2 to Day 16. A promise does not count as payment: Sprout closes the work only after ModMed shows $0 and the SMS receipt is sent.",
 ];
 
 function Glyph({ kind }: { kind: "play" | "pause" | "next" | "back" | "restart" | "phone" | "check" }) {
@@ -93,9 +95,11 @@ export default function RecoveryWalkthrough({ tabs, id }: { tabs?: ReactNode; id
 
   useEffect(() => {
     if (!running) return;
-    const timer = window.setTimeout(() => setIndex(n => (n + 1) % actions.length), action.duration / speed);
+    const timer = window.setTimeout(() => {
+      setIndex(current => (current + 1) % actions.length);
+    }, (finished ? Math.max(action.duration, 4000) : action.duration) / speed);
     return () => window.clearTimeout(timer);
-  }, [index, running, action.duration, speed]);
+  }, [index, running, finished, action.duration, speed]);
 
   useEffect(() => {
     const rail = stepsRef.current;
@@ -197,8 +201,8 @@ export default function RecoveryWalkthrough({ tabs, id }: { tabs?: ReactNode; id
 
   return (
     <section className="rw sw" id={id} ref={root} aria-label="Sprout interactive recovery simulation">
-      <header className="rw-header"><div><h2>Get Maya’s 74-day-old balance explained and paid</h2><p>Watch Sprout work. Pause or advance at any time.</p></div>{tabs}</header>
-      <ol ref={stepsRef} className="rw-steps" aria-label="Recovery chapters">{chapters.map((chapter, n) => <li key={chapter}><button type="button" aria-pressed={action.chapter === n} onClick={() => jump(starts[n])}><span>{action.chapter > n ? <Glyph kind="check" /> : n + 1}</span>{chapter}</button></li>)}</ol>
+      <header className="demo-header"><div><h2>Resolve Maya’s $186 balance, <span className="sw-titlephrase">74 days outstanding</span></h2><p className="sw-assignment">Practice boundary: explain the record, use approved outreach and terms, then verify payment.</p><div className="sw-workflow-meta" aria-label="ModMed, phone, SMS, 16 days"><span>ModMed</span><span>Phone</span><span>SMS</span><span>16 days</span></div></div>{tabs}</header>
+      <ol ref={stepsRef} className="demo-chapters" aria-label="Recovery chapters">{chapters.map((chapter, n) => <li key={chapter}><button type="button" aria-pressed={action.chapter === n} onClick={() => jump(starts[n])}><span>{action.chapter > n ? <Glyph kind="check" /> : n + 1}</span>{chapter}</button></li>)}</ol>
       <div ref={world} data-action={index} data-click={[1, 2, 5, 6, 13, 16].includes(index)} className={`sw-world ${calling ? "sw-world--calling" : ""} ${running ? "sw-world--running" : ""}`}>
         <div className="sw-computer">
           <div className="sw-windowbar"><div className="sw-windowdots" aria-hidden="true"><i /><i /><i /></div><span>ModMed / Patient Financials</span><span className="sw-sandbox">Demo workspace</span></div>
@@ -226,15 +230,15 @@ export default function RecoveryWalkthrough({ tabs, id }: { tabs?: ReactNode; id
                     {index >= 5 && index < 10 && <button className="sw-calllaunch" type="button" onClick={() => jump(6)} disabled={calling}><Glyph kind="phone" />{calling ? "Call in progress" : "Call Maya"}</button>}
                     {index >= 10 && <div className={`sw-approved ${index === 10 ? "sw-target" : ""}`}><small>Practice-approved terms</small><strong>2 payments × $93</strong><span>Two weeks apart · No added fee</span><Glyph kind="check" /></div>}
                   </> : index === 13 ? <div className="sw-note"><div><span className="sw-note-dot" /> Account note <small>Saved</small></div><p><Typed key="note" text="Spoke with Maya. Explained deductible. Patient agreed to two $93 installments, two weeks apart. Follow-up scheduled before the second payment." /></p><div className="sw-note-reminder"><Glyph kind="check" /> Payment follow-up scheduled</div></div>
-                  : <div className="sw-ledger"><div className="sw-ledgerhead"><strong>Posted payments</strong><span className="sw-timejump">{index === 14 ? "Day 2" : "Day 16"}</span></div><div className={`sw-payment ${index === 14 ? "sw-target" : ""}`}><span>Day 2</span><strong>$93.00</strong><span><Glyph kind="check" /> Posted</span></div><div className={`sw-payment ${index === 15 ? "sw-target" : ""} ${index < 15 ? "sw-pending" : ""}`}><span>Day 16</span><strong>$93.00</strong><span>{index < 15 ? "Scheduled" : <><Glyph kind="check" /> Posted</>}</span></div>{finished && <div className="sw-success"><span className="sw-success-check"><Glyph kind="check" /></span><div><strong>$186 recovered.</strong><p>Ledger verified. Receipt sent. Job closed.</p></div><span className="sw-confetti" aria-hidden="true">✦</span></div>}</div>}
+                  : <div className="sw-ledger"><div className="sw-ledgerhead"><strong>Posted payments</strong><span className="sw-timejump">{index === 14 ? "Day 2" : "2 weeks later · Day 16"}</span></div><div className={`sw-payment ${index === 14 ? "sw-target" : ""}`}><span>Day 2</span><strong>$93.00</strong><span><Glyph kind="check" /> Posted</span></div><div className={`sw-payment ${index === 15 ? "sw-target" : ""} ${index < 15 ? "sw-pending" : ""}`}><span>Day 16</span><strong>$93.00</strong><span>{index < 15 ? "Scheduled" : <><Glyph kind="check" /> Posted</>}</span></div>{finished && <div className="sw-success"><span className="sw-success-check"><Glyph kind="check" /></span><div><strong>$0 balance verified</strong><p>$186 recovered · SMS receipt sent · ModMed updated</p></div><span className="sw-confetti" aria-hidden="true">✦</span></div>}</div>}
                 </>}
               </div>}
             </div>
           </div>
-          <div className="sw-systemstatus"><span><i />{index === 13 ? "Account note saved" : finished ? "Recovery complete" : "All changes recorded in the demo"}</span><span>{index >= 14 ? `Day ${index === 14 ? "2" : "16"}` : "Day 1 · 6:05 pm"}</span></div>
+          <div className="sw-systemstatus"><span><i />{index === 13 ? "Account note saved" : finished ? "$0 verified · SMS receipt sent" : "All changes recorded in the demo"}</span><span>{index >= 15 ? "Day 16 · complete" : index === 14 ? "Day 2" : "Day 1 · 6:05 pm"}</span></div>
         </div>
         {calling && <div className={`sw-phone ${index === 6 ? "sw-phone--ringing" : ""}`}>
-          <div className="sw-phone-top"><span><i /> Simulated call</span><span>{index === 6 ? "Connecting…" : "Connected"}</span></div>
+          <div className="sw-phone-top"><span><i /> Phone · Simulated call</span><span>{index === 6 ? "Connecting…" : "Connected"}</span></div>
           <div className="sw-call-person"><span className="sw-call-avatar">M</span><div><strong>Maya R.</strong><span>Patient · Outbound call</span></div><Glyph kind="phone" /></div>
           <div className={`sw-wave ${dialogue[index]?.name === "Maya" ? "sw-wave--maya" : ""}`} aria-hidden="true">{Array.from({ length: 23 }, (_, n) => <i key={n} style={{ "--bar": `${10 + ((n * 17) % 30)}px`, "--delay": `${n * -0.11}s` } as CSSProperties} />)}</div>
           <div className="sw-dialogue" key={index} aria-live="polite" aria-atomic="true"><span>{dialogue[index]?.name === "Sprout" ? "Sprout says" : "Maya says"}</span><p><Typed text={dialogue[index]?.words ?? ""} /></p></div>
@@ -249,7 +253,7 @@ export default function RecoveryWalkthrough({ tabs, id }: { tabs?: ReactNode; id
       </div>
       <div className="sw-director">
         <div className="sw-captionline"><span className={`sw-live-dot ${running ? "is-running" : ""}`} /><p aria-live="polite" aria-atomic="true">{action.title}</p><span className="sw-actioncount">{String(index + 1).padStart(2, "0")} / {actions.length}</span></div>
-        <div className="sw-controls"><button type="button" className="sw-play" onClick={() => { if (finished) setIndex(0); setPlaying(!running); setShowContext(false); }}><Glyph kind={running ? "pause" : finished ? "restart" : "play"} />{running ? "Pause" : finished ? "Replay" : "Play"}</button><input className="sw-mobile-scrub" type="range" min={0} max={actions.length - 1} value={index} onChange={event => jump(Number(event.target.value))} aria-label="Action timeline" aria-valuetext={`Action ${index + 1} of ${actions.length}: ${action.title}`} /><div className="sw-progress" aria-label="Choose an action">{actions.map((item, n) => <button key={n} type="button" className={`${n <= index ? "is-done" : ""} ${n === index ? "is-current" : ""}`} aria-label={`Action ${n + 1}: ${item.title}`} aria-current={index === n ? "step" : undefined} onClick={() => jump(n)}><span /></button>)}</div><button type="button" className="sw-speed" onClick={() => setSpeed(speed === 1 ? 1.5 : 1)} aria-label={`Playback speed ${speed} times. Change speed.`}>{speed}×</button><button type="button" className="sw-back" onClick={() => jump(Math.max(0, index - 1))} disabled={index === 0} aria-label="Previous action"><Glyph kind="back" /></button><button type="button" className="sw-next" onClick={advance} aria-label={action.next}><span className="sw-next-full">{action.next}</span><span className="sw-next-short" aria-hidden="true">{finished ? "Start over" : "Next action"}</span><Glyph kind={finished ? "restart" : "next"} /></button></div>
+        <div className="sw-controls"><button type="button" className="sw-play" onClick={() => { if (finished && !playing) setIndex(0); setPlaying(!running); setShowContext(false); }}><Glyph kind={running ? "pause" : finished ? "restart" : "play"} />{running ? "Pause" : finished ? "Replay" : "Play"}</button><input className="sw-mobile-scrub" type="range" min={0} max={actions.length - 1} value={index} onChange={event => jump(Number(event.target.value))} aria-label="Action timeline" aria-valuetext={`Action ${index + 1} of ${actions.length}: ${action.title}`} /><div className="sw-progress" aria-label="Choose an action">{actions.map((item, n) => <button key={n} type="button" className={`${n <= index ? "is-done" : ""} ${n === index ? "is-current" : ""}`} aria-label={`Action ${n + 1}: ${item.title}`} aria-current={index === n ? "step" : undefined} onClick={() => jump(n)}><span /></button>)}</div><button type="button" className="sw-speed" onClick={() => setSpeed(speed === 1 ? 1.5 : 1)} aria-label={`Playback speed ${speed} times. Change speed.`}>{speed}×</button><button type="button" className="sw-back" onClick={() => jump(Math.max(0, index - 1))} disabled={index === 0} aria-label="Previous action"><Glyph kind="back" /></button><button type="button" className="sw-next" onClick={advance} aria-label={action.next}><span className="sw-next-full">{action.next}</span><span className="sw-next-short" aria-hidden="true">{finished ? "Start over" : "Next action"}</span><Glyph kind={finished ? "restart" : "next"} /></button></div>
       </div>
     </section>
   );

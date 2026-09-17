@@ -1,13 +1,10 @@
 import {
   ArrowsClockwise,
-  CheckCircle,
-  Clock,
   Compass,
-  EyeSlash,
+  Desktop,
   Lightning,
   ListChecks,
-  PhoneSlash,
-  SealCheck,
+  Brain,
   ShieldCheck,
 } from "@phosphor-icons/react/dist/ssr";
 import {
@@ -15,16 +12,15 @@ import {
   how,
   leak,
   pilot,
-  pricing,
 } from "@/lib/content/positioning";
 import { homeNav } from "@/lib/content";
 import AnalyticsBridge from "../AnalyticsBridge";
-import EmailCapture from "../EmailCapture";
 import SiteFooter from "../SiteFooter";
 import SiteNav from "../SiteNav";
 import CaseSwitcher from "./CaseSwitcher";
-import RecoveryVisual from "./RecoveryVisual";
 import AgentGuide from "./AgentGuide";
+import { PILOT_MAILTO } from "@/lib/content/shared";
+import LearningSection from "./LearningSection";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://primarylogic.com";
 
@@ -34,12 +30,11 @@ const structuredData = JSON.stringify({
   name: "Primary Logic",
   url: siteUrl,
   description:
-    "Primary Logic works the leads, patients, and cases a team can’t get to — by phone, text, and email — until the outcome is verified in the customer’s own system. Priced per completed outcome.",
+    "Primary Logic builds AI contractors that handle administrative work in existing systems, coordinate with people, and follow through until the agreed result is verified.",
 }).replace(/</g, "\\u003c");
 
-const leakIcons = [Clock, PhoneSlash, EyeSlash];
-const howIcons = [Lightning, ArrowsClockwise, Compass, CheckCircle];
-const tenetIcons = [ShieldCheck, ListChecks, SealCheck];
+const howIcons = [Desktop, Lightning, ArrowsClockwise, Compass];
+const tenetIcons = [ShieldCheck, ListChecks, Brain];
 
 function SectionHead({
   eyebrow,
@@ -47,14 +42,14 @@ function SectionHead({
   body,
   align = "left",
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   heading: string;
   body?: string;
   align?: "left" | "center";
 }) {
   return (
     <div className={`pl-section-head${align === "center" ? " pl-section-head--center" : ""}`}>
-      <p className="pl-eyebrow">{eyebrow}</p>
+      {eyebrow ? <p className="pl-eyebrow">{eyebrow}</p> : null}
       <h2>{heading}</h2>
       {body ? <p className="pl-section-head__body">{body}</p> : null}
     </div>
@@ -76,54 +71,31 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 2 · The leak */}
+        {/* 2 · The entire job */}
         <section id="problem" className="pl-section">
-          <div className="pl-container">
-            <AgentGuide agent="sunny" />
-            <SectionHead eyebrow={leak.eyebrow} heading={leak.heading} body={leak.body} />
-            <div className="pl-leak">
-              <ol className="pl-leak__moments">
-                {leak.moments.map((m, i) => {
-                  const Ico = leakIcons[i % leakIcons.length];
-                  return (
-                  <li key={m.title}>
-                    <span className={`pl-leak__icon pl-leak__icon--${i + 1}`}><Ico aria-hidden="true" size={18} /></span>
-                    <div>
-                      <h3>{m.title}</h3>
-                      <p>{m.body}</p>
-                    </div>
-                  </li>
-                  );
-                })}
-              </ol>
-              <RecoveryVisual />
-            </div>
-          </div>
-        </section>
-
-        {/* 3 · How it works — principles strip */}
-        <section id="how" className="pl-section pl-section--tint">
-          <div className="pl-container">
+          <div id="how" className="pl-container">
             <div className="pl-guided-heading">
-              <SectionHead eyebrow={how.eyebrow} heading={how.heading} body={how.body} />
-              <AgentGuide agent="bubbles" />
+              <SectionHead eyebrow={leak.eyebrow} heading={leak.heading} body={leak.body} />
+              <AgentGuide agent="sunny" />
             </div>
             <ul className="pl-principles">
               {how.steps.map((st, i) => {
                 const Ico = howIcons[i % howIcons.length];
                 return (
                   <li key={st.title} className="pl-principle">
-                    <span className="pl-principle__icon"><Ico aria-hidden="true" size={18} /></span>
-                    <div>
+                    <div className="pl-principle__heading">
+                      <span className="pl-principle__icon"><Ico aria-hidden="true" size={18} /></span>
                       <h3>{st.title}</h3>
-                      <p>{st.body}</p>
                     </div>
+                    <p>{st.body}</p>
                   </li>
                 );
               })}
             </ul>
           </div>
         </section>
+
+        <LearningSection />
 
         {/* 5 · Operating authority */}
         <section id="authority" className="pl-section">
@@ -133,7 +105,8 @@ export default function HomePage() {
               <AgentGuide agent="lilac" />
             </div>
             <ol className="pl-tenets">
-              {controls.principles.map((pr, i) => {
+              {[2, 0, 1].map((i) => {
+                const pr = controls.principles[i];
                 const Ico = tenetIcons[i % tenetIcons.length];
                 return (
                   <li key={pr.title} className="pl-tenet">
@@ -142,11 +115,24 @@ export default function HomePage() {
                       <h3>{pr.title}</h3>
                     </div>
                     <p className="pl-tenet__body">{pr.body}</p>
-                    <ul className="pl-tenet__tags">
-                      {pr.tags.map((t) => (
-                        <li key={t.label}><strong>{t.label}</strong><span>{t.detail}</span></li>
-                      ))}
-                    </ul>
+                    <div className="pl-control-example">
+                      <p className="pl-control-example__label">{["Permissions", "Activity record", "Resolving a blocker"][i]}<span>Illustrative</span></p>
+                      {i === 0 && <ul className="pl-permission-rows">
+                        <li><span>Read billing records</span><span className="pl-control-status">Allowed</span></li>
+                        <li><span>Offer approved payment plan</span><span className="pl-control-status">Allowed</span></li>
+                        <li><span>Waive a balance</span><span className="pl-control-status pl-control-status--waiting">Approval required</span></li>
+                      </ul>}
+                      {i === 1 && <ol className="pl-audit-rows">
+                        <li><span>Day 1</span><div><strong>Balance checked</strong><small>Statement reviewed in ModMed</small></div></li>
+                        <li><span>Day 2</span><div><strong>Agreement recorded</strong><small>Two installments of $93</small></div></li>
+                        <li><span>Day 16</span><div><strong>Payment verified</strong><small>Remaining balance: $0</small></div></li>
+                      </ol>}
+                      {i === 2 && <div className="pl-approval-example">
+                        <blockquote>“I can’t pay the full amount today.”</blockquote>
+                        <p>Recognizes a timing issue, checks approved terms, and offers two installments of $93.</p>
+                        <div><span className="pl-control-status">Payment plan arranged</span><small>Follow-up scheduled</small></div>
+                      </div>}
+                    </div>
                   </li>
                 );
               })}
@@ -154,40 +140,19 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 6 · Pricing */}
-        <section id="pricing" className="pl-section pl-section--tint">
+        {/* Get started */}
+        <section id="pricing" className="pl-section pl-section--tint pl-closing">
           <div className="pl-container">
-            <div className="pl-guided-heading">
-              <SectionHead eyebrow={pricing.eyebrow} heading={pricing.heading} body={pricing.body} />
-              <AgentGuide agent="cocoa" />
-            </div>
-            <div className="pl-terms-card">
-              <ol className="pl-terms-card__steps">
-                {pricing.steps.map((st, i) => (
-                  <li key={st.key} className={`pl-terms-card__step${st.emphasized ? " is-emph" : ""}`}>
-                    <h3><span className="pl-terms-card__num">{i + 1}</span>{st.key}</h3>
-                    <p>{st.body}</p>
-                  </li>
-                ))}
-              </ol>
-              <div className="pl-terms-card__foot">
-                <p className="pl-terms-card__trust"><CheckCircle aria-hidden="true" size={18} weight="fill" /> {pricing.trust}</p>
-                <a href={pricing.cta.href} className="pl-button pl-button--primary" data-analytics="pricing-cta">{pricing.cta.label}</a>
+            <div id="pilot" className="pl-closing__start">
+              <div className="pl-closing__copy">
+                <h2>{pilot.heading}</h2>
+                <div className="pl-closing__description">
+                  {pilot.body}{" "}<AgentGuide agent="peach" inline />
+                </div>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 9 · Pilot */}
-        <section id="pilot" className="pl-section pl-pilot pl-pilot--center">
-          <div className="pl-container">
-            <div className="pl-guide-welcome pl-guide-welcome--pilot"><AgentGuide agent="peach" /></div>
-            <div className="pl-pilot__copy">
-              <h2>{pilot.heading}</h2>
-              <p className="pl-pilot__body">{pilot.body}</p>
-              <div className="pl-pilot__form">
-                <EmailCapture id="homepage-pilot" variant="landing" buttonLabel={pilot.form.button} emailPlaceholder={pilot.form.placeholder} lane="homepage" />
-              </div>
+              <a href={PILOT_MAILTO} className="pl-button pl-button--primary" data-analytics="homepage-pilot-cta">
+                <span>{pilot.ctaLabel}</span><span aria-hidden="true">→</span>
+              </a>
             </div>
           </div>
         </section>

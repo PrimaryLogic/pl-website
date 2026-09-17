@@ -7,7 +7,7 @@ export default function DemoViewport({ children }: { children: ReactNode }) {
   const frame = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
     const container = frame.current;
-    const player = container?.firstElementChild as HTMLElement | null;
+    const player = container?.querySelector<HTMLElement>(":scope > .sw");
     if (!container || !player) return;
     let pending = 0;
     const fit = () => {
@@ -24,19 +24,8 @@ export default function DemoViewport({ children }: { children: ReactNode }) {
         // Compensate for zoom so the rendered player still spans its container.
         player.style.width = desktop ? `${width / scale}px` : "100%";
       };
-      applyScale(1);
-      if (desktop && player.offsetHeight > available) {
-        let lower = 0.1;
-        let upper = 1;
-        // Width changes can reflow text, so measure the fitted layout itself.
-        for (let attempt = 0; attempt < 10; attempt += 1) {
-          const scale = (lower + upper) / 2;
-          applyScale(scale);
-          if (player.offsetHeight * scale <= available) lower = scale;
-          else upper = scale;
-        }
-        applyScale(Math.floor(lower * 1000) / 1000);
-      }
+      // One reference canvas for every workflow: content length must not resize type.
+      applyScale(desktop ? Math.min(1, available / 890) : 1);
       if (player.style.zoom !== previousZoom || player.style.width !== previousWidth) {
         window.dispatchEvent(new Event("demo-fit"));
       }

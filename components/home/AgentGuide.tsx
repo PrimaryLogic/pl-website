@@ -5,44 +5,44 @@ import Image from "next/image";
 
 const guides = {
   sunny: {
-    name: "Sunny", question: "Where does the work get stuck?", title: "Small blockers. Unfinished jobs.",
-    body: "A missing document, an unclear charge, a callback that never happened. Each leaves a next step for someone to remember and finish.",
-    example: "A loan file needs a bank statement. The borrower promises it tomorrow. Someone still has to follow up, check what arrives, and get the complete file submitted.",
-    note: "This is work your team already spends hours on, as well as work still waiting.",
+    name: "Sunny", question: "What can I hand off?", title: "The whole job, including the follow-up.",
+    body: "Our AI contractors work in your existing systems, make calls, send messages, and handle the next step until the agreed result is verified.",
+    example: "A customer is missing a document. The agent requests it, follows up, checks the correction, and confirms the account is active.",
+    note: "You define the job and its boundaries. The agent carries it through.",
   },
   sprout: {
-    name: "Sprout", question: "What happens after hello?", title: "One job. All the way through.",
-    body: "Primary Logic takes responsibility for the job: conversations, paperwork, system updates, and follow-ups over days or weeks until the work is done.",
-    example: "In Maya’s demo, explaining the balance is only the start. I record her payment plan, check the first installment, and return two weeks later to verify the rest.",
-    note: "The job stays open until the result is confirmed.",
+    name: "Sprout", question: "What would you hand off?", title: "Hand off the work. Stop chasing it.",
+    body: "We build AI contractors around your workflows, systems, and rules. They keep track of what is outstanding and keep working, even when a job takes months.",
+    example: "Describe your most time-consuming admin job. We’ll explain how we’d automate it, what access we’d need, and how we’d confirm it is done.",
+    note: "Start with one workflow in the systems you already use.",
   },
   bubbles: {
-    name: "Bubbles", question: "What if they go quiet?", title: "Waiting is part of the job.",
-    body: "Primary Logic remembers what was promised and when to act again. A reply, a document, or a system update determines the next step.",
-    example: "“I’ll send it Friday.” Check that it arrived. “I’ll pay next week.” Check that it posted. If it hasn’t, follow up through the business’s existing channels.",
-    note: "Every follow-up stays within the agreed contact rules.",
+    name: "Bubbles", question: "What does it learn?", title: "Every interaction informs the next.",
+    body: "The agent remembers customer history, preferences, commitments, and unresolved questions. New information changes when it follows up, which channel it uses, or how it approaches a blocker.",
+    example: "Priya says, “Friday. Text after six.” The agent carries that preference into Friday’s follow-up instead of sending another generic reminder.",
+    note: "Its approach adapts. Your boundaries still apply.",
   },
   lilac: {
-    name: "Lilac", question: "Who sets the boundaries?", title: "Your rules, carried through.",
-    body: "You define the outcome, the information and systems the agent can use, and the actions it can take. The agent handles the job within those rules and records its work.",
-    example: "Maya needs more time to pay. The practice already permits two installments. Sprout offers those terms, records the agreement, and verifies both payments.",
-    note: "Your team can review the actions and result of each case.",
+    name: "Lilac", question: "When does it need me?", title: "Your judgment, where it matters.",
+    body: "You approve the systems, information, and actions the agent can use. It records its work and brings you the context when a decision falls outside those boundaries.",
+    example: "Two installments are already approved? The agent can offer them. A customer asks for different terms? It requests your approval before proceeding.",
+    note: "Review what happened, make the decision, and let the agent resume.",
   },
   cocoa: {
-    name: "Cocoa", question: "What actually counts?", title: "A result your system can prove.",
-    body: "Before work begins, we agree on the outcome, where it will be verified, and its fixed fee. Calls made and messages sent aren’t the billable event.",
-    example: "For a document-collection job, the agreed result could be a complete file submitted in your system. For payment recovery, the money must be posted in your ledger.",
-    note: "Verified outcomes × agreed fee. No verified outcome, no outcome fee.",
+    name: "Cocoa", question: "What am I paying for?", title: "A completed result, verified.",
+    body: "Before work begins, we agree on what counts as done, where to verify it, and the fixed fee. Calls, messages, and time spent are not the billable outcome.",
+    example: "A balance must be paid in your ledger. An onboarding account must be active. An invoice must reach the agreed payment stage in your system.",
+    note: "No verified outcome, no outcome fee.",
   },
   peach: {
-    name: "Peach", question: "Where would we start?", title: "Start with one job.",
-    body: "Pick work that keeps coming back to your team: chasing documents, completing intake, or resolving unpaid balances. We agree on the rules and what done means.",
-    example: "Start with one workflow in your existing systems. Check the completed results before deciding what else to hand over.",
-    note: "Click “Design a pilot” below to open an email to us.",
+    name: "Peach", question: "Can I see customer case studies?", title: "See what our agents have done.",
+    body: "Contact us for case studies of how Primary Logic agents have driven outcomes for our customers.",
+    example: "Tell us which workflow you’re considering so we can share relevant examples.",
+    note: "Ask for case studies in your email — we’ll take it from there.",
   },
 };
 
-export default function AgentGuide({ agent }: { agent: keyof typeof guides }) {
+export default function AgentGuide({ agent, inline = false }: { agent: keyof typeof guides; inline?: boolean }) {
   const guide = guides[agent];
   const id = useId();
   const trigger = useRef<HTMLButtonElement>(null);
@@ -72,7 +72,7 @@ export default function AgentGuide({ agent }: { agent: keyof typeof guides }) {
     };
   }, []);
   return (
-    <div className={`pl-guide pl-guide--${agent}`}>
+    <div className={`pl-guide pl-guide--${agent}${inline ? " pl-guide--inline" : ""}`}>
       <button ref={trigger} type="button" className="pl-guide__trigger" popoverTarget={id} aria-label={`${guide.name}: ${guide.question}`}>
         <Image className="pl-guide__avatar" src={`/avatars/${agent}.png`} alt="" width={112} height={112} sizes="112px" />
         <span className="pl-guide__badge" aria-hidden="true">?</span>

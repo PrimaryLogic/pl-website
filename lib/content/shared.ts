@@ -8,14 +8,14 @@
 
 export const CONTACT_EMAIL = "hello@primarylogic.com";
 export const PILOT_EMAIL = "mayank@primarylogic.com";
-export const PILOT_SUBJECT = "Revenue Aligned Agents!";
-export const PILOT_BODY = `Company:
+export const PILOT_SUBJECT = "A job for Primary Logic";
+export const PILOT_BODY = `Hi Primary Logic,
 
-Estimated Unrealized Revenue:
+Here’s the admin work we’d like to automate. I’ve attached a job spec or described it below.
 
-Type of Unfinished Work:
+Could you tell us how you’d automate it?
 
-Systems Involved:`;
+[Describe the work here]`;
 export const PILOT_MAILTO = `mailto:${PILOT_EMAIL}?subject=${encodeURIComponent(PILOT_SUBJECT)}&body=${encodeURIComponent(PILOT_BODY)}`;
 
 export const WORDMARK = "Primary Logic";
@@ -30,7 +30,7 @@ export type NavContent = {
 export const homeNav: NavContent = {
   wordmark: WORDMARK,
   links: [],
-  cta: { label: "Design a pilot", href: PILOT_MAILTO },
+  cta: { label: "Hire Primary Logic", href: PILOT_MAILTO },
 };
 
 export const footer = {

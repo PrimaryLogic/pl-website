@@ -8,7 +8,7 @@ import { track } from "@/lib/analytics";
 export default function EmailCapture({
   id,
   variant = "full",
-  buttonLabel = "Design a pilot",
+  buttonLabel = "Hire Primary Logic",
   emailPlaceholder = "name@company.com",
   orgLabel = "Organization",
   orgPlaceholder = "Your organization",

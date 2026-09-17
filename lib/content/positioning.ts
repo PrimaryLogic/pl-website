@@ -308,20 +308,21 @@ export const verticals: VerticalStory[] = [
 
 
 export const hero = {
-  heading: "Unfinished work is unrealized revenue.",
+  heading: "Hand off your admin. Hire Primary Logic.",
   body:
-    "Primary Logic’s AI agents handle the jobs your revenue depends on, end to end – following through for days or weeks until the work is done.",
-  primaryCta: { label: "Design a pilot", href: PILOT_MAILTO },
+    "AI contractors that handle your admin work in your existing systems — and see it through, even when it takes months.",
+  tagline: "Built around your workflows, systems, and rules.",
+  primaryCta: { label: "Send us your most time-consuming admin job", href: PILOT_MAILTO },
   secondaryCta: { label: "See how it works", href: "#how" },
-  form: { button: "Design a pilot", placeholder: "Work email" },
+  form: { button: "Send us your most time-consuming admin job", placeholder: "Work email" },
   caseLabel: "Example",
 };
 
 export const leak = {
-  eyebrow: "Stop losing revenue",
-  heading: "Most lost revenue isn’t lost. It’s unfinished.",
+  eyebrow: "End-to-end execution",
+  heading: "Our agents handle the entire job.",
   body:
-    "A missing document. A question about a charge. A promised callback. Revenue depends on someone keeping track of what’s outstanding and following through until it’s resolved.",
+    "A single job can take weeks or months of calls, texts, emails, and actions in your existing systems. Our agents coordinate every step and follow through until it’s done.",
   moments: [
     { title: "It arrives at the wrong moment", body: "The 6:40 pm call. “I thought insurance covered this.” Everyone’s busy, so the question waits." },
     { title: "Follow-up stops after two tries", body: "“I’ll send the bank statement tomorrow.” “Can I pay half now?” There’s a next step to remember and follow through on." },
@@ -340,10 +341,10 @@ export const how = {
   body:
     "Primary Logic handles the work from start to finish – through your existing systems and communication channels, within the rules you set, until the outcome is achieved.",
   steps: [
-    { title: "Answers at the right moment", body: "Minutes after the 11 pm form; the 6:05 pm callback because that’s when they said." },
-    { title: "Never drops the follow-up", body: "Call, text, and email on their schedule, for days or weeks, remembering every touch." },
-    { title: "Resolves it end to end", body: "Answers from your approved policies and pricing — nothing routed back to your team." },
-    { title: "Finishes in your system", body: "Handled and confirmed in your systems — that’s when it counts." },
+    { title: "Works inside your systems", body: "Reads records, collects documents, and completes actions in the software you already use." },
+    { title: "Responds at the right time", body: "Answers an after-hours question or makes the callback at the time your customer requested." },
+    { title: "Never drops the follow-up", body: "Remembers commitments and follows up at the right time, across days, weeks, or months." },
+    { title: "Resolves it end to end", body: "Resolves blockers, finishes the job, and confirms the result in your system." },
   ],
   visual: {
     title: "One job, across channels",
@@ -397,28 +398,15 @@ export const setup = {
   footnote: "We work under your name and the consent your customers already gave you — and report back the same way a human vendor would.",
 };
 
-export const pricing = {
-  eyebrow: "Outcome-based pricing",
-  heading: "Only pay for verified outcomes.",
-  body: "Before launch, we agree on the billable event, the system that verifies it, and the fixed fee.",
-  steps: [
-    { key: "Define", body: "Choose the billable event — a confirmed visit, a signed retainer, a funded loan." },
-    { key: "Verify", body: "Your system records completion — schedule, case system, or LOS." },
-    { key: "Invoice", body: "Verified outcomes × fixed fee.", emphasized: true },
-  ],
-  trust: "Your system is the source of truth.",
-  cta: { label: "Design a pilot", href: PILOT_MAILTO },
-};
-
 export const controls = {
-  eyebrow: "Operating authority",
+  eyebrow: "Built to figure it out",
   heading: "Autonomous, within your rules.",
   body:
-    "Before launch, we agree on the outcome, the information and systems the agent can use, and the actions it can take.",
+    "Our agents figure out how to get the job done, within the access and rules you approve. Every action is recorded for your review.",
   principles: [
     {
       title: "Bounded",
-      body: "Acts only on approved knowledge, permissions, policies, and consent. Nothing is improvised.",
+      body: "Works within the access, policies, and permissions you approve.",
       tags: [
         { label: "HIPAA", detail: "Signed BAA, minimum-necessary PHI access" },
         { label: "TCPA & consent", detail: "Consent on file; quiet hours and opt-outs enforced" },
@@ -427,7 +415,7 @@ export const controls = {
     },
     {
       title: "Auditable",
-      body: "Every message, action, and system write sits on one record, readable any time.",
+      body: "Every conversation, action, and system update is recorded for your review.",
       tags: [
         { label: "Full audit trail", detail: "Calls, texts, emails, and writes, timestamped" },
         { label: "Access logging", detail: "Who saw what, and when" },
@@ -435,11 +423,11 @@ export const controls = {
       ],
     },
     {
-      title: "Accountable",
-      body: "Works within the agreed rules and records the result of every case. Only verified outcomes are billed.",
+      title: "Intelligent",
+      body: "Figures out what’s blocking the job and finds a way forward within your rules.",
       tags: [
         { label: "System of record", detail: "Confirmed in your existing systems" },
-        { label: "Closed, not improvised", detail: "Out-of-authority cases end with a record" },
+        { label: "Decisions, with context", detail: "Requests approval before acting outside its authority" },
         { label: "Never billed", detail: "No verified outcome, no fee" },
       ],
     },
@@ -457,15 +445,9 @@ export const lanes = {
 };
 
 export const pilot = {
-  eyebrow: "The pilot",
-  heading: "Recapture the revenue you’re losing.",
+  ctaLabel: "Let’s talk about the work",
+  heading: "Hire Primary Logic to handle your admin.",
   body:
-    "Give Primary Logic one job that takes persistent follow-through. We agree on the rules and what completion means, then handle it in your existing systems. You pay for verified outcomes.",
-  steps: [
-    { title: "Pick one queue", body: "One you already measure and already lose. Your current process keeps running." },
-    { title: "We learn how you work", body: "About two weeks: we listen to your calls, learn your scripts and rules, and agree on what goes to your team." },
-    { title: "Run it side by side", body: "We work part of the queue, you keep the rest. Compare on your own dashboard." },
-    { title: "Pay per completion", body: "Only outcomes your system confirms are billed. If nothing completes, the pilot cost you nothing." },
-  ],
-  form: { button: "Design a pilot", placeholder: "Work email" },
+    "Send a job description, PDF, or a few lines about the work you want off your plate. Include the systems you use and what a finished job looks like.",
+
 };

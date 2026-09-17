@@ -1,7 +1,10 @@
 .sw { border: 1px solid var(--pl-line); border-radius: 20px; background: #fff; box-shadow: var(--pl-shadow); }
 .sw .rw-header { display: flex; justify-content: space-between; align-items: center; gap: 28px; }
 .sw .rw-header h2 { max-width: 800px; font-size: clamp(23px,2.2vw,29px); line-height: 1.2; letter-spacing: -.025em; }
-.sw .rw-header > div > p:last-child { color: var(--pl-body); line-height: 1.6; }
+.sw .rw-header > div > p:last-of-type { color: var(--pl-body); line-height: 1.6; }
+.sw-example-label { display: inline-flex; align-items: center; min-height: 22px; padding: 3px 8px; border-radius: 999px; background: #edf4e8; color: #35603d; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.sw-workflow-meta { display: flex; flex-wrap: wrap; gap: 5px 0; margin-top: 9px; color: #777f74; font-size: 11px; }
+.sw-workflow-meta span + span::before { content: "/"; margin: 0 8px; color: #b0b6ac; }
 .sw .rw-caption { color: #65716a; font-size: 12px; line-height: 1.5; }
 .sw .rw-steps { display: grid; grid-template-columns: repeat(4,1fr); border-block: 1px solid var(--pl-line); padding: 0 !important; }
 .sw .rw-steps button { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 56px; padding: 8px 20px; border-bottom: 2px solid transparent; text-align: center; font-size: 14px; font-weight: 600; color: var(--pl-body); cursor: pointer; }
@@ -13,7 +16,7 @@
 .sw { --sw-purple: #503b68; --sw-green: #236347; overflow: hidden; }
 .sw .rw-header { padding: 22px 24px; }
 .sw .rw-header h2 { margin-top: 5px; }
-.sw .rw-header > div > p:last-child { margin-top: 7px; font-size: 14px; }
+.sw .rw-header > div > p:last-of-type { margin-top: 7px; font-size: 14px; }
 .sw button { -webkit-tap-highlight-color: transparent; }
 .sw button:focus-visible { outline: 3px solid #3c8b66; outline-offset: 3px; }
 .sw-world { position: relative; padding: 22px; background: #ecefeb; isolation: isolate; }
@@ -324,7 +327,7 @@ button.sw-patientrow:hover { background: #edf4e7; }
 @media (max-width: 700px) {
  .sw .rw-header { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 18px 14px; }
  .sw .rw-header h2 { font-size: 22px; max-width: 250px; }
- .sw .rw-header > div > p:last-child { font-size: 12px; max-width: 200px; }
+ .sw .rw-header > div > p:last-of-type { font-size: 12px; max-width: 200px; }
  .sw .rw-header .pl-select { align-self: start; }
  .sw .rw-header .pl-select__button { min-height: 36px; font-size: 11px; padding-inline: 9px; }
  .sw .rw-steps button { font-size: 11px; padding: 8px 10px; min-height: 48px; }
@@ -417,8 +420,10 @@ button.sw-patientrow:hover { background: #edf4e7; }
 @media (max-width: 700px) {
  .sw .rw-header > div { display: contents; }
  .sw .rw-header h2 { grid-column: 1 / -1; grid-row: 2; max-width: none; }
- .sw .rw-header > div > p:last-child { grid-column: 1 / -1; grid-row: 3; margin-top: 0; max-width: none; }
- .sw .rw-header .pl-select { grid-column: 1 / -1; grid-row: 1; justify-self: start; align-self: start; }
+ .sw-example-label { grid-column: 1; grid-row: 1; justify-self: start; }
+ .sw .rw-header > div > p:last-of-type { grid-column: 1 / -1; grid-row: 3; margin-top: 0; max-width: none; }
+ .sw-workflow-meta { grid-column: 1 / -1; grid-row: 4; margin-top: 2px; }
+ .sw .rw-header .pl-select { grid-column: 2; grid-row: 1; justify-self: end; align-self: start; }
 }
 
 .sw-titlephrase { white-space: nowrap; }
@@ -463,7 +468,7 @@ button.sw-patientrow:hover { background: #edf4e7; }
 /* Mobile playback stays legible as the records and conversation change. */
 .sw { overflow-anchor: none; }
 @media (max-width: 700px) {
- .sw .rw-header > div > p:last-child { align-self: center; }
+ .sw .rw-header > div > p:last-of-type { align-self: center; }
  .sw .rw-header .pl-select__button { min-height: 44px; }
  .sw-world--calling .sw-desktop { min-height: 134px; }
  .sw-world--calling[data-action="10"] .sw-accounttotals,
