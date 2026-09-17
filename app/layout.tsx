@@ -28,11 +28,11 @@ const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://primarylogi
 export const metadata: Metadata = {
   metadataBase: siteUrl,
   title: {
-    default: "Primary Logic",
+    default: "Primary Logic | Long-horizon agents",
     template: "%s | Primary Logic",
   },
   description:
-    "Primary Logic works the leads, patients, and cases your team can’t get to — by phone, text, and email, for as long as it takes — and you pay only when the outcome shows up in your own system.",
+    "Long-horizon agents that handle your admin work in your existing systems — and see it through, even when it takes months.",
   alternates: { canonical: "/" },
   applicationName: "Primary Logic",
   authors: [{ name: "Primary Logic" }],
@@ -40,15 +40,15 @@ export const metadata: Metadata = {
     type: "website",
     url: "/",
     siteName: "Primary Logic",
-    title: "Autonomous revenue follow-through, paid per verified outcome",
+    title: "Primary Logic | Long-horizon agents",
     description:
-      "We work the demand your team can’t get to until it turns into a confirmed visit, a signed retainer, or a funded loan. You pay per completed outcome.",
+      "Long-horizon agents that handle your admin work in your existing systems — and see it through, even when it takes months.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Autonomous revenue follow-through, paid per verified outcome",
+    title: "Primary Logic | Long-horizon agents",
     description:
-      "We work the demand your team can’t get to until it turns into a confirmed visit, a signed retainer, or a funded loan. You pay per completed outcome.",
+      "Long-horizon agents that handle your admin work in your existing systems — and see it through, even when it takes months.",
   },
 };
 

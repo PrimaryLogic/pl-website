@@ -310,7 +310,7 @@ export const verticals: VerticalStory[] = [
 export const hero = {
   heading: "Hand off your admin. Hire Primary Logic.",
   body:
-    "AI contractors that handle your admin work in your existing systems — and see it through, even when it takes months.",
+    "Long-horizon agents that handle your admin work in your existing systems — and see it through, even when it takes months.",
   tagline: "Built around your workflows, systems, and rules.",
   primaryCta: { label: "Send us your most time-consuming admin job", href: PILOT_MAILTO },
   secondaryCta: { label: "See how it works", href: "#how" },

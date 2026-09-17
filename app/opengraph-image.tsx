@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Primary Logic | Unfinished work is unrealized revenue.";
+export const alt = "Primary Logic | Long-horizon agents for your admin work.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -38,15 +38,15 @@ export default async function OpenGraphImage() {
       </div>
       <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
         <div style={{ fontFamily: display ? "Display" : "sans-serif", fontSize: 46, lineHeight: 1.06, whiteSpace: "nowrap", fontWeight: 600, letterSpacing: "-0.03em" }}>
-          Unfinished work is unrealized revenue.
+          Long-horizon agents for your admin work.
         </div>
-        <div style={{ marginTop: 22, fontSize: 24, lineHeight: 1.45, whiteSpace: "nowrap", color: "#4a554e" }}>
-          Autonomously handle the leads your team can’t get to, until the revenue is won.
+        <div style={{ marginTop: 22, fontSize: 24, lineHeight: 1.45, color: "#4a554e" }}>
+          Working in your existing systems, from start to finish — even when it takes months.
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 18, borderTop: "2px solid #101a15", fontSize: 18, color: "#4a554e" }}>
         <div>AUTONOMOUS, WITHIN YOUR RULES</div>
-        <div>PAY ONLY FOR VERIFIED OUTCOMES</div>
+        <div>FROM START TO FINISH</div>
       </div>
     </div>,
     { ...size, fonts: fonts.length ? fonts : undefined },

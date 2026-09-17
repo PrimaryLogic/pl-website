@@ -6,13 +6,13 @@ import Image from "next/image";
 const guides = {
   sunny: {
     name: "Sunny", question: "What can I hand off?", title: "The whole job, including the follow-up.",
-    body: "Our AI contractors work in your existing systems, make calls, send messages, and handle the next step until the agreed result is verified.",
+    body: "Our agents work in your existing systems, make calls, send messages, and handle the next step until the agreed result is verified.",
     example: "A customer is missing a document. The agent requests it, follows up, checks the correction, and confirms the account is active.",
     note: "You define the job and its boundaries. The agent carries it through.",
   },
   sprout: {
     name: "Sprout", question: "What would you hand off?", title: "Hand off the work. Stop chasing it.",
-    body: "We build AI contractors around your workflows, systems, and rules. They keep track of what is outstanding and keep working, even when a job takes months.",
+    body: "We build long-horizon agents around your workflows, systems, and rules. They keep track of what is outstanding and keep working, even when a job takes months.",
     example: "Describe your most time-consuming admin job. We’ll explain how we’d automate it, what access we’d need, and how we’d confirm it is done.",
     note: "Start with one workflow in the systems you already use.",
   },

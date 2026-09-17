@@ -30,7 +30,7 @@ const structuredData = JSON.stringify({
   name: "Primary Logic",
   url: siteUrl,
   description:
-    "Primary Logic builds AI contractors that handle administrative work in existing systems, coordinate with people, and follow through until the agreed result is verified.",
+    "Primary Logic builds long-horizon agents that handle administrative work in existing systems, coordinate with people, and follow through until the agreed result is verified.",
 }).replace(/</g, "\\u003c");
 
 const howIcons = [Desktop, Lightning, ArrowsClockwise, Compass];
