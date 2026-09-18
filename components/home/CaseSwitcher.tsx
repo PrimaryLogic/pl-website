@@ -1,14 +1,16 @@
 "use client";
 
-import { useId, Suspense, type KeyboardEvent } from "react";
+import { useId, useState, useRef, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { hero } from "@/lib/content/positioning";
 import { track } from "@/lib/analytics";
 import RecoveryWalkthrough from "./RecoveryWalkthrough";
 import OnboardingWalkthrough from "./OnboardingWalkthrough";
 import InvoiceWalkthrough from "./InvoiceWalkthrough";
-import AgentGuide from "./AgentGuide";
 import DemoViewport from "./DemoViewport";
+import GettingStarted from "./GettingStarted";
+import DemoInvitation from "./DemoInvitation";
+import setupStyles from "./GettingStarted.module.css";
 
 
 const availableDemos = [
@@ -26,7 +28,7 @@ function selectDemo(key: DemoKey) {
 }
 
 /**
- * Hero: one fixed headline and CTA, then a workflow demo tabs.
+ * Hero and setup panels, with on-demand workflow demos.
  */
 export default function CaseSwitcher() {
   return <Suspense fallback={<CaseSwitcherContent active="balance" />}><LinkedCaseSwitcher /></Suspense>;
@@ -42,63 +44,65 @@ function LinkedCaseSwitcher() {
 
 function CaseSwitcherContent({ active }: { active: DemoKey }) {
   const id = useId();
+  const [demoOpen, setDemoOpen] = useState(false);
+  const demoPanel = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    if (!demoOpen) return;
+    const dialog = demoPanel.current;
+    const previousOverflow = document.body.style.overflow;
+    dialog?.showModal();
+    document.body.style.overflow = "hidden";
+    return () => {
+      dialog?.close();
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [demoOpen]);
+  function closeDemo() {
+    setDemoOpen(false);
+  }
   const Example = active === "balance" ? RecoveryWalkthrough : active === "onboarding" ? OnboardingWalkthrough : InvoiceWalkthrough;
 
-  function tabKeyDown(event: KeyboardEvent<HTMLDivElement>) {
-    const tabs = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
-    const current = tabs.indexOf(document.activeElement as HTMLButtonElement);
-    let next = current;
-    if (event.key === "ArrowRight") next = (current + 1) % tabs.length;
-    else if (event.key === "ArrowLeft") next = (current - 1 + tabs.length) % tabs.length;
-    else if (event.key === "Home") next = 0;
-    else if (event.key === "End") next = tabs.length - 1;
-    else return;
-    event.preventDefault();
-    tabs[next]?.focus({ preventScroll: true });
-    tabs[next]?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
-    tabs[next]?.click();
-  }
 
   return (
-    <div className="pl-hero__stack">
+    <div className={`pl-hero__stack ${setupStyles.heroStack}`}>
       <div className="pl-hero__center">
         <h1 className="pl-hero__title">{hero.heading}</h1>
-        <p className="pl-hero__body">{hero.body.split(" — ")[0]}{" — "}<span className="pl-hero__follow-through">{hero.body.split(" — ").slice(1).join(" — ")}</span></p>
-        <div className="pl-hero__tagline-row">
-          <p className="pl-hero__tagline">{hero.tagline}</p>
-          <div className="pl-guide-welcome"><AgentGuide agent="sprout" /></div>
-        </div>
+        <p className="pl-hero__body">{hero.body}</p>
         <div className="pl-hero__form">
           <a href={hero.primaryCta.href} className="pl-button pl-button--primary" data-analytics="homepage-hero-cta"><span>{hero.primaryCta.label}</span><span aria-hidden="true">→</span></a>
         </div>
       </div>
 
-      <div className="pl-case-wrap">
-        <div className="pl-workflow-tabs" role="tablist" aria-label="Demo workflows" onKeyDown={tabKeyDown}>
-          {availableDemos.map((workflow) => (
-            <button
-              key={workflow.key}
-              id={`${id}-tab-${workflow.key}`}
-              type="button"
-              role="tab"
-              aria-label={workflow.label}
-              aria-selected={active === workflow.key}
-              aria-controls={`${id}-panel-${workflow.key}`}
-              tabIndex={active === workflow.key ? 0 : -1}
-              onClick={(event) => {
-                event.currentTarget.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
-                selectDemo(workflow.key);
-                if (active !== workflow.key) track("demo_job_selected", { job: workflow.key });
-              }}
-            >
-              {workflow.label}
-            </button>
-          ))}
+      <GettingStarted demoControl={
+        <DemoInvitation id={`${id}-demo-trigger`} open={demoOpen} controls={`${id}-demos`} onOpen={() => setDemoOpen(true)} />
+      } />
+
+      <dialog ref={demoPanel} id={`${id}-demos`} className={setupStyles.demoPanel} aria-label="Interactive demos" onCancel={event => { event.preventDefault(); closeDemo(); }} onClick={event => { if (event.target === event.currentTarget) { const rect = event.currentTarget.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeDemo(); } }}>
+        {demoOpen && <>
+        <div className={setupStyles.demoHeading}>
+          <div className={setupStyles.demoSwitcher} role="group" aria-label="Choose a demo">
+            {availableDemos.map((workflow) => (
+              <button
+                key={workflow.key}
+                type="button"
+                aria-label={workflow.label}
+                aria-pressed={active === workflow.key}
+                onClick={() => {
+                  selectDemo(workflow.key);
+                  if (active !== workflow.key) track("demo_job_selected", { job: workflow.key });
+                }}
+              >
+                {workflow.key === "balance" ? "Balances" : workflow.key === "onboarding" ? "Onboarding" : "Invoices"}
+              </button>
+            ))}
+          </div>
+          <button type="button" onClick={closeDemo} className={setupStyles.demoClose} aria-label="Close demo"><span aria-hidden="true">×</span></button>
         </div>
-        <div role="tabpanel" id={`${id}-panel-${active}`} aria-labelledby={`${id}-tab-${active}`}>
+        <div className={setupStyles.demoContent} role="region" aria-label={availableDemos.find(workflow => workflow.key === active)?.label}>
           <DemoViewport key={active}><Example key={active} id={`${id}-demo`} /></DemoViewport>
         </div>
-      </div>
+        </>}
+      </dialog>
     </div>
   );
 }

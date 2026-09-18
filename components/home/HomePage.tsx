@@ -1,16 +1,10 @@
 import {
-  ArrowsClockwise,
-  Compass,
-  Desktop,
-  Lightning,
   ListChecks,
   Brain,
   ShieldCheck,
 } from "@phosphor-icons/react/dist/ssr";
 import {
   controls,
-  how,
-  leak,
   pilot,
 } from "@/lib/content/positioning";
 import { homeNav } from "@/lib/content";
@@ -33,7 +27,6 @@ const structuredData = JSON.stringify({
     "Primary Logic builds long-horizon agents that handle administrative work in existing systems, coordinate with people, and follow through until the agreed result is verified.",
 }).replace(/</g, "\\u003c");
 
-const howIcons = [Desktop, Lightning, ArrowsClockwise, Compass];
 const tenetIcons = [ShieldCheck, ListChecks, Brain];
 
 function SectionHead({
@@ -71,30 +64,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 2 · The entire job */}
-        <section id="problem" className="pl-section">
-          <div id="how" className="pl-container">
-            <div className="pl-guided-heading">
-              <SectionHead eyebrow={leak.eyebrow} heading={leak.heading} body={leak.body} />
-              <AgentGuide agent="sunny" />
-            </div>
-            <ul className="pl-principles">
-              {how.steps.map((st, i) => {
-                const Ico = howIcons[i % howIcons.length];
-                return (
-                  <li key={st.title} className="pl-principle">
-                    <div className="pl-principle__heading">
-                      <span className="pl-principle__icon"><Ico aria-hidden="true" size={18} /></span>
-                      <h3>{st.title}</h3>
-                    </div>
-                    <p>{st.body}</p>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </section>
-
         <LearningSection />
 
         {/* 5 · Operating authority */}
@@ -116,17 +85,22 @@ export default function HomePage() {
                     </div>
                     <p className="pl-tenet__body">{pr.body}</p>
                     <div className="pl-control-example">
-                      <p className="pl-control-example__label">{["Permissions", "Activity record", "Resolving a blocker"][i]}<span>Illustrative</span></p>
+                      <p className="pl-control-example__label">{["Permissions", "A quick check-in", "Resolving a blocker"][i]}</p>
                       {i === 0 && <ul className="pl-permission-rows">
                         <li><span>Read billing records</span><span className="pl-control-status">Allowed</span></li>
                         <li><span>Offer approved payment plan</span><span className="pl-control-status">Allowed</span></li>
                         <li><span>Waive a balance</span><span className="pl-control-status pl-control-status--waiting">Approval required</span></li>
                       </ul>}
-                      {i === 1 && <ol className="pl-audit-rows">
-                        <li><span>Day 1</span><div><strong>Balance checked</strong><small>Statement reviewed in ModMed</small></div></li>
-                        <li><span>Day 2</span><div><strong>Agreement recorded</strong><small>Two installments of $93</small></div></li>
-                        <li><span>Day 16</span><div><strong>Payment verified</strong><small>Remaining balance: $0</small></div></li>
-                      </ol>}
+                      {i === 1 && <div className="pl-agent-email">
+                        <div className="pl-agent-email__message">
+                          <span className="pl-agent-email__sender">You <span>→ Primary Logic</span></span>
+                          <p>What happened with Maya’s balance?</p>
+                        </div>
+                        <div className="pl-agent-email__message pl-agent-email__reply">
+                          <span className="pl-agent-email__sender">Primary Logic <span>→ You</span></span>
+                          <p>Maya paid both $93 installments, and I confirmed her balance is $0 in ModMed. No further follow-up needed.</p>
+                        </div>
+                      </div>}
                       {i === 2 && <div className="pl-approval-example">
                         <blockquote>“I can’t pay the full amount today.”</blockquote>
                         <p>Recognizes a timing issue, checks approved terms, and offers two installments of $93.</p>

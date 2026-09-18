@@ -11,11 +11,11 @@ export const PILOT_EMAIL = "mayank@primarylogic.com";
 export const PILOT_SUBJECT = "A job for Primary Logic";
 export const PILOT_BODY = `Hi Primary Logic,
 
-Here’s the admin work we’d like to automate. I’ve attached a job spec or described it below.
+Here’s the work we’d like you to handle:
 
-Could you tell us how you’d automate it?
+[Describe the work or attach a job description]
 
-[Describe the work here]`;
+What do you need to get started?`;
 export const PILOT_MAILTO = `mailto:${PILOT_EMAIL}?subject=${encodeURIComponent(PILOT_SUBJECT)}&body=${encodeURIComponent(PILOT_BODY)}`;
 
 export const WORDMARK = "Primary Logic";

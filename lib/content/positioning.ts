@@ -308,43 +308,21 @@ export const verticals: VerticalStory[] = [
 
 
 export const hero = {
-  heading: "Hand off your admin. Hire Primary Logic.",
+  heading: "Automate your repetitive tasks",
   body:
-    "Long-horizon agents that handle your admin work in your existing systems — and see it through, even when it takes months.",
-  tagline: "Built around your workflows, systems, and rules.",
-  primaryCta: { label: "Send us your most time-consuming admin job", href: PILOT_MAILTO },
+    "Primary Logic’s AI agents use their own computers, phones, and email accounts to handle your team’s repetitive work. Fully autonomous, with no handholding from you.",
+  primaryCta: { label: "Tell us what you need done", href: PILOT_MAILTO },
   secondaryCta: { label: "See how it works", href: "#how" },
-  form: { button: "Send us your most time-consuming admin job", placeholder: "Work email" },
+  form: { button: "Tell us what you need done", placeholder: "Work email" },
   caseLabel: "Example",
 };
 
-export const leak = {
-  eyebrow: "End-to-end execution",
-  heading: "Our agents handle the entire job.",
-  body:
-    "A single job can take weeks or months of calls, texts, emails, and actions in your existing systems. Our agents coordinate every step and follow through until it’s done.",
-  moments: [
-    { title: "It arrives at the wrong moment", body: "The 6:40 pm call. “I thought insurance covered this.” Everyone’s busy, so the question waits." },
-    { title: "Follow-up stops after two tries", body: "“I’ll send the bank statement tomorrow.” “Can I pay half now?” There’s a next step to remember and follow through on." },
-    { title: "Nobody notices it never finished", body: "The loan file is still missing a document. The appointment was discussed but never booked. The payment was promised but never posted." },
-  ],
-  stats: [
-    { figure: "30–60%", label: "of diagnosed dental treatment is never scheduled", source: "Practice-management case-acceptance benchmarks" },
-    { figure: "40%", label: "of law firms answered a prospective client’s call", source: "Clio Legal Trends Report, 2024 secret-shopper study" },
-    { figure: "10×", label: "more likely to reach a lead within 5 minutes than after 30", source: "Lead Response Management study, MIT / InsideSales" },
-  ],
-};
-
 export const how = {
-  eyebrow: "How it works",
-  heading: "Customer coordination, owned until the revenue is won.",
-  body:
-    "Primary Logic handles the work from start to finish – through your existing systems and communication channels, within the rules you set, until the outcome is achieved.",
+  heading: "How you get started.",
   steps: [
-    { title: "Works inside your systems", body: "Reads records, collects documents, and completes actions in the software you already use." },
-    { title: "Responds at the right time", body: "Answers an after-hours question or makes the callback at the time your customer requested." },
-    { title: "Never drops the follow-up", body: "Remembers commitments and follows up at the right time, across days, weeks, or months." },
-    { title: "Resolves it end to end", body: "Resolves blockers, finishes the job, and confirms the result in your system." },
+    { title: "Tell us the job", body: "Describe the repetitive work you want off your plate and what it takes to finish it." },
+    { title: "Connect your systems", body: "We’ll help set up access to your systems. You decide what the agent can do." },
+    { title: "Get the result", body: "The agent handles the steps and follow-up, asking you when a decision needs your input." },
   ],
   visual: {
     title: "One job, across channels",
@@ -402,7 +380,7 @@ export const controls = {
   eyebrow: "Built to figure it out",
   heading: "Autonomous, within your rules.",
   body:
-    "Our agents figure out how to get the job done, within the access and rules you approve. Every action is recorded for your review.",
+    "Our agents figure out how to get the work done within the access and rules you approve. Anything outside those rules comes to you with the context to decide.",
   principles: [
     {
       title: "Bounded",
@@ -415,7 +393,7 @@ export const controls = {
     },
     {
       title: "Auditable",
-      body: "Every conversation, action, and system update is recorded for your review.",
+      body: "Ask your agent what it did, where things stand, and what’s next.",
       tags: [
         { label: "Full audit trail", detail: "Calls, texts, emails, and writes, timestamped" },
         { label: "Access logging", detail: "Who saw what, and when" },
@@ -448,6 +426,6 @@ export const pilot = {
   ctaLabel: "Let’s talk about the work",
   heading: "Hire Primary Logic to handle your admin.",
   body:
-    "Send a job description, PDF, or a few lines about the work you want off your plate. Include the systems you use and what a finished job looks like.",
+    "Send a job description, PDF, or a few lines about the work. We’ll tell you what we need to get started.",
 
 };

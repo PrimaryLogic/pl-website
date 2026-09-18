@@ -13,7 +13,7 @@ export default function NotFound() {
           <p className="label text-accent">404 · End of trail</p>
           <h1 className="display mt-5 text-[44px] text-ink sm:text-[64px]">This job has no next step.</h1>
           <p className="mx-auto mt-6 max-w-[610px] text-[17px] leading-[1.65] text-body">
-            The page may have moved, or the address may be incomplete. Return to the homepage or explore our lending page.
+            The page may have moved, or the address may be incomplete. Return to the homepage to find out how we can help.
           </p>
           <div className="mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
             <Link
@@ -22,12 +22,6 @@ export default function NotFound() {
             >
               Return home
               <ArrowRight aria-hidden="true" size={15} weight="bold" />
-            </Link>
-            <Link
-              href="/lending"
-              className="inline-flex min-h-11 items-center justify-center rounded-[6px] border border-rule-mid bg-white px-6 py-3 text-[14px] font-medium text-ink transition-colors hover:border-ink"
-            >
-              Lending
             </Link>
           </div>
         </div>

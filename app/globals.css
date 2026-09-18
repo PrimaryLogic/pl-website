@@ -554,7 +554,7 @@ summary::-webkit-details-marker {
 .pl-hero__center { align-items: flex-start; text-align: left; max-width: none; margin: 0; }
 .pl-hero__center .pl-hero__title { max-width: 18ch; font-size: clamp(40px, 5.6vw, 72px); letter-spacing: -0.035em; line-height: 1.02; }
 .pl-hero__center .pl-hero__body { margin: 26px 0 0; max-width: 720px; font-size: clamp(18px, 1.7vw, 22px); line-height: 1.45; }
-.pl-hero__form { justify-content: flex-start; margin-top: 36px; }
+.pl-hero__form { justify-content: flex-start; margin-top: 24px; }
 .pl-hero__form form { align-items: flex-start; }
 .pl-hero__form .contact-join--landing { width: min(100%, 560px); }
 
@@ -815,7 +815,7 @@ html, body { background: #fff; }
 .pl-leak { align-items: stretch; }
 .pl-hero__center .pl-hero__body { max-width: 1060px; }
 .pl-hero__center .pl-hero__body { max-width: 760px; }
-.pl-hero__center .pl-hero__body { width: 100%; max-width: 800px; text-wrap: pretty; }
+.pl-hero__center .pl-hero__body { width: 100%; max-width: 1000px; text-wrap: pretty; }
 
 /* Industry picker: a compact trigger and a touch-friendly top-layer menu. */
 .pl-select { position: relative; display: inline-block; flex-shrink: 0; }
@@ -1039,7 +1039,7 @@ html, body { background: #fff; }
 @media (min-width: 1024px) {
   .pl-hero__center .pl-hero__title {
     max-width: none;
-    font-size: clamp(44px, 4.4vw, 56px);
+    font-size: clamp(56px, 5.6vw, 76px);
   }
 }
 
@@ -1051,6 +1051,7 @@ html, body { background: #fff; }
   text-align: center;
 }
 .pl-hero__form > .pl-button > span:last-child, .pl-pilot__form > .pl-button > span:last-child { flex-shrink: 0; }
+.pl-hero__form > .pl-button { min-height:42px; padding:8px 16px; gap:10px; border-radius:6px; }
 
 @media (min-width: 768px) {
   .pl-hero__follow-through { display: inline-block; }
@@ -1096,7 +1097,9 @@ html, body { background: #fff; }
 .demo-viewport .sw.sw .sw-computer > :is(.sw-windowbar, .sw-appbar, .sw-systemstatus) { flex-shrink: 0; }
 .demo-viewport .sw.sw :is(.sw-captionline, .ob-caption, .iw-caption) { min-height: 42px; }
 @media (max-width: 700px) {
- .demo-viewport .sw.sw :is(.sw-world, .ob-world, .iw-world) { height: 650px; min-height: 650px; }
+ .demo-viewport .sw.sw :is(.sw-world, .ob-world, .iw-world) { height: auto; min-height: 0; overflow-y: visible; }
+ .demo-viewport .sw.sw :is(.sw-computer, .ob-window, .iw-stage) { min-height: 0; }
+ .demo-viewport .sw.sw .sw-desktop { min-height: 0; }
  .demo-viewport .sw.sw .sw-world--calling .sw-computer { min-height: 0; }
  .demo-viewport .sw.sw :is(.sw-captionline, .ob-caption, .iw-caption) { min-height: 60px; }
 }
@@ -1229,3 +1232,40 @@ html, body { background: #fff; }
 
 /* Inline Peach stays aligned with the paragraph. */
 .pl-closing .pl-guide.pl-guide--peach { translate: none; }
+
+/* A check-in with the agent, shown as a short email exchange. */
+.pl-agent-email { margin-top:16px; }
+.pl-agent-email__message { padding:0 0 14px; }
+.pl-agent-email__sender { display:block; color:var(--pl-ink); font-size:11px; font-weight:600; margin-bottom:7px; }
+.pl-agent-email__sender > span { color:#778279; font-weight:400; margin-left:5px; }
+.pl-agent-email__message p { color:var(--pl-body); font-size:13px; line-height:1.55; }
+.pl-agent-email__reply { padding:14px; background:#f3f7f3; border-left:2px solid #bad1c1; }
+.pl-agent-email__reply .pl-agent-email__sender { color:var(--pl-green-deep); }
+
+
+/* Shared rows keep every mobile authority card aligned while swiping. */
+@media (max-width:640px) {
+  #authority .pl-tenets {
+    display:grid;
+    grid-template-columns:none;
+    grid-template-rows:auto auto auto;
+    grid-auto-flow:column;
+    grid-auto-columns:min(84vw, 360px);
+    gap:12px;
+    align-items:stretch;
+  }
+  #authority .pl-tenet { display:grid; grid-template-rows:subgrid; grid-row:span 3; padding:24px; border-radius:16px; }
+  #authority .pl-tenet__head { gap:10px; }
+  #authority .pl-tenet__head h3 { font-size:19px; }
+  #authority .pl-tenet__icon { width:32px; height:32px; border-radius:9px; }
+  #authority .pl-tenet__body { font-size:15px; line-height:1.55; margin-top:0; }
+  #authority .pl-control-example { display:flex; flex-direction:column; margin-top:8px; padding-top:16px; }
+  #authority .pl-approval-example { flex:1; justify-content:space-between; gap:32px; padding-top:14px; }
+  #authority .pl-approval-example blockquote { font-size:14px; padding:10px 12px; }
+  #authority .pl-approval-example > p { font-size:12px; line-height:1.6; }
+  #authority .pl-permission-rows { display:flex; flex:1; flex-direction:column; }
+  #authority .pl-permission-rows li { flex:1; min-height:54px; }
+  #authority .pl-agent-email { margin-top:14px; }
+  #authority .pl-agent-email__message p { font-size:13px; line-height:1.55; }
+  #authority .pl-agent-email__reply { padding:14px; }
+}

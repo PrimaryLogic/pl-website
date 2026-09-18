@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef, type ReactNode } from "react";
 
-/** Fit the complete desktop player below the site navigation, including controls. */
+/** Fit the whole player, including playback controls, inside the demo dialog. */
 export default function DemoViewport({ children }: { children: ReactNode }) {
   const frame = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
@@ -12,20 +12,21 @@ export default function DemoViewport({ children }: { children: ReactNode }) {
     let pending = 0;
     const fit = () => {
       const desktop = window.matchMedia("(min-width: 701px)").matches;
-      const width = container.clientWidth;
-      const nav = document.querySelector(".pl-nav");
-      const top = (nav?.getBoundingClientRect().height ?? 68) + 16;
-      container.style.scrollMarginTop = `${top}px`;
-      const available = Math.max(240, window.innerHeight - top - 16);
       const previousZoom = player.style.zoom;
       const previousWidth = player.style.width;
-      const applyScale = (scale: number) => {
-        player.style.zoom = String(scale);
-        // Compensate for zoom so the rendered player still spans its container.
-        player.style.width = desktop ? `${width / scale}px` : "100%";
-      };
-      // One reference canvas for every workflow: content length must not resize type.
-      applyScale(desktop ? Math.min(1, available / 890) : 1);
+      const width = container.clientWidth;
+      const available = container.clientHeight;
+      let scale = 1;
+      player.style.zoom = "1";
+      player.style.width = "100%";
+      if (desktop && available > 0) {
+        // Re-measure after wrapping changes instead of assuming a fixed player height.
+        for (let pass = 0; pass < 3; pass++) {
+          scale = Math.min(1, available / player.offsetHeight);
+          player.style.zoom = String(scale);
+          player.style.width = `${width / scale}px`;
+        }
+      }
       if (player.style.zoom !== previousZoom || player.style.width !== previousWidth) {
         window.dispatchEvent(new Event("demo-fit"));
       }

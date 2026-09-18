@@ -5,28 +5,28 @@ import Image from "next/image";
 
 const guides = {
   sunny: {
-    name: "Sunny", question: "What can I hand off?", title: "The whole job, including the follow-up.",
-    body: "Our agents work in your existing systems, make calls, send messages, and handle the next step until the agreed result is verified.",
-    example: "A customer is missing a document. The agent requests it, follows up, checks the correction, and confirms the account is active.",
-    note: "You define the job and its boundaries. The agent carries it through.",
+    name: "Sunny", question: "What do I need to get started?", title: "Start by telling us the job.",
+    body: "Send a job description, PDF, or a few lines about the work. We’ll help work out the access and information the agent needs, and agree on what it can do.",
+    example: "“We chase missing onboarding documents. We use a CRM and email. The job is done when the file is complete and the account is active.”",
+    note: "You don’t need to map out every step. We’ll help you figure it out.",
   },
   sprout: {
-    name: "Sprout", question: "What would you hand off?", title: "Hand off the work. Stop chasing it.",
-    body: "We build long-horizon agents around your workflows, systems, and rules. They keep track of what is outstanding and keep working, even when a job takes months.",
-    example: "Describe your most time-consuming admin job. We’ll explain how we’d automate it, what access we’d need, and how we’d confirm it is done.",
-    note: "Start with one workflow in the systems you already use.",
+    name: "Sprout", question: "What can I hand off?", title: "Give us a job to see through.",
+    body: "Our agents work in your systems, contact people, and follow up until the job is done — even when it takes months.",
+    example: "An unpaid balance needs more than a reminder. The agent checks the record, answers the customer’s questions, follows up, and confirms payment in your system.",
+    note: "Tell us the result you need. We’ll help you automate the work to get there.",
   },
   bubbles: {
-    name: "Bubbles", question: "What does it learn?", title: "Every interaction informs the next.",
-    body: "The agent remembers customer history, preferences, commitments, and unresolved questions. New information changes when it follows up, which channel it uses, or how it approaches a blocker.",
-    example: "Priya says, “Friday. Text after six.” The agent carries that preference into Friday’s follow-up instead of sending another generic reminder.",
-    note: "Its approach adapts. Your boundaries still apply.",
+    name: "Bubbles", question: "How does it get better?", title: "Every interaction informs the next.",
+    body: "The agent remembers what happened, what someone promised, and what is still unresolved. It uses that context to choose when to follow up, how to reach someone, and what to try next.",
+    example: "Priya says, “Friday. Text after six.” The agent remembers and follows up by text at the time she requested.",
+    note: "It adapts as it learns more, within the rules you set.",
   },
   lilac: {
-    name: "Lilac", question: "When does it need me?", title: "Your judgment, where it matters.",
-    body: "You approve the systems, information, and actions the agent can use. It records its work and brings you the context when a decision falls outside those boundaries.",
-    example: "Two installments are already approved? The agent can offer them. A customer asks for different terms? It requests your approval before proceeding.",
-    note: "Review what happened, make the decision, and let the agent resume.",
+    name: "Lilac", question: "When does it need me?", title: "You set the rules. It handles the steps.",
+    body: "You decide what the agent can access and do. It works through problems on its own and asks for your input when a decision falls outside those rules. Its actions are recorded for your review.",
+    example: "An approved payment plan? The agent can offer it. Different terms? It brings you the request and the context to decide.",
+    note: "Make the decision, and the agent picks up where it left off.",
   },
   cocoa: {
     name: "Cocoa", question: "What am I paying for?", title: "A completed result, verified.",
@@ -36,8 +36,8 @@ const guides = {
   },
   peach: {
     name: "Peach", question: "Can I see customer case studies?", title: "See what our agents have done.",
-    body: "Contact us for case studies of how Primary Logic agents have driven outcomes for our customers.",
-    example: "Tell us which workflow you’re considering so we can share relevant examples.",
+    body: "Ask us for case studies showing the work our agents have handled and the results for our customers.",
+    example: "Tell us about your task so we can share relevant examples.",
     note: "Ask for case studies in your email — we’ll take it from there.",
   },
 };
