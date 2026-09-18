@@ -1,7 +1,6 @@
 "use client";
 
-import { useId, useState, useRef, useEffect, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useId, useState, useRef, useEffect } from "react";
 import { hero } from "@/lib/content/positioning";
 import { track } from "@/lib/analytics";
 import RecoveryWalkthrough from "./RecoveryWalkthrough";
@@ -19,30 +18,16 @@ const availableDemos = [
   { key: "invoice", label: "Process an invoice for payment", context: "Accounts payable · Software + approval" },
 ] as const;
 type DemoKey = typeof availableDemos[number]["key"];
-function selectDemo(key: DemoKey) {
-  const url = new URL(window.location.href);
-  url.searchParams.set("demo", key);
-  if (url.href !== window.location.href) {
-    window.history.pushState(null, "", url);
-  }
-}
-
-/**
- * Hero and setup panels, with on-demand workflow demos.
- */
+/** Hero and setup panels, with on-demand workflow demos. */
 export default function CaseSwitcher() {
-  return <Suspense fallback={<CaseSwitcherContent active="balance" />}><LinkedCaseSwitcher /></Suspense>;
-}
-
-function LinkedCaseSwitcher() {
-  const params = useSearchParams();
-  const requested = params.get("demo");
-  const demo = requested === "dermatology" ? "balance" : requested === "home-care" ? "onboarding" : requested;
-  const active = availableDemos.find(({ key }) => key === demo)?.key ?? "balance";
-  return <CaseSwitcherContent active={active} />;
-}
-
-function CaseSwitcherContent({ active }: { active: DemoKey }) {
+  const [active, setActive] = useState<DemoKey>("balance");
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (url.searchParams.has("demo")) {
+      url.searchParams.delete("demo");
+      window.history.replaceState(window.history.state, "", url);
+    }
+  }, []);
   const id = useId();
   const [demoOpen, setDemoOpen] = useState(false);
   const demoPanel = useRef<HTMLDialogElement>(null);
@@ -88,7 +73,7 @@ function CaseSwitcherContent({ active }: { active: DemoKey }) {
                 aria-label={workflow.label}
                 aria-pressed={active === workflow.key}
                 onClick={() => {
-                  selectDemo(workflow.key);
+                  setActive(workflow.key);
                   if (active !== workflow.key) track("demo_job_selected", { job: workflow.key });
                 }}
               >

@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
+import { hero } from "@/lib/content/positioning";
 
-export const alt = "Primary Logic | Long-horizon agents for your admin work.";
+export const alt = `Primary Logic | ${hero.heading}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -37,11 +38,11 @@ export default async function OpenGraphImage() {
         <div style={{ fontFamily: display ? "Display" : "sans-serif", fontSize: 26, fontWeight: 600, letterSpacing: "-0.02em" }}>Primary Logic</div>
       </div>
       <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-        <div style={{ fontFamily: display ? "Display" : "sans-serif", fontSize: 46, lineHeight: 1.06, whiteSpace: "nowrap", fontWeight: 600, letterSpacing: "-0.03em" }}>
-          Long-horizon agents for your admin work.
+        <div style={{ fontFamily: display ? "Display" : "sans-serif", fontSize: 64, lineHeight: 1.08, maxWidth: 950, fontWeight: 600, letterSpacing: "-0.03em" }}>
+          {hero.heading}
         </div>
         <div style={{ marginTop: 22, fontSize: 24, lineHeight: 1.45, color: "#4a554e" }}>
-          Working in your existing systems, from start to finish — even when it takes months.
+          {hero.body}
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 18, borderTop: "2px solid #101a15", fontSize: 18, color: "#4a554e" }}>

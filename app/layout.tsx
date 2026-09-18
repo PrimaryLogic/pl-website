@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { hero } from "@/lib/content/positioning";
 import { IBM_Plex_Mono, Inter, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
     template: "%s | Primary Logic",
   },
   description:
-    "Long-horizon agents that handle your admin work in your existing systems — and see it through, even when it takes months.",
+    hero.body,
   alternates: { canonical: "/" },
   applicationName: "Primary Logic",
   authors: [{ name: "Primary Logic" }],
@@ -40,15 +41,15 @@ export const metadata: Metadata = {
     type: "website",
     url: "/",
     siteName: "Primary Logic",
-    title: "Primary Logic | Long-horizon agents",
+    title: `Primary Logic | ${hero.heading}`,
     description:
-      "Long-horizon agents that handle your admin work in your existing systems — and see it through, even when it takes months.",
+      hero.body,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Primary Logic | Long-horizon agents",
+    title: `Primary Logic | ${hero.heading}`,
     description:
-      "Long-horizon agents that handle your admin work in your existing systems — and see it through, even when it takes months.",
+      hero.body,
   },
 };
 
