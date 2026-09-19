@@ -93,11 +93,11 @@ export const verticals: VerticalStory[] = [
         time: "10:15 am",
         system: "EHR/PM",
         signal: "$186 balance, 74 days old; three automated reminders, no reply",
-        memory: "Statement on file: date of service, charges, insurance adjustment, reason code — deductible.",
+        memory: "Statement on file: date of service, charges, insurance adjustment, reason code: deductible.",
         actions: [
           { kind: "us", actor: "Primary Logic", channel: "", text: "Checks consent, reads the reason code, explains the balance in plain language" },
           { kind: "person", actor: "Patient", channel: "SMS", text: "", transcript: [
-            { who: "agent", text: "Hi Maya — Dr. Chen’s office. Your $186 from the March 3 visit is the part your plan applied to your deductible, not a missed payment. Want me to walk you through it?" },
+            { who: "agent", text: "Hi Maya, this is Dr. Chen’s office. Your $186 from the March 3 visit is the part your plan applied to your deductible, not a missed payment. Want me to walk you through it?" },
             { who: "person", text: "Wait, I thought my insurance covered that?" },
           ] },
         ],
@@ -111,7 +111,7 @@ export const verticals: VerticalStory[] = [
         actions: [
           { kind: "us", actor: "Primary Logic", channel: "", text: "Answers from the statement and your approved payment-plan policy" },
           { kind: "person", actor: "Patient", channel: "SMS", text: "", transcript: [
-            { who: "agent", text: "Your insurer processed the claim. The allowed amount was $186, it paid $0 because your deductible isn’t met yet, and the $186 was applied to your deductible — so it’s your responsibility. Full statement is in your portal. You can pay today or split it into two payments of $93." },
+            { who: "agent", text: "Your insurer processed the claim. The allowed amount was $186, it paid $0 because your deductible isn’t met yet, and the $186 was applied to your deductible. That means it is your responsibility. The full statement is in your portal. You can pay today or split it into two payments of $93." },
             { who: "person", text: "Ok that makes sense. Can I split it?" },
           ] },
           { kind: "system", actor: "EHR/PM", channel: "Workflow", text: "Sets up the two-payment plan on the account" },
@@ -126,7 +126,7 @@ export const verticals: VerticalStory[] = [
         actions: [
           { kind: "us", actor: "Primary Logic", channel: "", text: "Confirms the payment posted, schedules the second reminder" },
           { kind: "person", actor: "Patient", channel: "SMS", text: "", transcript: [
-            { who: "agent", text: "Got it — $93 posted to your account. The second $93 is due April 15; I’ll text you the link a few days before." },
+            { who: "agent", text: "Got it. $93 posted to your account. The second $93 is due April 15. I’ll text you the link a few days before." },
             { who: "person", text: "perfect, thank you!!" },
           ] },
           { kind: "system", actor: "EHR/PM", channel: "Workflow", text: "Posts the payment to the ledger" },
@@ -137,11 +137,11 @@ export const verticals: VerticalStory[] = [
         time: "6:05 pm",
         system: "Portal",
         signal: "Second payment comes in on the reminder",
-        memory: "Maya prefers SMS, daytime, and a split plan — saved for next time.",
+        memory: "Maya prefers SMS, daytime, and a split plan. Saved for next time.",
         actions: [
           { kind: "us", actor: "Primary Logic", channel: "", text: "Verifies the balance is zero and closes the account" },
           { kind: "person", actor: "Patient", channel: "SMS", text: "", transcript: [
-            { who: "agent", text: "That’s the last one, Maya — your balance is $0. Receipt is in your portal." },
+            { who: "agent", text: "That’s the last one, Maya. Your balance is $0. The receipt is in your portal." },
             { who: "person", text: "yay. thanks for explaining it" },
           ] },
           { kind: "system", actor: "EHR/PM", channel: "Workflow", text: "Marks the balance paid in full" },
@@ -178,9 +178,9 @@ export const verticals: VerticalStory[] = [
         actions: [
           { kind: "us", actor: "Primary Logic", channel: "", text: "Checks conflicts and consent, calls Cameron" },
           { kind: "person", actor: "Claimant", channel: "Phone", text: "", transcript: [
-            { who: "agent", text: "Hi Cameron — I’ve resent the agreement. Anything holding you up?" },
+            { who: "agent", text: "Hi Cameron. I’ve resent the agreement. Anything holding you up?" },
             { who: "person", text: "Just a question about how the fee works." },
-            { who: "agent", text: "It’s a contingency fee — you pay nothing unless the case resolves in your favor. I’ll send the firm’s one-page summary with the agreement." },
+            { who: "agent", text: "It’s a contingency fee. You pay nothing unless the case resolves in your favor. I’ll send the firm’s one page summary with the agreement." },
           ] },
         ],
       },
@@ -193,7 +193,7 @@ export const verticals: VerticalStory[] = [
         actions: [
           { kind: "us", actor: "Primary Logic", channel: "", text: "Sends the approved fee summary with a fresh signature link" },
           { kind: "person", actor: "Claimant", channel: "Email", text: "", transcript: [
-            { who: "agent", text: "Here’s the firm’s fee summary and a fresh link to sign — takes about a minute." },
+            { who: "agent", text: "Here’s the firm’s fee summary and a fresh link to sign. It takes about a minute." },
             { who: "person", text: "Thanks, that clears it up. I’ll look tonight." },
           ] },
           { kind: "system", actor: "E-sign", channel: "Workflow", text: "Issues a fresh signature link" },
@@ -208,7 +208,7 @@ export const verticals: VerticalStory[] = [
         actions: [
           { kind: "us", actor: "Primary Logic", channel: "", text: "Sends the evening reminder" },
           { kind: "person", actor: "Claimant", channel: "SMS", text: "", transcript: [
-            { who: "agent", text: "Your agreement is ready to sign — link below. Takes about a minute." },
+            { who: "agent", text: "Your agreement is ready to sign. The link is below. It takes about a minute." },
             { who: "person", text: "Signing now." },
           ] },
         ],
@@ -255,7 +255,7 @@ export const verticals: VerticalStory[] = [
         actions: [
           { kind: "us", actor: "Primary Logic", channel: "", text: "Checks consent, sends a secure upload link" },
           { kind: "person", actor: "Borrower", channel: "Email", text: "", transcript: [
-            { who: "agent", text: "Hi Dana — your file is two pay stubs from complete. Secure upload link inside." },
+            { who: "agent", text: "Hi Dana. Your file is two pay stubs from complete. The secure upload link is inside." },
             { who: "person", text: "They’re on my work computer. Can someone call after 6?" },
           ] },
         ],
@@ -269,9 +269,9 @@ export const verticals: VerticalStory[] = [
         actions: [
           { kind: "us", actor: "Primary Logic", channel: "", text: "Calls at 6, stays on for the upload" },
           { kind: "person", actor: "Borrower", channel: "Phone", text: "", transcript: [
-            { who: "agent", text: "I’ll stay on while you upload — the two most recent stubs." },
+            { who: "agent", text: "I’ll stay on while you upload the two most recent stubs." },
             { who: "person", text: "Done. What rate am I looking at?" },
-            { who: "agent", text: "I can read you the approved rate and disclosure already on your file — sending them to your email now, exactly as recorded." },
+            { who: "agent", text: "I can read you the approved rate and disclosure already on your file. I’m sending them to your email now, exactly as recorded." },
           ] },
           { kind: "system", actor: "LOS", channel: "Workflow", text: "Marks the documents received" },
         ],
@@ -308,9 +308,9 @@ export const verticals: VerticalStory[] = [
 
 
 export const hero = {
-  heading: "Automate your repetitive tasks",
+  heading: "Get the work done. Skip the hire.",
   body:
-    "Primary Logic’s AI agents use their own computers, phones, and email accounts to handle your team’s repetitive work. Fully autonomous, with no handholding from you.",
+    "Primary Logic takes on the jobs your business needs done and owns them from start to finish, without adding headcount or another person to manage.",
   primaryCta: { label: "Tell us what you need done", href: PILOT_MAILTO },
   secondaryCta: { label: "See how it works", href: "#how" },
   form: { button: "Tell us what you need done", placeholder: "Work email" },
@@ -320,9 +320,9 @@ export const hero = {
 export const how = {
   heading: "How you get started.",
   steps: [
-    { title: "Tell us the job", body: "Describe the repetitive work you want off your plate and what it takes to finish it." },
-    { title: "Connect your systems", body: "We’ll help set up access to your systems. You decide what the agent can do." },
-    { title: "Get the result", body: "The agent handles the steps and follow-up, asking you when a decision needs your input." },
+    { title: "Tell us the result", body: "Describe the job you want done and what finished looks like." },
+    { title: "Set the boundaries", body: "We learn how the work gets done. You decide what the agent can access and do." },
+    { title: "Hand off the work", body: "The agent handles the steps and follow up, asking only when your judgment is needed." },
   ],
   visual: {
     title: "One job, across channels",
@@ -341,7 +341,7 @@ export const how = {
     columns: { a: "An assistant", b: "Primary Logic" },
     rows: [
       { a: "Handles one conversation, then hands off", b: "Owns the job for days or weeks, across phone, text, and email" },
-      { a: "Waits for someone to ask", b: "Acts when something changes — or when nothing does" },
+      { a: "Waits for someone to ask", b: "Acts when something changes or when nothing does" },
       { a: "Measured on activity", b: "Measured on outcomes: visits confirmed, retainers signed, loans funded" },
       { a: "Priced per seat or per minute", b: "Priced per verified outcome" },
     ],
@@ -357,7 +357,7 @@ export const setup = {
     title: "Your side",
     tag: "About an hour",
     items: [
-      "Send us a copy of the queue — from your CRM, a nightly export, or a forwarded inbox",
+      "Send us a copy of the queue from your CRM, a nightly export, or a forwarded inbox",
       "Approve the caller ID, email sender, and scripts we use in your name",
       "Tell us what we may say, what we may promise, and what goes to your team",
     ],
@@ -367,20 +367,20 @@ export const setup = {
     tag: "Everything else",
     items: [
       "Remember every call, text, and email for the life of the job",
-      "Work the phone, text, and email — and the third parties: front desks, e-sign, document collection",
+      "Work the phone, text, and email, plus third parties such as front desks, e-sign, and document collection",
       "Schedule, remind, retry, and escalate",
       "Write progress and the outcome back into your system",
       "Keep a full record of every touch",
     ],
   },
-  footnote: "We work under your name and the consent your customers already gave you — and report back the same way a human vendor would.",
+  footnote: "We work under your name and the consent your customers already gave you. We report back the same way a human vendor would.",
 };
 
 export const controls = {
-  eyebrow: "Built to figure it out",
-  heading: "Autonomous, within your rules.",
+  eyebrow: "You manage the outcome",
+  heading: "We manage the work.",
   body:
-    "Our agents figure out how to get the work done within the access and rules you approve. Anything outside those rules comes to you with the context to decide.",
+    "You define the result, access, and rules. Our agents handle the daily execution and bring you complete context when your judgment is needed.",
   principles: [
     {
       title: "Bounded",
@@ -423,9 +423,9 @@ export const lanes = {
 };
 
 export const pilot = {
-  ctaLabel: "Let’s talk about the work",
-  heading: "Hire Primary Logic to handle your admin.",
+  ctaLabel: "Tell us the job",
+  heading: "What would you hire someone to do if you did not also have to manage them?",
   body:
-    "Send a job description, PDF, or a few lines about the work. We’ll tell you what we need to get started.",
+    "Send us a job description, a document, or a few lines about the work you want done. Tell us what needs to be true when the job is finished. We’ll show you how Primary Logic can take responsibility for getting it done.",
 
 };

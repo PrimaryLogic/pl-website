@@ -18,8 +18,8 @@ export default function GettingStarted({ demoControl }: { demoControl?: ReactNod
               </div>
             </div>
             <div className={styles.caption}>
-              <h3>Tell us what you want done.</h3>
-              <p>Email or text us the task.</p>
+              <h3>Tell us the result you need.</h3>
+              <p>Send us the job and what finished looks like.</p>
             </div>
           </li>
           <li className={styles.step}>
@@ -37,8 +37,8 @@ export default function GettingStarted({ demoControl }: { demoControl?: ReactNod
               </div>
             </div>
             <div className={styles.caption}>
-              <h3>We get everything in place.</h3>
-              <p>We gather what’s needed and set up the workflow.</p>
+              <h3>We learn how the work gets done.</h3>
+              <p>We gather what is needed. You set the boundaries.</p>
             </div>
           </li>
           <li className={styles.step}>
@@ -59,8 +59,8 @@ export default function GettingStarted({ demoControl }: { demoControl?: ReactNod
               </div>
             </div>
             <div className={styles.caption}>
-              <h3>The work gets done.</h3>
-              <p>Agents have their own computers to handle the job.</p>
+              <h3>We own the work.</h3>
+              <p>Our agents keep going until the result is complete.</p>
             </div>
           </li>
         </ol>

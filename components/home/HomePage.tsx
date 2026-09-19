@@ -24,7 +24,7 @@ const structuredData = JSON.stringify({
   name: "Primary Logic",
   url: siteUrl,
   description:
-    "Primary Logic builds long-horizon agents that handle administrative work in existing systems, coordinate with people, and follow through until the agreed result is verified.",
+    "Primary Logic takes on the jobs a business needs done and owns the work from start to finish, without adding headcount or another person to manage.",
 }).replace(/</g, "\\u003c");
 
 const tenetIcons = [ShieldCheck, ListChecks, Brain];

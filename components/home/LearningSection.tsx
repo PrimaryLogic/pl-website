@@ -8,9 +8,9 @@ export default function LearningSection() {
       <div className="pl-container">
         <div className="pl-guided-heading">
         <header className={`pl-section-head ${styles.header}`}>
-          <p className="pl-eyebrow">Continuous learning</p>
-          <h2 id="learning-heading">Keeps track of the whole job.</h2>
-          <p className="pl-section-head__body">Our agents remember what happened, what was promised, and what’s left — so every interaction informs the next step.</p>
+          <p className="pl-eyebrow">The whole job</p>
+          <h2 id="learning-heading">We keep working until it is done.</h2>
+          <p className="pl-section-head__body">A job can take weeks or months of conversations, documents, system updates, and follow ups. Our agents remember what happened, what was promised, and what is left so every interaction moves the work forward.</p>
         </header>
         <AgentGuide agent="bubbles" />
         </div>
