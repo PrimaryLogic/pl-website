@@ -5,16 +5,16 @@ import Image from "next/image";
 
 const guides = {
   sunny: {
-    name: "Sunny", question: "What do I need to get started?", title: "Start by telling us the result.",
-    body: "Send a job description, a document, or a few lines about the work. We’ll help define what finished means, what the agent needs, and what it can do.",
+    name: "Sunny", question: "What do I need to get started?", title: "Start by telling us the job.",
+    body: "Send a job description, PDF, or a few lines about the work. We’ll help work out the access and information the agent needs, and agree on what it can do.",
     example: "“We chase missing onboarding documents. We use a CRM and email. The job is done when the file is complete and the account is active.”",
-    note: "You do not need to map out every step. That is part of the job.",
+    note: "You don’t need to map out every step. We’ll help you figure it out.",
   },
   sprout: {
     name: "Sprout", question: "What can I hand off?", title: "Give us a job to see through.",
-    body: "Our agents work in your systems, contact people, and follow up until the job is done, even when it takes months.",
+    body: "Our agents work in your systems, contact people, and follow up until the job is done — even when it takes months.",
     example: "An unpaid balance needs more than a reminder. The agent checks the record, answers the customer’s questions, follows up, and confirms payment in your system.",
-    note: "Tell us the result you need. We’ll take responsibility for the work to get there.",
+    note: "Tell us the result you need. We’ll help you automate the work to get there.",
   },
   bubbles: {
     name: "Bubbles", question: "How does it get better?", title: "Every interaction informs the next.",
@@ -23,10 +23,10 @@ const guides = {
     note: "It adapts as it learns more, within the rules you set.",
   },
   lilac: {
-    name: "Lilac", question: "When does it need me?", title: "You set the outcome and rules. We manage the work.",
+    name: "Lilac", question: "When does it need me?", title: "You set the rules. It handles the steps.",
     body: "You decide what the agent can access and do. It works through problems on its own and asks for your input when a decision falls outside those rules. Its actions are recorded for your review.",
     example: "An approved payment plan? The agent can offer it. Different terms? It brings you the request and the context to decide.",
-    note: "Make the decision and the agent picks up where it left off.",
+    note: "Make the decision, and the agent picks up where it left off.",
   },
   cocoa: {
     name: "Cocoa", question: "What am I paying for?", title: "A completed result, verified.",
@@ -38,7 +38,7 @@ const guides = {
     name: "Peach", question: "Can I see customer case studies?", title: "See what our agents have done.",
     body: "Ask us for case studies showing the work our agents have handled and the results for our customers.",
     example: "Tell us about your task so we can share relevant examples.",
-    note: "Ask for case studies in your email. We’ll take it from there.",
+    note: "Ask for case studies in your email — we’ll take it from there.",
   },
 };
 

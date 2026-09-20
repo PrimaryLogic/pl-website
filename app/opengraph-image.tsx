@@ -46,8 +46,8 @@ export default async function OpenGraphImage() {
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 18, borderTop: "2px solid #101a15", fontSize: 18, color: "#4a554e" }}>
-        <div>YOU SET THE OUTCOME</div>
-        <div>WE MANAGE THE WORK</div>
+        <div>AUTONOMOUS, WITHIN YOUR RULES</div>
+        <div>FROM START TO FINISH</div>
       </div>
     </div>,
     { ...size, fonts: fonts.length ? fonts : undefined },
