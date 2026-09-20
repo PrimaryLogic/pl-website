@@ -308,9 +308,9 @@ export const verticals: VerticalStory[] = [
 
 
 export const hero = {
-  heading: "Automate your repetitive tasks",
+  heading: "Get the work done. Skip the hire.",
   body:
-    "Primary Logic’s AI agents use their own computers, phones, and email accounts to handle your team’s repetitive work. Fully autonomous, with no handholding from you.",
+    "Primary Logic’s AI agents use their own computers, phones, and email accounts to get the job done, from start to finish. No handholding or additional headcount to manage.",
   primaryCta: { label: "Tell us what you need done", href: PILOT_MAILTO },
   secondaryCta: { label: "See how it works", href: "#how" },
   form: { button: "Tell us what you need done", placeholder: "Work email" },
@@ -424,7 +424,7 @@ export const lanes = {
 
 export const pilot = {
   ctaLabel: "Let’s talk about the work",
-  heading: "Hire Primary Logic to handle your admin.",
+  heading: "Hire Primary Logic",
   body:
     "Send a job description, PDF, or a few lines about the work. We’ll tell you what we need to get started.",
 
