@@ -59,8 +59,8 @@ export default function GettingStarted({ demoControl }: { demoControl?: ReactNod
               </div>
             </div>
             <div className={styles.caption}>
-              <h3>We improve the outcome over time.</h3>
-              <p>Every call, message, promise, and result shapes what we try next.</p>
+              <h3>The metric keeps improving.</h3>
+              <p>Our agents learn from every interaction and automatically adjust what they do next.</p>
             </div>
           </li>
         </ol>
