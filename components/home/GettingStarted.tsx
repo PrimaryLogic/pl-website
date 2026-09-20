@@ -13,13 +13,13 @@ export default function GettingStarted({ demoControl }: { demoControl?: ReactNod
               <span className={styles.stepLabel}>Step 1</span>
               <div className={`${styles.paper} ${styles.requestMail}`}>
                 <div className={styles.messageLabel}><EnvelopeSimple size={17} aria-hidden="true" /><span>You <ArrowRight size={12} aria-hidden="true" /> Primary Logic</span></div>
-                <p className={styles.bigMessage}>Can you handle our overdue patient balances?</p>
-                <p className={styles.messageDetail}>We use ModMed and email.</p>
+                <p className={styles.bigMessage}>Improve our revenue recovery rate.</p>
+                <p className={styles.messageDetail}>We recover 42% of balances over 60 days.</p>
               </div>
             </div>
             <div className={styles.caption}>
-              <h3>Tell us what you want done.</h3>
-              <p>Email or text us the task.</p>
+              <h3>Give us the business outcome.</h3>
+              <p>Tell us what you want to improve and how you measure it.</p>
             </div>
           </li>
           <li className={styles.step}>
@@ -27,40 +27,40 @@ export default function GettingStarted({ demoControl }: { demoControl?: ReactNod
               <span className={styles.stepLabel}>Step 2</span>
               <div className={`${styles.paper} ${styles.question}`}>
                 <div className={styles.messageLabel}>Primary Logic</div>
-                <p>Which balances should we work on? What payment terms can we offer?</p>
+                <p>Which balances count? What is the baseline? What payment terms can we offer?</p>
                 <p>Let’s connect ModMed and your email.</p>
               </div>
-              <div className={styles.reply}><span className={styles.replyLabel}>You</span><p>Over 60 days. Here’s our process.</p></div>
+              <div className={styles.reply}><span className={styles.replyLabel}>You</span><p>42% today. Get us above 55%.</p></div>
               <div className={styles.connections}>
                 <span><Check size={14} weight="bold" aria-hidden="true" /> ModMed connected</span>
                 <span><Check size={14} weight="bold" aria-hidden="true" /> Email connected</span>
               </div>
             </div>
             <div className={styles.caption}>
-              <h3>We get everything in place.</h3>
-              <p>We gather what’s needed and set up the workflow.</p>
+              <h3>We learn what moves the metric.</h3>
+              <p>We study the workflow, constraints, and every outcome.</p>
             </div>
           </li>
           <li className={styles.step}>
             <div className={`${styles.scene} ${styles.result}`}>
               <span className={styles.stepLabel}>Step 3</span>
               <div className={`${styles.paper} ${styles.record}`}>
-                <div className={styles.recordHeader}><strong>ModMed</strong><span>Maya R.</span></div>
+                <div className={styles.recordHeader}><strong>ModMed</strong><span>90 days</span></div>
                 <div className={styles.recordBody}>
-                  <span className={styles.balanceLabel}>Patient balance</span>
-                  <div className={styles.balance}><del>$186</del><ArrowRight size={21} aria-hidden="true" /><strong>$0</strong></div>
-                  <span className={styles.paid}><Check size={14} weight="bold" aria-hidden="true" /> Payment recorded</span>
+                  <span className={styles.balanceLabel}>Revenue recovery rate</span>
+                  <div className={styles.balance}><del>42%</del><ArrowRight size={21} aria-hidden="true" /><strong>58%</strong></div>
+                  <span className={styles.paid}><Check size={14} weight="bold" aria-hidden="true" /> 16 point improvement</span>
                 </div>
               </div>
               <div className={`${styles.paper} ${styles.update}`}>
                 <div className={styles.messageLabel}><EnvelopeSimple size={16} aria-hidden="true" />Primary Logic</div>
-                <p>Payment received. Record updated.</p>
-                <p className={styles.updateDetail}>Following up on the remaining accounts.</p>
+                <p>Recovery rate is up to 58%.</p>
+                <p className={styles.updateDetail}>Still learning which timing, channels, and payment options work best.</p>
               </div>
             </div>
             <div className={styles.caption}>
-              <h3>The work gets done.</h3>
-              <p>Agents have their own computers to handle the job.</p>
+              <h3>The metric keeps improving.</h3>
+              <p>Our agents learn from every interaction and automatically adjust what they do next.</p>
             </div>
           </li>
         </ol>
