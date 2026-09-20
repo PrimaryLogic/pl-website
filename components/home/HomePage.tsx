@@ -14,7 +14,6 @@ import SiteNav from "../SiteNav";
 import CaseSwitcher from "./CaseSwitcher";
 import AgentGuide from "./AgentGuide";
 import { PILOT_MAILTO } from "@/lib/content/shared";
-import LearningSection from "./LearningSection";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://primarylogic.com";
 
@@ -63,8 +62,6 @@ export default function HomePage() {
             <CaseSwitcher />
           </div>
         </section>
-
-        <LearningSection />
 
         {/* 5 · Operating authority */}
         <section id="authority" className="pl-section">

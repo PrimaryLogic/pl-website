@@ -55,12 +55,12 @@ export default function GettingStarted({ demoControl }: { demoControl?: ReactNod
               <div className={`${styles.paper} ${styles.update}`}>
                 <div className={styles.messageLabel}><EnvelopeSimple size={16} aria-hidden="true" />Primary Logic</div>
                 <p>Recovery rate is up to 58%.</p>
-                <p className={styles.updateDetail}>Still testing timing and payment options.</p>
+                <p className={styles.updateDetail}>Still learning which timing, channels, and payment options work best.</p>
               </div>
             </div>
             <div className={styles.caption}>
-              <h3>We own the outcome.</h3>
-              <p>Our agents keep learning and improving the result.</p>
+              <h3>We improve the outcome over time.</h3>
+              <p>Every call, message, promise, and result shapes what we try next.</p>
             </div>
           </li>
         </ol>
