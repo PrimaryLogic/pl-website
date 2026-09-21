@@ -29,7 +29,7 @@ const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://primarylogi
 export const metadata: Metadata = {
   metadataBase: siteUrl,
   title: {
-    default: `Primary Logic | ${outcomePositioning.heading}`,
+    default: "Primary Logic",
     template: "%s | Primary Logic",
   },
   description:
