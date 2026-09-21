@@ -31,7 +31,7 @@ export default function HomePage() {
         </main>
         <footer className={styles.footer}>
           <span>© {new Date().getFullYear()} Primary Logic</span>
-          <nav aria-label="Legal pages"><Link href="/privacy-policy">Privacy</Link><Link href="/terms-of-service">Terms</Link></nav>
+          <nav aria-label="Legal pages"><Link href="/privacy-policy">Privacy</Link></nav>
         </footer>
       </div>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "Organization", name: "Primary Logic", url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://primarylogic.com", description: copy.description }).replace(/</g, "\\u003c") }} />

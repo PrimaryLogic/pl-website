@@ -4,7 +4,7 @@ import styles from "./home/OutcomePage.module.css";
 
 export default function StubPage({ title, activePage, effectiveDate, effectiveDateTime, children }: {
   title: string;
-  activePage: "privacy" | "terms";
+  activePage: "privacy";
   effectiveDate: string;
   effectiveDateTime: string;
   children: ReactNode;
@@ -26,7 +26,6 @@ export default function StubPage({ title, activePage, effectiveDate, effectiveDa
           <span>© {new Date().getFullYear()} Primary Logic</span>
           <nav aria-label="Legal pages">
             <Link href="/privacy-policy" aria-current={activePage === "privacy" ? "page" : undefined}>Privacy</Link>
-            <Link href="/terms-of-service" aria-current={activePage === "terms" ? "page" : undefined}>Terms</Link>
           </nav>
         </footer>
       </div>

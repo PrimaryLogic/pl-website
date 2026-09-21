@@ -37,7 +37,6 @@ export const footer = {
   entity: WORDMARK,
   links: [
     { label: "Privacy", href: "/privacy-policy" },
-    { label: "Terms", href: "/terms-of-service" },
     { label: "Contact", href: `mailto:${CONTACT_EMAIL}` },
   ],
 };
