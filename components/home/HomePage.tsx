@@ -16,7 +16,7 @@ export default function HomePage() {
         <main id="main-content">
           <section className={styles.intro} aria-labelledby="intro-heading">
             <h1 id="intro-heading">{copy.heading}</h1>
-            <p className={styles.lead}>Primary Logic is building toward a future where AGI does the work of running a business, so people can focus on their customers.</p>
+            <p className={styles.lead}>Primary Logic is building for the future where AGI does the work of running a business, so the focus is on your customers.</p>
             <p>Understanding what customers need, earning their trust, and building lasting relationships should be at the center of a company. Behind those relationships is an enormous amount of work: building the product, delivering it, managing finances, coordinating teams, and keeping the business running.</p>
             <p>We believe artificial general intelligence will be able to do that work across every part of a business. A small team should be able to serve more customers and deliver more for each of them without building a larger organization to support it.</p>
             <p>Getting there means giving intelligence a place to work. It needs access to the company’s software and information, a memory of what has happened, and the ability to act. It needs to carry work across systems, recover when something goes wrong, and see a job through over days or months.</p>
