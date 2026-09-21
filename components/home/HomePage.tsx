@@ -1,139 +1,40 @@
-import {
-  ListChecks,
-  Brain,
-  ShieldCheck,
-} from "@phosphor-icons/react/dist/ssr";
-import {
-  controls,
-  pilot,
-} from "@/lib/content/positioning";
-import { homeNav } from "@/lib/content";
+import Link from "next/link";
 import AnalyticsBridge from "../AnalyticsBridge";
-import SiteFooter from "../SiteFooter";
-import SiteNav from "../SiteNav";
-import CaseSwitcher from "./CaseSwitcher";
-import AgentGuide from "./AgentGuide";
-import { PILOT_MAILTO } from "@/lib/content/shared";
-import LearningSection from "./LearningSection";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://primarylogic.com";
-
-const structuredData = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Primary Logic",
-  url: siteUrl,
-  description:
-    "Primary Logic builds long-horizon agents that handle administrative work in existing systems, coordinate with people, and follow through until the agreed result is verified.",
-}).replace(/</g, "\\u003c");
-
-const tenetIcons = [ShieldCheck, ListChecks, Brain];
-
-function SectionHead({
-  eyebrow,
-  heading,
-  body,
-  align = "left",
-}: {
-  eyebrow?: string;
-  heading: string;
-  body?: string;
-  align?: "left" | "center";
-}) {
-  return (
-    <div className={`pl-section-head${align === "center" ? " pl-section-head--center" : ""}`}>
-      {eyebrow ? <p className="pl-eyebrow">{eyebrow}</p> : null}
-      <h2>{heading}</h2>
-      {body ? <p className="pl-section-head__body">{body}</p> : null}
-    </div>
-  );
-}
+import { outcomePositioning as copy } from "@/lib/content/outcomes";
+import styles from "./OutcomePage.module.css";
 
 export default function HomePage() {
   return (
-    <div className="pl-site">
+    <div className={styles.page}>
       <a href="#main-content" className="skip-link">Skip to main content</a>
       <AnalyticsBridge />
-      <SiteNav nav={homeNav} variant="operator" />
+      <div className={styles.column}>
+        <header className={styles.header}>
+          <Link className={styles.wordmark} href="/" aria-label="Primary Logic home">Primary Logic</Link>
+          <a href={copy.contactHref} data-analytics="homepage-header-contact">Get in touch</a>
+        </header>
+        <main id="main-content">
+          <section className={styles.intro} aria-labelledby="intro-heading">
+            <h1 id="intro-heading">{copy.heading}</h1>
+            <p className={styles.lead}>Primary Logic is building toward a future where AGI does the work of running a business, so people can focus on their customers.</p>
+            <p>Understanding what customers need, earning their trust, and building lasting relationships should be at the center of a company. Behind those relationships is an enormous amount of work: building the product, delivering it, managing finances, coordinating teams, and keeping the business running.</p>
+            <p>We believe artificial general intelligence will be able to do that work across every part of a business. A small team should be able to serve more customers and deliver more for each of them without building a larger organization to support it.</p>
+            <p>Getting there means giving intelligence a place to work. It needs access to the company’s software and information, a memory of what has happened, and the ability to act. It needs to carry work across systems, recover when something goes wrong, and see a job through over days or months.</p>
+            <p>That is what we’re building at Primary Logic: agents that operate computers, use the tools a business already relies on, and coordinate work across the company. As models become more capable, these agents should be able to take on more of the business without demanding more of the team’s attention.</p>
+          </section>
 
-      <main id="main-content">
-        {/* 1 · Hero */}
-        <section className="pl-hero">
-          <div className="pl-container">
-            <CaseSwitcher />
-          </div>
-        </section>
-
-        <LearningSection />
-
-        {/* 5 · Operating authority */}
-        <section id="authority" className="pl-section">
-          <div className="pl-container">
-            <div className="pl-guided-heading">
-              <SectionHead eyebrow={controls.eyebrow} heading={controls.heading} body={controls.body} />
-              <AgentGuide agent="lilac" />
-            </div>
-            <ol className="pl-tenets">
-              {[2, 0, 1].map((i) => {
-                const pr = controls.principles[i];
-                const Ico = tenetIcons[i % tenetIcons.length];
-                return (
-                  <li key={pr.title} className="pl-tenet">
-                    <div className="pl-tenet__head">
-                      <span className="pl-tenet__icon"><Ico aria-hidden="true" size={18} weight="fill" /></span>
-                      <h3>{pr.title}</h3>
-                    </div>
-                    <p className="pl-tenet__body">{pr.body}</p>
-                    <div className="pl-control-example">
-                      <p className="pl-control-example__label">{["Permissions", "A quick check-in", "Resolving a blocker"][i]}</p>
-                      {i === 0 && <ul className="pl-permission-rows">
-                        <li><span>Read billing records</span><span className="pl-control-status">Allowed</span></li>
-                        <li><span>Offer approved payment plan</span><span className="pl-control-status">Allowed</span></li>
-                        <li><span>Waive a balance</span><span className="pl-control-status pl-control-status--waiting">Approval required</span></li>
-                      </ul>}
-                      {i === 1 && <div className="pl-agent-email">
-                        <div className="pl-agent-email__message">
-                          <span className="pl-agent-email__sender">You <span>→ Primary Logic</span></span>
-                          <p>What happened with Maya’s balance?</p>
-                        </div>
-                        <div className="pl-agent-email__message pl-agent-email__reply">
-                          <span className="pl-agent-email__sender">Primary Logic <span>→ You</span></span>
-                          <p>Maya paid both $93 installments, and I confirmed her balance is $0 in ModMed. No further follow-up needed.</p>
-                        </div>
-                      </div>}
-                      {i === 2 && <div className="pl-approval-example">
-                        <blockquote>“I can’t pay the full amount today.”</blockquote>
-                        <p>Recognizes a timing issue, checks approved terms, and offers two installments of $93.</p>
-                        <div><span className="pl-control-status">Payment plan arranged</span><small>Follow-up scheduled</small></div>
-                      </div>}
-                    </div>
-                  </li>
-                );
-              })}
-            </ol>
-          </div>
-        </section>
-
-        {/* Get started */}
-        <section id="pricing" className="pl-section pl-section--tint pl-closing">
-          <div className="pl-container">
-            <div id="pilot" className="pl-closing__start">
-              <div className="pl-closing__copy">
-                <h2>{pilot.heading}</h2>
-                <div className="pl-closing__description">
-                  {pilot.body}{" "}<AgentGuide agent="peach" inline />
-                </div>
-              </div>
-              <a href={PILOT_MAILTO} className="pl-button pl-button--primary" data-analytics="homepage-pilot-cta">
-                <span>{pilot.ctaLabel}</span><span aria-hidden="true">→</span>
-              </a>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <SiteFooter variant="operator" />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData }} />
+          <section className={`${styles.section} ${styles.contact}`} aria-labelledby="contact-heading">
+            <h2 id="contact-heading">Build this future with us.</h2>
+            <p>Bringing AGI into businesses means solving problems that only appear when systems do real work: keeping agents coordinated, recovering from failures, and learning from outcomes that may take months to observe.</p>
+            <p>If you want to help build these systems or put them to work in your company, write to us at <a href={`mailto:${copy.email}`} data-analytics="homepage-pilot-cta">{copy.email}</a>.</p>
+          </section>
+        </main>
+        <footer className={styles.footer}>
+          <span>© {new Date().getFullYear()} Primary Logic</span>
+          <nav aria-label="Legal pages"><Link href="/privacy-policy">Privacy</Link><Link href="/terms-of-service">Terms</Link></nav>
+        </footer>
+      </div>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "Organization", name: "Primary Logic", url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://primarylogic.com", description: copy.description }).replace(/</g, "\\u003c") }} />
     </div>
   );
 }

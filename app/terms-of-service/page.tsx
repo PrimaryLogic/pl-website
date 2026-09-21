@@ -1,7 +1,7 @@
 import StubPage from "@/components/StubPage";
 import { CONTACT_EMAIL } from "@/lib/content";
 
-export const metadata = { title: "Terms of Service", robots: { index: false, follow: false } };
+export const metadata = { title: "Terms of Service", alternates: { canonical: "/terms-of-service" }, robots: { index: false, follow: false } };
 
 export default function TermsOfService() {
   return (

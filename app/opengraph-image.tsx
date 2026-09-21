@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
-import { hero } from "@/lib/content/positioning";
+import { outcomePositioning } from "@/lib/content/outcomes";
 
-export const alt = `Primary Logic | ${hero.heading}`;
+export const alt = `Primary Logic | ${outcomePositioning.heading}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -27,10 +27,9 @@ export default async function OpenGraphImage() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        background: "#f7f8f6",
-        color: "#101a15",
+        background: "#ffffff",
+        color: "#19231d",
         padding: "64px 72px",
-        borderTop: "14px solid #0e7c4a",
         fontFamily: text ? "Text" : "sans-serif",
       }}
     >
@@ -38,16 +37,15 @@ export default async function OpenGraphImage() {
         <div style={{ fontFamily: display ? "Display" : "sans-serif", fontSize: 26, fontWeight: 600, letterSpacing: "-0.02em" }}>Primary Logic</div>
       </div>
       <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-        <div style={{ fontFamily: display ? "Display" : "sans-serif", fontSize: 64, lineHeight: 1.08, maxWidth: 950, fontWeight: 600, letterSpacing: "-0.03em" }}>
-          {hero.heading}
+        <div style={{ fontFamily: display ? "Display" : "sans-serif", fontSize: 76, lineHeight: 1.06, maxWidth: 950, fontWeight: 600, letterSpacing: "-0.03em" }}>
+          {outcomePositioning.heading}
         </div>
-        <div style={{ marginTop: 22, fontSize: 24, lineHeight: 1.45, color: "#4a554e" }}>
-          {hero.body}
+        <div style={{ marginTop: 28, fontSize: 26, lineHeight: 1.5, color: "#4d5951" }}>
+          {outcomePositioning.description}
         </div>
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 18, borderTop: "2px solid #101a15", fontSize: 18, color: "#4a554e" }}>
-        <div>AUTONOMOUS, WITHIN YOUR RULES</div>
-        <div>FROM START TO FINISH</div>
+      <div style={{ display: "flex", fontSize: 20, color: "#116342" }}>
+        primarylogic.com
       </div>
     </div>,
     { ...size, fonts: fonts.length ? fonts : undefined },

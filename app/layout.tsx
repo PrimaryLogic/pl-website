@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { hero } from "@/lib/content/positioning";
+import { outcomePositioning } from "@/lib/content/outcomes";
 import { IBM_Plex_Mono, Inter, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 
@@ -29,11 +29,11 @@ const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://primarylogi
 export const metadata: Metadata = {
   metadataBase: siteUrl,
   title: {
-    default: "Primary Logic",
+    default: `Primary Logic | ${outcomePositioning.heading}`,
     template: "%s | Primary Logic",
   },
   description:
-    hero.body,
+    outcomePositioning.description,
   alternates: { canonical: "/" },
   applicationName: "Primary Logic",
   authors: [{ name: "Primary Logic" }],
@@ -41,22 +41,22 @@ export const metadata: Metadata = {
     type: "website",
     url: "/",
     siteName: "Primary Logic",
-    title: `Primary Logic | ${hero.heading}`,
+    title: `Primary Logic | ${outcomePositioning.heading}`,
     description:
-      hero.body,
+      outcomePositioning.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: `Primary Logic | ${hero.heading}`,
+    title: `Primary Logic | ${outcomePositioning.heading}`,
     description:
-      hero.body,
+      outcomePositioning.description,
   },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#f7f7f4",
+  themeColor: "#ffffff",
   colorScheme: "light",
 };
 

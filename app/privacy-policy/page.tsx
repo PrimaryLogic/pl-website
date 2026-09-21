@@ -1,7 +1,7 @@
 import StubPage from "@/components/StubPage";
 import { CONTACT_EMAIL } from "@/lib/content";
 
-export const metadata = { title: "Privacy Policy", robots: { index: false, follow: false } };
+export const metadata = { title: "Privacy Policy", alternates: { canonical: "/privacy-policy" }, robots: { index: false, follow: false } };
 
 export default function PrivacyPolicy() {
   return (
