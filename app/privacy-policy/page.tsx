@@ -33,19 +33,6 @@ export default function PrivacyPolicy() {
       </section>
 
       <section>
-        <h2>Text messaging</h2>
-        <p>
-          Primary Logic may send transactional account notifications by SMS on behalf of a participating provider when a recipient has affirmatively consented during that provider&apos;s appointment scheduling or confirmation process. Consent to SMS is not a condition of receiving care. Messages may include account-balance updates, payment-link availability, payment-plan updates, and responses to payment-related questions; they do not include clinical details.
-        </p>
-        <p>
-          Message frequency varies with appointment and account activity, with up to four automated account notifications per appointment and additional replies only when a recipient responds. Message and data rates may apply. Recipients may reply STOP to cancel at any time and HELP for assistance.
-        </p>
-        <p>
-          We do not sell, share, rent, or provide mobile phone numbers or SMS consent and opt-in data to third parties or affiliates for marketing or promotional purposes.
-        </p>
-      </section>
-
-      <section>
         <h2>Service providers and legal requests</h2>
         <p>
           We may disclose information to service providers that help operate the website or respond to an inquiry, subject to appropriate contractual protections. We may also disclose information when required by law or necessary to protect rights, safety, and security.
