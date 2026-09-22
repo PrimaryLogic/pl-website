@@ -8,8 +8,8 @@ export default function PrivacyPolicy() {
     <StubPage
       title="Privacy Policy"
       activePage="privacy"
-      effectiveDate="August 21, 2026"
-      effectiveDateTime="2026-08-21"
+      effectiveDate="September 22, 2026"
+      effectiveDateTime="2026-09-22"
     >
       <section>
         <h2>Scope</h2>
@@ -21,14 +21,14 @@ export default function PrivacyPolicy() {
       <section>
         <h2>Information we collect</h2>
         <p>
-          When you request information, we collect the work email and organization information you submit, the source of the request, and the submission time. Hosting and security infrastructure may also process standard request information such as IP address, browser details, and diagnostic logs.
+          The website has no forms, accounts, or sign-ins, and it asks you for nothing. If you write to an email address listed on the site, we receive what you chose to send and use it to reply. Hosting and security infrastructure process standard request information such as IP address, browser details, and diagnostic logs.
         </p>
       </section>
 
       <section>
         <h2>How we use information</h2>
         <p>
-          We use website information to respond to inquiries, operate and secure the website, prevent abuse, and meet legal obligations. We retain it only as long as reasonably necessary for those purposes.
+          We use what you send us to respond to your inquiry, and infrastructure logs to operate and secure the website, prevent abuse, and meet legal obligations. We retain both only as long as reasonably necessary for those purposes. We do not use website information for advertising and we do not sell it.
         </p>
       </section>
 
