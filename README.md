@@ -37,4 +37,6 @@ One environment variable, documented in `.env.example`:
 
 ## CI
 
-`.github/workflows/ci.yml` runs lint and build on every push and pull request.
+`.github/workflows/ci.yml` runs lint and build on every push to `main` and every pull request.
+
+Two checks predate it and still run: Vercel builds a preview deployment per push and reports pass or fail, and CodeQL scans the code through GitHub's default setup. Neither runs the linter, which is the gap this workflow fills, along with building on a clean runner independent of Vercel's build environment.
