@@ -5,9 +5,12 @@ on:
     branches: ["main"]
   pull_request:
 
+# Superseded pull request runs are cancelled; runs on main are not. Cancelling
+# on main means a merge lands with no recorded result whenever the next merge
+# follows closely, which is exactly what happened to the merge of #2.
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
