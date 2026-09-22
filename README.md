@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# pl-website
 
-## Getting Started
+The Primary Logic marketing site: one static page stating what the company is building, plus a privacy policy. Next.js 16 App Router, React 19, Tailwind v4. No API routes, no database, no forms — the only conversion path is a `mailto:` link.
 
-First, run the development server:
+## Running it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build   # production build; also runs the TypeScript check
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Node 22 or newer.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**`npx tsc --noEmit` fails on a fresh checkout** with `Cannot find name 'LayoutProps'`. Next generates that type into `.next/types` during a build, so run `npm run build` once first. `next build` type-checks the project itself, which is why CI has no separate `tsc` step.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Layout
 
-## Learn More
+| Path | What's there |
+|---|---|
+| `app/page.tsx` | Homepage, a thin wrapper over `components/home/HomePage.tsx` |
+| `app/privacy-policy/page.tsx` | Privacy policy, rendered through `components/StubPage.tsx` |
+| `app/layout.tsx` | Fonts, metadata, Open Graph and Twitter cards |
+| `app/opengraph-image.tsx`, `app/icon.svg`, `app/apple-icon.tsx` | Generated social image and icons |
+| `app/robots.ts`, `app/sitemap.ts` | Generated `robots.txt` and `sitemap.xml` |
+| `lib/content/` | Site copy, kept out of components so wording changes don't touch markup |
+| `components/home/` | Homepage sections |
 
-To learn more about Next.js, take a look at the following resources:
+`components/home/HomePage.tsx` is the only homepage component the site renders today. The walkthrough components beside it (`RecoveryWalkthrough`, `InvoiceWalkthrough`, `OnboardingWalkthrough`, `LanePage` and the chrome it pulls in) are unreachable from any route — they belong to the site that commit 8fb1c2f replaced, and are kept on purpose while their future is undecided. `npm run build` will not catch a change that breaks them.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Configuration
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+One environment variable, documented in `.env.example`:
 
-## Deploy on Vercel
+- `NEXT_PUBLIC_SITE_URL` — canonical origin for metadata, `robots.txt` and `sitemap.xml`. Defaults to `https://primarylogic.com`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## CI
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`.github/workflows/ci.yml` runs lint and build on every push and pull request.
