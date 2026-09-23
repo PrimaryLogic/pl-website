@@ -17,10 +17,10 @@ export default function HomePage() {
           <section className={styles.intro} aria-labelledby="intro-heading">
             <h1 id="intro-heading">{copy.heading}</h1>
             <p className={styles.lead}>Primary Logic is building for the future where AGI does the work of running a business, so you can focus on your customers.</p>
-            <p>Understanding what customers need, earning their trust, and building lasting relationships should be at the center of a company. Behind those relationships is an enormous amount of work: building the product, delivering it, managing finances, coordinating teams, and keeping the business running.</p>
+            <p>Human creativity is a business’s defining advantage. Deciding what to build, earning your customers’ trust, and building lasting relationships should be at the center of a company. Behind those relationships is an enormous amount of work: building the product, delivering it, managing finances, coordinating teams, and keeping the business running.</p>
             <p>We believe artificial general intelligence will be able to do that work across every part of a business. A small team should be able to serve more customers and deliver more for each of them without building a larger organization to support it.</p>
             <p>Getting there means giving intelligence a place to work. It needs access to the company’s software and information, a memory of what has happened, and the ability to act. It needs to carry work across systems, recover when something goes wrong, and see a job through over days or months.</p>
-            <p>That is what we’re building at Primary Logic: agents that operate computers, use the tools a business already relies on, and coordinate work across the company. As models become more capable, these agents should be able to take on more of the business without demanding more of the team’s attention.</p>
+            <p>That is what we’re building at Primary Logic: agents that operate computers to take responsibility for work across a company. They learn from outcomes, refine their approach, and retain what works. As models become more capable, these agents should be able to take on more of the business without demanding more of the team’s attention.</p>
           </section>
 
           <section className={`${styles.section} ${styles.contact}`} aria-labelledby="contact-heading">
